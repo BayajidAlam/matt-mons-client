@@ -1,4 +1,4 @@
-import { authKey } from "@/constants/storageKey";
+import { authKey } from "@/constants/storagekey";
 import { instance as axiosInstance } from "@/helpers/axios/axiosInstance";
 import { getBaseUrl } from "@/helpers/config/envConfig";
 import { decodedToken } from "@/utils/jwt";

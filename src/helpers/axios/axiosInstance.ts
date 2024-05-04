@@ -1,4 +1,4 @@
-import { authKey } from "@/constants/storageKey";
+import { authKey } from "@/constants/storagekey";
 import { getNewAccessToken } from "@/services/auth.service";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
 import { getFromLocalStorage, setToLocalStorage } from "@/utils/local-storage";
