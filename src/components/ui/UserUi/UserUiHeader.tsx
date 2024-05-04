@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { authKey } from "@/constants/storagekey";
 const { Header: AntHeader } = Layout;
 
-const Header = () => {
+const UserUiHeader = () => {
   const router = useRouter();
 
   const logOut = () => {
@@ -29,6 +29,7 @@ const Header = () => {
     <AntHeader
       style={{
         background: "#fff",
+        height: "80px"
       }}
     >
       <Row
@@ -57,4 +58,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default UserUiHeader;
