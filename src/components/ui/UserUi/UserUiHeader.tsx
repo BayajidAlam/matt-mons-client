@@ -2,6 +2,7 @@ import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { authKey } from "@/constants/storagekey";
 import HeaderTop from "../Home/Header/HeaderTop";
+import MainHeader from "../Home/Header/MainHeader";
 
 const UserUiHeader = () => {
   const router = useRouter();
@@ -27,6 +28,7 @@ const UserUiHeader = () => {
   return (
     <div>
       <HeaderTop />
+      <MainHeader />
     </div>
   );
 };
