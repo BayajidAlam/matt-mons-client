@@ -5,9 +5,9 @@ import { Ri24HoursFill } from "react-icons/ri";
 
  const HeaderBottom = () => {
   return (
-    <div className="border lg:flex justify-between items-center lg:container xl:w-[70%] mx-auto ">
+    <div className="border lg:flex justify-between items-center lg:w-[90%] xl:w-[70%] mx-auto ">
 
-      <div className="flex justify-start lg:justify-center items-center lg:w-1/3 border-b lg:border-r px-3 py-3">
+      <div className="flex justify-start lg:justify-center items-center lg:w-1/3 border-b  lg:border-b-0 lg:border-r px-3 py-3">
         <div className="flex justify-center items-center gap-3 ">
           <LiaShippingFastSolid className="text-3xl text-black " />
           <div className="text-black">
@@ -21,7 +21,7 @@ import { Ri24HoursFill } from "react-icons/ri";
         </div>
       </div>
 
-      <div className="flex justify-start lg:justify-center items-center lg:w-1/3 border-b lg:border-r px-3 py-3">
+      <div className="flex justify-start lg:justify-center items-center lg:w-1/3 border-b  lg:border-b-0 lg:border-r px-3 py-3">
         <div className="flex justify-center items-center gap-3 ">
           <RiMoneyDollarCircleLine className="text-3xl text-black " />
           <div className="text-black">
