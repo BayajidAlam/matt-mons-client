@@ -19,7 +19,8 @@ const UserContents = ({ children }: { children: React.ReactNode }) => {
       <div
         style={{
           padding: "10px",
-          height: `calc(100vh - 80px - 80px)`
+          height: `calc(100vh - 80px - 80px)`,
+          color: "white"
         }}
       >
         {children}

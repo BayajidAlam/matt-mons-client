@@ -35,7 +35,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <Layout>
+    <Layout style={{ backgroundColor: 'white' }}>
       <UserContents>{children}</UserContents>
     </Layout>
   );

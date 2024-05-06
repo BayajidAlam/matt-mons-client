@@ -1,9 +1,10 @@
-import React from 'react';
+import HeaderBottom from "@/components/ui/Home/Header/HeaderBottom";
+import React from "react";
 
 const UserPage = () => {
   return (
     <div>
-      <p>Home</p>
+      <HeaderBottom />
     </div>
   );
 };

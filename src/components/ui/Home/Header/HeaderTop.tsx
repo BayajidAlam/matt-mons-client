@@ -16,7 +16,7 @@ const HeaderTop = () => {
 
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  const handleOptionClick = (option) => {
+  const handleOptionClick = (option: any) => {
     setSelectedOption(option);
     setIsOpen(false);
   };
@@ -48,7 +48,7 @@ const HeaderTop = () => {
 
   return (
     <div className="bg-[#0188cc]">
-      <div className="flex justify-between items-center lg:container xl:w-[75%] mx-auto">
+      <div className="flex justify-between items-center  lg:container xl:w-[70%] mx-auto">
         {" "}
         <div className="flex justify-between items-center gap-1">
           <select className="bg-[#0188cc] text-white text-[10px]">
@@ -132,7 +132,7 @@ const HeaderTop = () => {
                 <TiSocialFacebook />
               </div>
               <div className="hover:bg-[#3b5a9a] rounded-full p-1">
-              <FaTwitter />
+                <FaTwitter />
               </div>
               <div className="hover:bg-[#3b5a9a] rounded-full p-1">
                 <IoLogoInstagram />
