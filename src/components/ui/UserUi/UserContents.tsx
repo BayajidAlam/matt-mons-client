@@ -17,10 +17,10 @@ const UserContents = ({ children }: { children: React.ReactNode }) => {
       <UserUiHeader />
 
       <div
-        style={{
-          height: `calc(100vh - 80px - 80px)`,
-          color: "white"
-        }}
+        // style={{
+        //   height: `calc(100vh)`,
+        //   color: "white"
+        // }}
       >
         {children}
       </div>
