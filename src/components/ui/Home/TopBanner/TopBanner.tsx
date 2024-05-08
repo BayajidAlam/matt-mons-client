@@ -5,7 +5,7 @@ import BannerImage1 from "@/assets/shop1_home_slider1.png";
 import Image from "next/image";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
+import {  Pagination } from "swiper/modules";
 // import Swiper and modules styles
 import "swiper/css/navigation";
 import { Swiper, SwiperSlide } from "swiper/react";

@@ -1,8 +1,13 @@
 "use client";
 import React, { useEffect } from "react";
-
 import SaleManyTimeLogo from "@/assets/sale-many-time-logo.png";
 import Image from "next/image";
+import "swiper/css";
+import "swiper/css/pagination";
+import {  Pagination } from "swiper/modules";
+// import Swiper and modules styles
+import "swiper/css/navigation";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const AddSection = () => {
   return (
@@ -11,12 +16,19 @@ const AddSection = () => {
         {" "}
         <div className="w-[23%] border h-[430px] hidden lg:block">
           <div className="flex justify-center items-center">
-            <Image
-              src={SaleManyTimeLogo}
-              width={50}
-              height={50}
-              alt="sale many time"
-            />
+            
+             <Swiper
+                spaceBetween={30}
+                pagination={{
+                  clickable: true,
+                }}
+                modules={[Pagination]}
+                className="mySwiper"
+              >
+                <SwiperSlide>
+                 
+                </SwiperSlide>
+              </Swiper>
           </div>
 
         </div>
