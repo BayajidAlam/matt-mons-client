@@ -1,20 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap");
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .dancing-script {
-  font-family: 'Dancing Script', cursive;
+  font-family: "Dancing Script", cursive;
   font-weight: 700;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Styles for laptop screens (from 1024px to 1279px) */
+@media screen and (min-width: 1024px) {
+  .rest_part {
+    width: calc(100% - 270px);
+  }
+}
+
+/* Styles for desktop screens (1280px and up) */
+@media screen and (min-width: 1280px) {
+  .rest_part {
+    width: calc(100% - 310px);
+  }
+}
+

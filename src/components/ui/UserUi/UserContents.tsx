@@ -1,9 +1,7 @@
 "use client";
 import { Layout } from "antd";
-import Header from "../Header";
 import Footer from "./Footer";
 import UserUiHeader from "./UserUiHeader";
-
 const { Content } = Layout;
 
 const UserContents = ({ children }: { children: React.ReactNode }) => {
@@ -16,14 +14,9 @@ const UserContents = ({ children }: { children: React.ReactNode }) => {
     >
       <UserUiHeader />
 
-      <div
-        // style={{
-        //   height: `calc(100vh)`,
-        //   color: "white"
-        // }}
-      >
+      <div className="relative">
         {children}
-      </div>
+        </div>
       <Footer />
     </Content>
   );

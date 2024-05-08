@@ -1,5 +1,4 @@
 "use client";
-import Contents from "@/components/ui/Contents";
 import UserContents from "@/components/ui/UserUi/UserContents";
 import { isLoggedIn } from "@/services/auth.service";
 import { Layout, Row, Space, Spin } from "antd";
@@ -13,7 +12,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!userLoggedIn) {
-      router.push("/login");
+      router.push("/home");
     }
     setIsLoading(true);
   }, [router, isLoading, userLoggedIn]);
