@@ -18,12 +18,7 @@ const AddSection = () => {
               alt="sale many time"
             />
           </div>
-          <h3
-          className="font-bold text-[70px] leading-1 tracking-wider"
-          >
-            <small className="rotate-[-90]">UP TO</small>50<sup>%</sup>
-            <sub>off</sub>
-          </h3>
+
         </div>
         <div className="w-full lg:w-[76%] ">
           <div></div>
