@@ -6,6 +6,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import ProductCard from "@/components/Product/ProductCard";
+import CommonTitle from "../../CommonTitle";
 
 const AddSection = () => {
   const [products, setProducts] = useState([]);
@@ -147,8 +148,11 @@ const AddSection = () => {
           </div>
         </div>
         <div className="rest_part">
-          <div className="grid grid-cols-1 md:grid-cols-2
-           lg:grid-cols-3 xl:grid-cols-4 gap-3">
+          <CommonTitle title="Check Out">Daily Best Sells</CommonTitle>
+          <div
+            className="grid grid-cols-1 md:grid-cols-2
+           lg:grid-cols-3 xl:grid-cols-4 gap-3"
+          >
             {products.map((product, i) => (
               <ProductCard key={i} product={product} />
             ))}
