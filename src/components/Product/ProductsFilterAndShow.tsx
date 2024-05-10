@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
+import Link from "next/link";
 
 const ProductFilter = () => {
   const [products, setProducts] = useState([]);
@@ -250,8 +251,10 @@ const ProductFilter = () => {
             className="grid grid-cols-1 md:grid-cols-2
            lg:grid-cols-3 xl:grid-cols-3 gap-3 w-full"
           >
-            {products.map((product, i) => (
-              <ProductCard key={i} product={product} />
+            {products.map((product: any, i) => (
+              <Link href={`/products/${product._id}`} key={i}>
+                <ProductCard product={product} />
+              </Link>
             ))}
           </div>
         </div>
