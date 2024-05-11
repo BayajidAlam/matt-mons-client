@@ -31,7 +31,7 @@ const Cart = () => {
     <>
       <div className="w-[92%] md:w-[95%] lg:w-[90%] xl:w-[70%] mx-auto">
         <div>
-          <h3 className="  lg:text-left text-[20px] ">Shopping Cart</h3>
+          <h3 className=" lg:text-left text-[20px] ">Shopping Cart</h3>
         </div>
         <div>
           <div className="lg:grid grid-cols-3">
@@ -39,7 +39,7 @@ const Cart = () => {
               {products.map((product: any) => (
                 <div
                   key={product?._id}
-                  className="flex justify-between my-10 border-b pb-10"
+                  className="flex justify-between my-4 pb-4 border-b "
                 >
                   <div className=" flex lg:gap-5 gap-3">
                     <Image
@@ -65,7 +65,7 @@ const Cart = () => {
                     <button onClick={() => handleDecrement(product?._id)}>
                       <SlMinus className="text-3xl" />
                     </button>
-                    <h5>{product?.quantity}</h5>
+                    <h5>2</h5>
                     <button onClick={() => handleIncrement(product?._id)}>
                       <BsPlusCircle className="text-3xl" />
                     </button>
@@ -90,11 +90,16 @@ const Cart = () => {
             </div>
 
             {/* order summary */}
-            <div className="col-span-1 mt-10 border-l p-10">
+            <div className="col-span-1 mt-10 md:border-l p-10">
               <h4 className="mb-10">Order Summary</h4>
-              <div className="flex justify-between py-4 border-b ">
-                <span className="text-slate-500">Subtotal</span>
-                <h5>${subTotal.toFixed(2)}</h5>
+              <div className="flex justify-between py-4 border-b gap-2">
+                <input
+                  className="text-[16px] border rounded-full px-8 py-2  uppercase"
+                  placeholder="Apply Cupon"
+                ></input>
+                <button className="text-[16px] border rounded-full px-8 py-2 uppercase bg-[#222529] text-white">
+                  Apply
+                </button>
               </div>
               <div className="flex justify-between py-4 border-b ">
                 <span className="text-slate-500">Shipping estimate</span>
@@ -110,14 +115,12 @@ const Cart = () => {
               </div>
               <div className="w-80 my-10">
                 <Link href="/checkout">
-                  <button className=" w-full btn btn-active btn-neutral text-white rounded-full ">
+                  <button className=" w-full btn bg-[#222529]   text-[16px] border rounded-full px-8 py-2 uppercase  text-white">
                     Check out
                   </button>
                 </Link>
               </div>
-              
             </div>
-
           </div>
         </div>
       </div>
