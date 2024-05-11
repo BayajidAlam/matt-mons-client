@@ -16,7 +16,9 @@ const FormTextArea = ({
   value,
   placeholder,
 }: TextAreaProps) => {
+
   const { control } = useFormContext();
+  
   return (
     <div className={`flex flex-col  w-full`}>
       {label ? label : null}

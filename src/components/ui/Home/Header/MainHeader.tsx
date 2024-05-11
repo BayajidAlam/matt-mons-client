@@ -6,12 +6,15 @@ import { IoCallOutline } from "react-icons/io5";
 import { VscAccount } from "react-icons/vsc";
 import { CiHeart } from "react-icons/ci";
 import { LiaShoppingBagSolid } from "react-icons/lia";
+import Link from "next/link";
 
 const MainHeader = () => {
   return (
     <div className=" w-[92%] md:w-[95%] lg:w-[90%] xl:w-[70%] mx-auto py-8 px-1">
       <div className="flex justify-between items-center gap-12">
-        <Image src={EComLogo} alt="logo" width={100} height={40} />
+        <Link href="/home">
+          <Image src={EComLogo} alt="logo" width={100} height={40} />
+        </Link>
 
         <form className="hidden lg:flex mx-auto w-[40%] px-6 rounded-full bg-[#f5f5f5]   focus-within:border-gray-300 h-[40px]">
           <input
