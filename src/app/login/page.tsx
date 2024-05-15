@@ -1,16 +1,28 @@
-import LoginPage from "@/components/Login/Login";
-import { Metadata } from "next";
+import React from "react";
+import SignUpImage from "@/assets/sign-up.svg";
+import Image from "next/image";
+import LoginPageComponent from "@/components/Login/Login";
 
-export const metadata: Metadata = {
-  title: "UMS | Login",
-};
+const LoginPage = () => {
 
-const Login = () => {
   return (
-    <>
-      <LoginPage />
-    </>
+    <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-between items-start w-1/2 mx-auto border  px-20 py-20 rounded-md shadow-md">
+        <div className="w-[50%]">
+          <h1 className="text-lg font-bold">Sign In</h1>
+          <LoginPageComponent />
+        </div>
+        <div className="w-[50%] mt-16 ml-20">
+          <Image
+            src={SignUpImage}
+            width={500}
+            height={500}
+            alt="register-image"
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -1,5 +1,5 @@
 "use client";
-import { Button, Checkbox, Col, Row, message } from "antd";
+import { Button, Checkbox, Col, Divider, Row, message } from "antd";
 import loginImage from "../../assets/login-image.png";
 import Image from "next/image";
 import Form from "@/components/Forms/Form";
@@ -81,10 +81,22 @@ const RegisterPageComponent = () => {
               Register
             </Button>
           </Form>
-          <div className="mt-2 flex justify-start items-center gap-2">
+          {/* <div className="mt-2 flex justify-start items-center gap-2">
             <h1 className="text-lg">Login with</h1>
             <IoLogoGoogle className="text-xl" />
             <IoLogoFacebook className="text-xl" />
+          </div> */}
+
+          <Divider className="border-red-500">OR Login With</Divider>
+          <div className="mt-2 flex justify-center items-center gap-2">
+            <div className="mt-2 flex justify-start items-center gap-2">
+              <IoLogoGoogle className="text-xl" />{" "}
+              <p className="text-lg">Google</p>
+            </div>
+            <div className="mt-2 flex justify-start items-center gap-2">
+              <IoLogoFacebook className="text-xl" />{" "}
+              <p className="text-lg">Facebook</p>
+            </div>
           </div>
         </div>
       </Col>
