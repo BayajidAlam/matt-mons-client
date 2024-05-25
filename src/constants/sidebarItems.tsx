@@ -7,13 +7,44 @@ import {
   ThunderboltOutlined,
   CreditCardOutlined,
   FileTextOutlined,
+  MessageOutlined,
+  DashboardOutlined,
+  HomeOutlined,
+  ShopOutlined,
+  UserSwitchOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 
 export const sidebarItems = (role: string) => {
-  
   const defaultSidebarItems: MenuProps["items"] = [
+    {
+      key: "/home",
+      label: (
+        <Link className="text-sm" href={`/`}>
+          Home
+        </Link>
+      ),
+      icon: <HomeOutlined />,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/dashboard`}>
+          Dashboard
+        </Link>
+      ),
+      key: "/dashboard",
+      icon: <DashboardOutlined />,
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/inbox`}>
+          Inbox
+        </Link>
+      ),
+      key: "/inbox",
+      icon: <MessageOutlined />,
+    },
     {
       label: "Profile",
       key: "profile",
@@ -175,10 +206,49 @@ export const sidebarItems = (role: string) => {
     },
   ];
 
+  const sellerSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: "Manage shop",
+      key: "manage-products",
+      icon: <ShopOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/products`}>Products</Link>,
+          key: `/${role}/products`,
+        },
+        {
+          label: <Link href={`/${role}/orders`}>Orders</Link>,
+          key: `/${role}/orders`,
+        },
+        {
+          label: <Link href={`/${role}/returns`}>Returns</Link>,
+          key: `/${role}/returns`,
+        },
+      ],
+    },
+    {
+      label: "Shop Users",
+      key: "shop-users",
+      icon: <UserSwitchOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/managers`}>Managers</Link>,
+          key: `/${role}/managers`,
+        },
+        {
+          label: <Link href={`/${role}/customers`}>Customers</Link>,
+          key: `/${role}/customers`,
+        },
+      ],
+    },
+  ];
+
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.FACULTY) return facultySidebarItems;
   else if (role === USER_ROLE.STUDENT) return studentSidebarItems;
+  else if (role === USER_ROLE.SELLER) return sellerSidebarItems;
   else {
     return defaultSidebarItems;
   }
