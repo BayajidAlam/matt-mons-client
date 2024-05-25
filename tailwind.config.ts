@@ -11,6 +11,10 @@ const config: Config = {
       rotate: {
         '-90': '-90deg',
       },
+      colors: {
+        brandMainColor: "#0188cc",
+        buttonBg: "#222529"
+      },
     },
   },
   plugins: [require("tailwind-scrollbar")({ nocompatible: true })],

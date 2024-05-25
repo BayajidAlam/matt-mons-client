@@ -25,7 +25,7 @@ const MainHeader = () => {
           />
 
           <div className="flex justify-center items-center">
-            <IoIosSearch className="text-2xl text-[#0188cc]" />
+            <IoIosSearch className="text-2xl text-brandMainColor" />
           </div>
         </form>
 

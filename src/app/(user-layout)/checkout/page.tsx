@@ -98,7 +98,7 @@ const Checkout = () => {
                 <p className="text-lg">Total</p>
                 <p className="text-lg font-bold">$1352</p>
               </div>
-              <button className=" w-full btn bg-[#222529]   text-[16px] border rounded-full px-8 py-2 mt-8 uppercase  text-white">
+              <button className=" w-full btn bg-buttonBg   text-[16px] border rounded-full px-8 py-2 mt-8 uppercase  text-white">
                 Place Order
               </button>
             </div>

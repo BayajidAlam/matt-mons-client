@@ -246,6 +246,11 @@ span.blue {
   border: 1px solid #1890ff;
 }
 
+.ant-layout-sider-trigger {
+  color: white !important;
+  background-color: #005dfdc3 !important;
+}
+
 .ant-list-box th {
   text-align: left;
   border-bottom: 1px solid #0000000d;

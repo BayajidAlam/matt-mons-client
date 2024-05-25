@@ -1,12 +1,20 @@
+import { Grid } from "antd";
+
 type ActionBarProps = {
   title?: string;
+  inline?: boolean;
   children?: React.ReactElement | React.ReactNode;
 };
 
-const ActionBar = ({ title, children }: ActionBarProps) => {
+const ActionBar = ({ title, children, inline }: ActionBarProps) => {
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+
   return (
-    <div>
-      <h1>{title}</h1>
+    <div
+      className={screens.xs ? undefined : "flex justify-between items-center"}
+    >
+      <h1 className="text-xl md:text-2xl font-semibold">{title}</h1>
       <div
         style={{
           display: "flex",

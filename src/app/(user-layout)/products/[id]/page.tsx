@@ -142,7 +142,7 @@ const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
               <button className="px-4 py-3 border-l text-xl">+</button>
             </div>
 
-            <button className="px-8 py-3 border-r text-[18px] text-white uppercase bg-[#222529] hover:bg-[#08c]">
+            <button className="px-8 py-3 border-r text-[18px] text-white uppercase bg-buttonBg hover:bg-[#08c]">
               Add to Cart
             </button>
 

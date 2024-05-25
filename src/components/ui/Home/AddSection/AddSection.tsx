@@ -65,7 +65,7 @@ const AddSection = () => {
                   <p className="w-[70%] mx-auto">
                     Bags, Clothing, T-Shirts, Shoes, Watches and much more...
                   </p>
-                  <button className="bg-[#222529] text-white px-6 py-3 text-[13px] font-poppins font-bold uppercase mt-6">
+                  <button className="bg-buttonBg text-white px-6 py-3 text-[13px] font-poppins font-bold uppercase mt-6">
                     Shop Now
                   </button>
                 </div>
@@ -102,7 +102,7 @@ const AddSection = () => {
                   <p className="w-[70%] mx-auto">
                     Bags, Clothing, T-Shirts, Shoes, Watches and much more...
                   </p>
-                  <button className="bg-[#222529] text-white px-6 py-3 text-[13px] font-poppins font-bold uppercase mt-6">
+                  <button className="bg-buttonBg text-white px-6 py-3 text-[13px] font-poppins font-bold uppercase mt-6">
                     Shop Now
                   </button>
                 </div>
@@ -139,7 +139,7 @@ const AddSection = () => {
                   <p className="w-[70%] mx-auto">
                     Bags, Clothing, T-Shirts, Shoes, Watches and much more...
                   </p>
-                  <button className="bg-[#222529] text-white px-6 py-3 text-[13px] font-poppins font-bold uppercase mt-6">
+                  <button className="bg-buttonBg text-white px-6 py-3 text-[13px] font-poppins font-bold uppercase mt-6">
                     Shop Now
                   </button>
                 </div>

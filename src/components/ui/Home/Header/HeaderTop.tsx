@@ -52,11 +52,11 @@ const HeaderTop = () => {
   );
 
   return (
-    <div className="bg-[#0188cc] py-2">
+    <div className="bg-brandMainColor py-2">
       <div className="flex justify-between items-center  w-[92%] md:w-[95%] lg:w-[90%] xl:w-[70%] mx-auto">
         {" "}
         <div className="flex justify-between items-center gap-1">
-          <select className="bg-[#0188cc] text-white text-[13px]">
+          <select className="bg-brandMainColor text-white text-[13px]">
             <option
               style={{
                 fontSize: "10px",
@@ -79,7 +79,7 @@ const HeaderTop = () => {
           <div className="relative">
             <button
               onClick={toggleOpen}
-              className="bg-[#0188cc] text-white px-3 py-2 rounded flex justify-center items-center gap-1"
+              className="bg-brandMainColor text-white px-3 py-2 rounded flex justify-center items-center gap-1"
             >
               <Image
                 src={selectedOption.flag}
@@ -134,13 +134,13 @@ const HeaderTop = () => {
             <span className="border border-r-[1px] h-3 border-white"></span>
             <div className="flex justify-between items-center gap-3 text-white">
               <div className="hover:bg-[#3b5a9a] rounded-full p-2">
-                <TiSocialFacebook className="text-[16px]"/>
+                <TiSocialFacebook className="text-[16px]" />
               </div>
               <div className="hover:bg-[#3b5a9a] rounded-full p-2">
-                <FaTwitter className="text-[16px]"/>
+                <FaTwitter className="text-[16px]" />
               </div>
               <div className="hover:bg-[#3b5a9a] rounded-full p-2">
-                <IoLogoInstagram className="text-[16px]"/>
+                <IoLogoInstagram className="text-[16px]" />
               </div>
             </div>
           </div>

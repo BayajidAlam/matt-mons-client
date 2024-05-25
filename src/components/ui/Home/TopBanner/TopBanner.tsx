@@ -45,7 +45,7 @@ const TopBanner = () => {
           <ul>
             {categories.map((category, i) => (
               <li
-                className=" text-black px-6 py-3 border-b hover:bg-[#0188cc] hover:text-white capitalize text-[15px] flex justify-start items-center gap-2"
+                className=" text-black px-6 py-3 border-b hover:bg-brandMainColor hover:text-white capitalize text-[15px] flex justify-start items-center gap-2"
                 key={i}
               >
                 <GiClothes />
@@ -54,9 +54,7 @@ const TopBanner = () => {
             ))}
           </ul>
         </div>
-        <div
-         className="rest_part"
-        >
+        <div className="rest_part">
           <div>
             <div>
               <Swiper
@@ -95,7 +93,7 @@ const TopBanner = () => {
                           <span>$</span> <p className="text-[20px]">199</p>{" "}
                           <span>99</span>
                         </div>
-                        <button className="bg-[#222529] text-white px-8 py-4 text-[13px] font-poppins font-bold uppercase">
+                        <button className="bg-buttonBg text-white px-8 py-4 text-[13px] font-poppins font-bold uppercase">
                           Shop Now
                         </button>
                       </div>
@@ -129,7 +127,7 @@ const TopBanner = () => {
                           <span>$</span> <p className="text-[20px]">199</p>{" "}
                           <span>99</span>
                         </div>
-                        <button className="bg-[#222529] text-white px-8 py-4 text-[13px] font-poppins font-bold uppercase">
+                        <button className="bg-buttonBg text-white px-8 py-4 text-[13px] font-poppins font-bold uppercase">
                           Shop Now
                         </button>
                       </div>
@@ -163,7 +161,7 @@ const TopBanner = () => {
                           <span>$</span> <p className="text-[20px]">199</p>{" "}
                           <span>99</span>
                         </div>
-                        <button className="bg-[#222529] text-white px-8 py-4 text-[13px] font-poppins font-bold uppercase">
+                        <button className="bg-buttonBg text-white px-8 py-4 text-[13px] font-poppins font-bold uppercase">
                           Shop Now
                         </button>
                       </div>

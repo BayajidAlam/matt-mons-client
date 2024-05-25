@@ -9,7 +9,7 @@ import { genderOptions } from "@/constants/global";
 import Loading from "@/app/loading";
 import UploadImage from "../ui/UploadImage";
 
-const AddUpdateManager = ({ id }: { id?: string }) => {
+const AddUpdateOrders = ({ id }: { id?: string }) => {
 
   const [image, setimage] = useState("");
   //Get
@@ -56,7 +56,7 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
-        {id ? "Update Manager" : "Add Manager"}
+        {id ? "Update Order" : "Add Order"}
       </h1>
       <div>
         <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
@@ -243,4 +243,4 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
   );
 };
 
-export default AddUpdateManager;
+export default AddUpdateOrders;

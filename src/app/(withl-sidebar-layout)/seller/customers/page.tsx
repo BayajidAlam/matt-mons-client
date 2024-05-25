@@ -18,9 +18,9 @@ import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
+import AddUpdateCustomers from "@/components/addUpdateFrom/AddUpdateCustomers";
 
-const AllManagesPage = () => {
-
+const AllCustomersPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
@@ -151,7 +151,7 @@ const AllManagesPage = () => {
   ];
 
   // const { data, isLoading } = useGetAllDriverQuery({ ...query });
-  const data:any = []
+  const data: any = [];
   const drivers = data?.drivers;
   const meta = data?.meta;
 
@@ -176,19 +176,17 @@ const AllManagesPage = () => {
   // }
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Managers List">
+      <ActionBar inline title="Customers List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
             placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={
-              {
-                // width: "300px",
-                textAlign: "center",
-              }
-            }
+            style={{
+              // width: "300px",
+              textAlign: "center",
+            }}
           />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -202,10 +200,10 @@ const AllManagesPage = () => {
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
-            buttonText="Add Managers"
+            buttonText="Add Customers"
             icon={<IoMdAdd />}
           >
-            <AddUpdateManager />
+            <AddUpdateCustomers />
           </ModalComponent>
         </div>
       </ActionBar>
@@ -221,17 +219,8 @@ const AllManagesPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-
-      {/* <UMModal
-        title="Remove admin"
-        isOpen={open}
-        closeModal={() => setOpen(false)}
-        handleOk={() => deleteGeneralUserHandler(adminId)}
-      >
-        <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> */}
     </div>
   );
 };
 
-export default AllManagesPage;
+export default AllCustomersPage;

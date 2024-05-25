@@ -97,7 +97,7 @@ const Cart = () => {
                   className="text-[16px] border rounded-full px-8 py-2  uppercase"
                   placeholder="Apply Cupon"
                 ></input>
-                <button className="text-[16px] border rounded-full px-8 py-2 uppercase bg-[#222529] text-white">
+                <button className="text-[16px] border rounded-full px-8 py-2 uppercase bg-buttonBg text-white">
                   Apply
                 </button>
               </div>
@@ -115,7 +115,7 @@ const Cart = () => {
               </div>
               <div className="w-80 my-10">
                 <Link href="/checkout">
-                  <button className=" w-full btn bg-[#222529]   text-[16px] border rounded-full px-8 py-2 uppercase  text-white">
+                  <button className=" w-full btn bg-buttonBg   text-[16px] border rounded-full px-8 py-2 uppercase  text-white">
                     Check out
                   </button>
                 </Link>
