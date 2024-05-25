@@ -9,11 +9,11 @@ git commit -m "style: improve code formatting"
 git commit -m "test: add unit tests for user service"
 ```
 
-# Uber
+# matt-mons-client
 
 Let's design an [Uber](https://uber.com) like ride-hailing service, similar to services like [Lyft](https://www.lyft.com), [OLA Cabs](https://www.olacabs.com), etc.
 
-## What is Uber?
+## About matt-mons-client?
 
 Uber is a mobility service provider, allowing users to book rides and a driver to transport them in a way similar to a taxi. It is available on the web and mobile platforms such as Android and iOS.
 
