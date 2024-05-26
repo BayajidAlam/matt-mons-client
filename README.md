@@ -9,7 +9,7 @@ git commit -m "style: improve code formatting"
 git commit -m "test: add unit tests for user service"
 ```
 
-# Uber
+# Modern ECommerce System
 
 Let's design an [Uber](https://uber.com) like ride-hailing service, similar to services like [Lyft](https://www.lyft.com), [OLA Cabs](https://www.olacabs.com), etc.
 

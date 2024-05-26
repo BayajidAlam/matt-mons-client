@@ -55,8 +55,8 @@ export const sidebarItems = (role: string) => {
           key: `/${role}/profile`,
         },
         {
-          label: <Link href={`/${role}/change-password`}>Change Password</Link>,
-          key: `/${role}/change-password`,
+          label: <Link href={`/forgot-password`}>Change Password</Link>,
+          key: `/${role}/forgot-password`,
         },
       ],
     },

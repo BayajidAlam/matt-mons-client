@@ -8,12 +8,12 @@ import { useDispatch } from "react-redux";
 // } from "../../features/conversations/conversationsApi";
 // import getPartnerInfo from "../../utils/getPartnerInfo";
 // import Error from "../ui/Error";
-import { useGetAllConversationQuery } from "@/redux/api/conversation/conversationApi";
+// import { useGetAllConversationQuery } from "@/redux/api/conversation/conversationApi";
 import { getUserInfo } from "@/services/auth.service";
 import Link from "next/link";
 import { useState } from "react";
-import Loader from "../Utlis/Loader";
 import ChatItem from "./ChatItem";
+import Loading from "@/app/loading";
 
 export default function ChatItems() {
   const [page, setPage] = useState(1);
@@ -66,7 +66,8 @@ export default function ChatItems() {
   let content = null;
 
   if (isLoading) {
-    content = <Loader className="h-[40vh] flex items-end justify-center" />;
+    // <Loader className="h-[40vh] flex items-end justify-center" />
+    content = <Loading />;
   } else if (!isLoading && isError) {
     content = (
       <li className="m-2 text-center">

@@ -8,13 +8,14 @@ import FormSelectField from "../Forms/FormSelectField";
 import { genderOptions } from "@/constants/global";
 import Loading from "@/app/loading";
 import UploadImage from "../ui/UploadImage";
+import Add from "../TextEditor/TextEditor";
+import TextEditor from "../TextEditor/TextEditor";
 
 const AddUpdateProduct = ({ id }: { id?: string }) => {
-
   const [image, setimage] = useState("");
   //Get
   // const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
-  const data:any = []
+  const data: any = [];
   //Update
   // const [updateDriver, { isLoading: updateLoad }] = useUpdateDriverMutation();
 
@@ -69,165 +70,56 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
             }}
             className="my-4"
           >
-            <Row
-              style={{
-                display: "flex",
-                alignItems: "center",
-              }}
-              gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}
-            >
-              <Col
-                className="gutter-row"
-                xs={10}
-                sm={6}
-                md={6}
-                lg={4}
-                // style={{
-                //   marginBottom: "10px",
-                // }}
-              >
-                <UploadImage setImageStatus={setimage} name="profileImg" />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={14}
-                sm={18}
-                md={18}
-                lg={20}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <div className="space-y-[10px]">
-                  <Col
-                    style={{
-                      padding: "0px",
-                    }}
-                  >
-                    {!id && (
-                      <FormInput
-                        type="text"
-                        name="userName"
-                        size="large"
-                        label="User Name"
-                        required={true}
-                        placeholder="Please enter driver user name"
-                      />
-                    )}
-                  </Col>
-                  <Col
-                    style={{
-                      padding: "0px",
-                    }}
-                  >
-                    {!id && (
-                      <FormInput
-                        type="password"
-                        name="password"
-                        size="large"
-                        label="Password"
-                        required={true}
-                        placeholder="Please enter driver password"
-                      />
-                    )}
-                  </Col>
-                </div>
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+            <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+              <Col xs={24} md={24} lg={24}>
                 <FormInput
-                  type="text"
-                  name={id ? "fullName" : "driver.fullName"}
+                  name="productName"
+                  label="Product Name"
                   size="large"
-                  label="Full Name"
                   required={true}
-                  placeholder="Please enter driver full name"
                 />
               </Col>
 
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} md={24} lg={24}>
+                <TextEditor name="productDescription" label="Product Details" required/>
+              </Col>
+              <Col xs={24} md={12} lg={8}>
                 <FormInput
-                  type="tel"
-                  name={id ? "mobile" : "driver.mobile"}
+                  name="odoMeter"
+                  label="Odometer"
+                  type="number"
                   size="large"
-                  label="Mobile"
                   required={true}
-                  placeholder="Please enter driver mobile number"
                 />
               </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
+              <Col xs={24} md={12} lg={8}>
                 <FormInput
-                  type="text"
-                  name={id ? "licenseNo" : "driver.licenseNo"}
+                  name="fee"
+                  label="Fee"
+                  type="number"
                   size="large"
-                  label="License No"
-                  // required={true}
-                  placeholder="Please enter driver license number"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name={id ? "bloodGroup" : "driver.bloodGroup"}
-                  options={genderOptions}
-                  label="Blood Group"
-                  placeholder="Select driver blood group"
-                  // required={true}
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={24}
-                style={{
-                  marginBottom: "15px",
-                }}
-              >
-                <FormTextArea
-                  name={id ? "address" : "driver.address"}
-                  label="Address"
-                  rows={3}
-                  placeholder="Enter driver address"
-                  // required
+                  required={true}
                 />
               </Col>
             </Row>
-            <div className="flex justify-end items-center">
+
+            <Row className="my-4" gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+              {" "}
+              <Col className="gutter-row" xs={10} sm={6} md={6} lg={4}>
+                <UploadImage setImageStatus={setimage} name="profileImg" />
+              </Col>
+              <Col className="gutter-row" xs={10} sm={6} md={6} lg={4}>
+                <UploadImage setImageStatus={setimage} name="profileImg" />
+              </Col>
+              <Col className="gutter-row" xs={10} sm={6} md={6} lg={4}>
+                <UploadImage setImageStatus={setimage} name="profileImg" />
+              </Col>
+              <Col className="gutter-row" xs={10} sm={6} md={6} lg={4}>
+                <UploadImage setImageStatus={setimage} name="profileImg" />
+              </Col>
+            </Row>
+
+            <div className="flex justify-end items-center mt-3">
               <Button
                 htmlType="submit"
                 type="primary"
