@@ -9,103 +9,140 @@ git commit -m "style: improve code formatting"
 git commit -m "test: add unit tests for user service"
 ```
 
-# Modern ECommerce System
+# matt-mons-client
 
-Let's design an [Uber](https://uber.com) like ride-hailing service, similar to services like [Lyft](https://www.lyft.com), [OLA Cabs](https://www.olacabs.com), etc.
+I am going to build an eCommerce Software. Firstly I will go with MVP which will meet the minimum requirements to run our initial business, which means I am prioritising the user fetching feature and the manager roll feature that will be developed first. Here I am  planning version(v1) requirements.
 
-## What is Uber?
+- First priority(V1)
+- Later Version(V2)
+  
+## About matt-mons-client?
 
-Uber is a mobility service provider, allowing users to book rides and a driver to transport them in a way similar to a taxi. It is available on the web and mobile platforms such as Android and iOS.
+matt-mons-client is a multi vendor ecommerce. Firstly I am building the web version of it.
 
 ## Requirements
 
-Our system should meet the following requirements:
+The system should meet the following requirements:
 
 ### Functional requirements
 
-We will design our system for two types of users: Customers and Drivers.
+I will design the system for five diffrent role Customer, Sells Manager, Seller, Admin, Super Admin
 
 **Customers**
 
-- Customers should be able to see all the cabs in the vicinity with an ETA and pricing information.
-- Customers should be able to book a cab to a destination.
-- Customers should be able to see the location of the driver.
+- Buy, wishlist, or report product
+- Checkout cart
+- Take AI guidance to shop (v2)
+- View,search and filter products
+- Make and Track Order
+- Read blogs
+- Contact with supports or chat with sales manager(V2)
+- Take the help of map to navigate towards shop(V2)
 
-**Drivers**
 
-- Drivers should be able to accept or deny the customer-requested ride.
-- Once a driver accepts the ride, they should see the pickup location of the customer.
-- Drivers should be able to mark the trip as complete on reaching the destination.
+**Sells Manager**
+
+- Create Product
+- Edit product(availability and others)
+- Accept order
+- Update tracking
+- Chat with customer(V2)
+
+
+**Seller**
+
+- Assign or create, remove managers to his shop and products
+- Remove reported item
+- Create discount, Offer
+- Create Product
+- Edit product(availability and others)
+- Accept order
+- Update tracking
+- Chat with customer(V2)
+
+
+**Admin**
+
+- Verify and edit,ban seller
+- Add, change the content of the application
+- Manage the Sells and Seller of the software
+- Business supervision
+- Assist seller and sales manager to get a better user experience
+- Collect feedback from seller and Sells manager
+
+
+**Admin**
+- Add, remove a admin
+- Business supervision
+
 
 ### Non-Functional requirements
 
 - High reliability.
 - High availability with minimal latency.
-- The system should be scalable and efficient.
+- The system should be scalable and efficient(V2)
 
 ### Extended requirements
 
-- Customers can rate the trip after it's completed.
+- Customers can rate the product, shop after it's completed.
 - Payment processing.
-- Metrics and analytics.
+- Metrics and analytics(V2).
 
 ## Estimation and Constraints
 
 Let's start with the estimation and constraints.
 
-_Note: Make sure to check any scale or traffic-related assumptions with your interviewer._
-
 ### Traffic
 
 Let us assume we have 100 million daily active users (DAU) with 1 million drivers and on average our platform enables 10 million rides daily.
-
-If on average each user performs 10 actions (such as request a check available rides, fares, book rides, etc.) we will have to handle 1 billion requests daily.
+Let us assume we have 10000 active users(DAU) 
+If on average each user performs 10 actions (such as request a check available product, addtoCart, checkout, etc.) we will have to handle 100000 requests daily.
 
 $$
-100 \space million \times 10 \space actions = 1 \space billion/day
+10000 \times 10 \space actions = 100000 \space /day
 $$
 
 **What would be Requests Per Second (RPS) for our system?**
 
-1 billion requests per day translate into 12K requests per second.
+100000 requests per day translate into 1.15 requests per second.
 
 $$
-\frac{1 \space billion}{(24 \space hrs \times 3600 \space seconds)} = \sim 12K \space requests/second
+\frac{100000 \space}{(24 \space hrs \times 3600 \space seconds)} = \sim 1.15 \space requests/second
 $$
 
 ### Storage
 
-If we assume each message on average is 400 bytes, we will require about 400 GB of database storage every day.
+If we assume each user comsume on average is 400 bytes, we will require about 0.04 GB of database storage every day.
 
 $$
-1 \space billion \times 400 \space bytes = \sim 400 \space GB/day
+100000 \space \times 400 \space bytes = \sim 0.04 \space GB/day
 $$
 
-And for 10 years, we will require about 1.4 PB of storage.
+And for 10 years, we will require about 146 GB of storage.
 
 $$
-400 \space GB \times 10 \space years \times 365 \space days = \sim 1.4 \space PB
+0.04 \space GB \times 10 \space years \times 365 \space days = \sim 146 \space GB
 $$
 
 ### Bandwidth
 
-As our system is handling 400 GB of ingress every day, we will require a minimum bandwidth of around 5 MB per second.
+As our system is handling 0.04 GB of ingress every day, we will require a minimum bandwidth of around 0.462 KB per second.
 
 $$
-\frac{400 \space GB}{(24 \space hrs \times 3600 \space seconds)} = \sim 5 \space MB/second
+\frac{0.04 \space GB}{(24 \space hrs \times 3600 \space seconds)} = \sim 0.462 \space KB/second
 $$
 
 ### High-level estimate
 
 Here is our high-level estimate:
 
-| Type                      | Estimate    |
-| ------------------------- | ----------- |
-| Daily active users (DAU)  | 100 million |
-| Requests per second (RPS) | 12K/s       |
-| Storage (per day)         | ~400 GB     |
-| Storage (10 years)        | ~1.4 PB     |
-| Bandwidth                 | ~5 MB/s     |
+| Type                      | Estimate        |
+| ------------------------- | -----------     |
+| Daily active users (DAU)  | 10000           |
+| Requests per second (RPS) | 1.15/s          |
+| Storage (per day)         | ~0.04 GB        |
+| Storage (10 years)        | ~146 GB         |
+| Bandwidth                 | ~0.462 KB/s     |
 
 ## Data model design
 
@@ -283,14 +320,6 @@ This service will simply send push notifications to the users. It will be discus
 
 This service will be used for metrics and analytics use cases.
 
-**What about inter-service communication and service discovery?**
-
-Since our architecture is microservices-based, services will be communicating with each other as well. Generally, REST or HTTP performs well but we can further improve the performance using [gRPC](https://karanpratapsingh.com/courses/system-design/rest-graphql-grpc#grpc) which is more lightweight and efficient.
-
-[Service discovery](https://karanpratapsingh.com/courses/system-design/service-discovery) is another thing we will have to take into account. We can also use a service mesh that enables managed, observable, and secure communication between individual services.
-
-_Note: Learn more about [REST, GraphQL, gRPC](https://karanpratapsingh.com/courses/system-design/rest-graphql-grpc) and how they compare with each other._
-
 ### How is the service expected to work?
 
 Here's how our service is expected to work:
@@ -305,79 +334,6 @@ Here's how our service is expected to work:
 6. Once the destination is reached, the driver will mark the ride as complete and collect payment.
 7. After the payment is complete, the customer can leave a rating and feedback for the trip if they like.
 
-### Location Tracking
-
-How do we efficiently send and receive live location data from the client (customers and drivers) to our backend? We have two different options:
-
-**Pull model**
-
-The client can periodically send an HTTP request to servers to report its current location and receive ETA and pricing information. This can be achieved via something like [Long polling](https://karanpratapsingh.com/courses/system-design/long-polling-websockets-server-sent-events#long-polling).
-
-**Push model**
-
-The client opens a long-lived connection with the server and once new data is available it will be pushed to the client. We can use [WebSockets](https://karanpratapsingh.com/courses/system-design/long-polling-websockets-server-sent-events#websockets) or [Server-Sent Events (SSE)](https://karanpratapsingh.com/courses/system-design/long-polling-websockets-server-sent-events#server-sent-events-sse) for this.
-
-The pull model approach is not scalable as it will create unnecessary request overhead on our servers and most of the time the response will be empty, thus wasting our resources. To minimize latency, using the push model with [WebSockets](https://karanpratapsingh.com/courses/system-design/long-polling-websockets-server-sent-events#websockets) is a better choice because then we can push data to the client once it's available without any delay, given that the connection is open with the client. Also, WebSockets provide full-duplex communication, unlike [Server-Sent Events (SSE)](https://karanpratapsingh.com/courses/system-design/long-polling-websockets-server-sent-events#server-sent-events-sse) which are only unidirectional.
-
-Additionally, the client application should have some sort of background job mechanism to ping GPS location while the application is in the background.
-
-_Note: Learn more about [Long polling, WebSockets, Server-Sent Events (SSE)](https://karanpratapsingh.com/courses/system-design/long-polling-websockets-server-sent-events)._
-
-### Ride Matching
-
-We need a way to efficiently store and query nearby drivers. Let's explore different solutions we can incorporate into our design.
-
-**SQL**
-
-We already have access to the latitude and longitude of our customers, and with databases like [PostgreSQL](https://www.postgresql.org) and [MySQL](https://www.mysql.com) we can perform a query to find nearby driver locations given a latitude and longitude (X, Y) within a radius (R).
-
-```sql
-SELECT * FROM locations WHERE lat BETWEEN X-R AND X+R AND long BETWEEN Y-R AND Y+R
-```
-
-However, this is not scalable, and performing this query on large datasets will be quite slow.
-
-**Geohashing**
-
-[Geohashing](https://karanpratapsingh.com/courses/system-design/geohashing-and-quadtrees#geohashing) is a [geocoding](https://en.wikipedia.org/wiki/Address_geocoding) method used to encode geographic coordinates such as latitude and longitude into short alphanumeric strings. It was created by [Gustavo Niemeyer](https://twitter.com/gniemeyer) in 2008.
-
-Geohash is a hierarchical spatial index that uses Base-32 alphabet encoding, the first character in a geohash identifies the initial location as one of the 32 cells. This cell will also contain 32 cells. This means that to represent a point, the world is recursively divided into smaller and smaller cells with each additional bit until the desired precision is attained. The precision factor also determines the size of the cell.
-
-![geohashing](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-IV/geohashing-and-quadtrees/geohashing.png)
-
-For example, San Francisco with coordinates `37.7564, -122.4016` can be represented in geohash as `9q8yy9mf`.
-
-Now, using the customer's geohash we can determine the nearest available driver by simply comparing it with the driver's geohash. For better performance, we will index and store the geohash of the driver in memory for faster retrieval.
-
-**Quadtrees**
-
-A [Quadtree](https://karanpratapsingh.com/courses/system-design/geohashing-and-quadtrees#quadtrees) is a tree data structure in which each internal node has exactly four children. They are often used to partition a two-dimensional space by recursively subdividing it into four quadrants or regions. Each child or leaf node stores spatial information. Quadtrees are the two-dimensional analog of [Octrees](https://en.wikipedia.org/wiki/Octree) which are used to partition three-dimensional space.
-
-![quadtree](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-IV/geohashing-and-quadtrees/quadtree.png)
-
-Quadtrees enable us to search points within a two-dimensional range efficiently, where those points are defined as latitude/longitude coordinates or as cartesian (x, y) coordinates.
-
-We can save further computation by only subdividing a node after a certain threshold.
-
-![quadtree-subdivision](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-IV/geohashing-and-quadtrees/quadtree-subdivision.png)
-
-[Quadtree](https://karanpratapsingh.com/courses/system-design/geohashing-and-quadtrees#quadtrees) seems perfect for our use case, we can update the Quadtree every time we receive a new location update from the driver. To reduce the load on the quadtree servers we can use an in-memory datastore such as [Redis](https://redis.io) to cache the latest updates. And with the application of mapping algorithms such as the [Hilbert curve](https://en.wikipedia.org/wiki/Hilbert_curve), we can perform efficient range queries to find nearby drivers for the customer.
-
-**What about race conditions?**
-
-Race conditions can easily occur when a large number of customers will be requesting rides simultaneously. To avoid this, we can wrap our ride matching logic in a [Mutex](<https://en.wikipedia.org/wiki/Lock_(computer_science)>) to avoid any race conditions. Furthermore, every action should be transactional in nature.
-
-_For more details, refer to [Transactions](https://karanpratapsingh.com/courses/system-design/transactions) and [Distributed Transactions](https://karanpratapsingh.com/courses/system-design/distributed-transactions)._
-
-**How to find the best drivers nearby?**
-
-Once we have a list of nearby drivers from the Quadtree servers, we can perform some sort of ranking based on parameters like average ratings, relevance, past customer feedback, etc. This will allow us to broadcast notifications to the best available drivers first.
-
-**Dealing with high demand**
-
-In cases of high demand, we can use the concept of Surge Pricing. Surge pricing is a dynamic pricing method where prices are temporarily increased as a reaction to increased demand and mostly limited supply. This surge price can be added to the base price of the trip.
-
-_For more details, learn how [surge pricing works](https://www.uber.com/us/en/drive/driver-app/how-surge-works) with Uber._
 
 ### Payments
 
@@ -393,29 +349,6 @@ _For more details, refer to the [WhatsApp](https://karanpratapsingh.com/courses/
 
 It's time to discuss our design decisions in detail.
 
-### Data Partitioning
-
-To scale out our databases we will need to partition our data. Horizontal partitioning (aka [Sharding](https://karanpratapsingh.com/courses/system-design/sharding)) can be a good first step. We can shard our database either based on existing [partition schemes](https://karanpratapsingh.com/courses/system-design/sharding#partitioning-criteria) or regions. If we divide the locations into regions using let's say zip codes, we can effectively store all the data in a given region on a fixed node. But this can still cause uneven data and load distribution, we can solve this using [Consistent hashing](https://karanpratapsingh.com/courses/system-design/consistent-hashing).
-
-_For more details, refer to [Sharding](https://karanpratapsingh.com/courses/system-design/sharding) and [Consistent Hashing](https://karanpratapsingh.com/courses/system-design/consistent-hashing)._
-
-### Metrics and Analytics
-
-Recording analytics and metrics is one of our extended requirements. We can capture the data from different services and run analytics on the data using [Apache Spark](https://spark.apache.org) which is an open-source unified analytics engine for large-scale data processing. Additionally, we can store critical metadata in the views table to increase data points within our data.
-
-### Caching
-
-In a location services-based platform, caching is important. We have to be able to cache the recent locations of the customers and drivers for fast retrieval. We can use solutions like [Redis](https://redis.io) or [Memcached](https://memcached.org) but what kind of cache eviction policy would best fit our needs?
-
-**Which cache eviction policy to use?**
-
-[Least Recently Used (LRU)](<https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU)>) can be a good policy for our system. In this policy, we discard the least recently used key first.
-
-**How to handle cache miss?**
-
-Whenever there is a cache miss, our servers can hit the database directly and update the cache with the new entries.
-
-_For more details, refer to [Caching](https://karanpratapsingh.com/courses/system-design/caching)._
 
 ## Identify and resolve bottlenecks
 
