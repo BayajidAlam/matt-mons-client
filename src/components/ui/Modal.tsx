@@ -21,15 +21,12 @@ const ModalComponent = ({
   icon?: any;
   width?: any;
 }) => {
-  // const [open, setOpen] = useState(false);
-  //   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const showModal = () => {
     setShowModel(true);
   };
 
   const handleOk = () => {
-    // setModalText("The modal will be closed after two seconds");
     setShowModel(false);
   };
 

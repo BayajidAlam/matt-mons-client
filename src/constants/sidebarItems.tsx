@@ -12,6 +12,7 @@ import {
   HomeOutlined,
   ShopOutlined,
   UserSwitchOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -211,6 +212,15 @@ export const sidebarItems = (role: string) => {
           key: `/${role}/customers`,
         },
       ],
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/shop-settings`}>
+          Shop Settings
+        </Link>
+      ),
+      key: "/shop-settings",
+      icon: <SettingOutlined />,
     },
   ];
 

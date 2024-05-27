@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 type ImageUploadProps = {
+  label: string
+  required?: boolean
   name: string;
   defaultImage?: string;
   customChange?: any;
@@ -15,6 +17,8 @@ type ImageUploadProps = {
 };
 
 const UploadImage = ({
+  label,
+  required,
   name,
   defaultImage,
   customChange,
@@ -70,6 +74,17 @@ const UploadImage = ({
 
   return (
     <>
+     {label && label}
+      {required && (
+        <span
+          style={{
+            color: "red",
+          }}
+        >
+          *
+        </span>
+      )}
+      
       <Upload
         name={name}
         listType="picture-card"

@@ -6,10 +6,11 @@ import { useState } from "react";
 import UploadImage from "../ui/UploadImage";
 import TextEditor from "../TextEditor/TextEditor";
 import FormColorPicker from "../Forms/FormColorPicker";
-import FormSelectField from "../Forms/FormSelectField";
 import { genderOptions } from "@/constants/global";
 import FormSearchableSelectField from "../Forms/FormSearchAbleSelectField";
 import FormGroupCheckBox from "../Forms/FormGroupCheckBox";
+import FormKeyValuePairInput from "../Forms/FormKeyValuePairInput";
+import UploadMultipleImage from "../UploadMultipleImage";
 
 const options = [
   { label: "L", value: "L" },
@@ -20,6 +21,7 @@ const options = [
 
 const AddUpdateProduct = ({ id }: { id?: string }) => {
   const [image, setimage] = useState("");
+  const [images, setImages] = useState<string[]>([]);
   //Get
   // const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
   const data: any = [];
@@ -172,6 +174,22 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 />
               </Col>
             </Row>
+            <Row className="my-4" gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                xs={24}
+                md={24}
+                lg={24}
+              >
+                <FormKeyValuePairInput
+                  name="additionalInfo"
+                  label="Additional Info"
+                  required
+                />
+              </Col>
+            </Row>
 
             <Row className="my-4" gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
               {" "}
@@ -185,7 +203,19 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 md={6}
                 lg={4}
               >
-                <UploadImage setImageStatus={setimage} name="profileImg" />
+                <UploadImage setImageStatus={setimage} name="profileImg" label="Product Image" required/>
+              </Col>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                className="gutter-row"
+                xs={10}
+                sm={6}
+                md={6}
+                lg={4}
+              >
+                <UploadMultipleImage name="additionalImage" label="Additional Image" setImageStatus={setImages}/>
               </Col>
             </Row>
 
