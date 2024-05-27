@@ -9,18 +9,37 @@ git commit -m "style: improve code formatting"
 git commit -m "test: add unit tests for user service"
 ```
 
-# matt-mons-client
 
-I am going to build an eCommerce Software. Firstly I will go with MVP which will meet the minimum requirements to run our initial business, which means I am prioritising the user fetching feature and the manager roll feature that will be developed first. Here I am  planning version(v1) requirements.
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Technology Stack](#technology-stack)
+- [System Design]($system-design)
+- [Getting Started](#getting-started)
+- [Folder Structure](#folder-structure)
+- [Usage](#usage)
+
+## Project Overview
+
+Welcome to the frontend repository of matt-mons, the innovative multi vendor ecommerce Management System designed to streamline your ecommerce management experience. Firstly I will go with MVP which will meet the minimum requirements to run our initial business, which means I am prioritising the user fetching feature and the manager roll feature that will be developed first. Here I am  planning version(v1) requirements.
+
+ This frontend repository works in conjunction with the matt-mons backend, providing a user-friendly interface for managing vehicles efficiently.
 
 - First priority(V1)
 - Later Version(V2)
-  
-## About matt-mons-client?
 
-matt-mons-client is a multi vendor ecommerce. Firstly I am building the web version of it.
+## Technology Stack
 
-## Requirements
+- **Next.js:** React framework for building user interfaces.
+- **Ant Design:** UI library for React components.
+- **Tailwind CSS:** Utility-first CSS framework.
+- **Redux:** State management for React applications.
+- **Socket.io:** Real-time bidirectional event-based communication.
+- **Framer Motion:** Animation library for React components.
+- **EmailJS:** Service for sending emails directly from client-side JavaScript.
+
+
+## System Design
 
 The system should meet the following requirements:
 
@@ -369,3 +388,78 @@ To make our system more resilient we can do the following:
 - Using multiple read replicas for our databases.
 - Multiple instances and replicas for our distributed cache.
 - Exactly once delivery and message ordering is challenging in a distributed system, we can use a dedicated [message broker](https://karanpratapsingh.com/courses/system-design/message-brokers) such as [Apache Kafka](https://kafka.apache.org) or [NATS](https://nats.io) to make our notification system more robust.
+
+## Getting Started
+
+To get started with the VehiTrack frontend, follow these steps:
+
+1. Clone the repository: `git clone [frontend_repository_url]`
+2. Install dependencies: `yarn install`
+3. Configure environment variables. (Contact with developer team)
+4. Start the development server: `yarn dev`
+
+For more detailed instructions and configuration options, refer to the [Documentation Link](https://docs.google.com/document/d/1p9UTRG0EbPuOUZziWcvhrJbCLFHpTxKn5TNf2t-Sji0/edit?usp=sharing).
+
+## Folder Structure
+
+The frontend codebase follows a modular and organized folder structure:
+
+- `/src`
+  - `/app`: main app router pages.
+  - `/components`: Reusable React components.
+  - `/assets`: External resource of assets like images.
+  - `/redux`: Redux store setup and actions.
+  - `/api`: API requests and integration with the backend.
+
+## Usage
+
+To interact with the VehiTrack frontend, follow these steps:
+
+1. **Installation:**
+
+   - Clone the frontend repository: `git clone [frontend_repository_url]`
+   - Install dependencies: `yarn install`
+
+2. **Configuration:**
+
+   - If necessary, configure environment variables. Check the [Documentation Link](#) for any specific configuration requirements.
+
+3. **Development Server:**
+
+   - Start the development server: `yarn dev`
+   - Open your browser and navigate to `http://localhost:3000` to access the VehiTrack application in development mode.
+
+4. **User Authentication:**
+
+   - Use the predefined user accounts for testing:
+     - **Super Admin:**
+       - User ID: SA00001
+       - Password: 123456
+     - **Admin:**
+       - User ID: A00001
+       - Password: 123456
+     - **Driver:**
+       - User ID: D00001
+       - Password: 123456
+     - **Helper:**
+       - User ID: H00001
+       - Password: 123456
+
+5. **Explore Features:**
+
+   - Navigate through the dashboard to access different features:
+     - Manage Vehicles, Drivers, and Helpers.
+     - Plan Trips and record expenses.
+     - Use the real-time collaborative chat system.
+     - View reports and analytics for insights.
+
+6. **Animation with Framer Motion:**
+
+   - Experience smooth and interactive animations integrated with Framer Motion.
+
+7. **Real-time Communication with Socket.io:**
+
+   - Test the real-time collaborative chat system that fosters seamless communication among team members.
+
+8. **Email Integration with EmailJS:**
+   - Explore functionalities that involve email communication directly from the client-side using EmailJS.
