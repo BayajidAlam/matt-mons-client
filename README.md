@@ -402,14 +402,22 @@ For more detailed instructions and configuration options, refer to the [Document
 
 ## Folder Structure
 
-The frontend codebase follows a modular and organized folder structure:
+The frontend codebase follows given modular and organized folder structure:
 
 - `/src`
-  - `/app`: main app router pages.
+  - `/app`: Pages of app router.
+  - `/assets`: Image, svg and other resources.
   - `/components`: Reusable React components.
-  - `/assets`: External resource of assets like images.
   - `/redux`: Redux store setup and actions.
-  - `/api`: API requests and integration with the backend.
+     - `/api`: API requests and integration with the backend.
+  - `constants`: Constant vaiable of the project.
+  - `helpers`: Helper functions.
+  - `hooks`: Necessary hooks.
+  - `lib`: Libarary functions.
+  - `schemas`: Schemas of the project for validation.
+  - `services`: Service like auth service.
+  - `types`: Defined common types of the project.
+  - `utils`: Utility functions declared here.
 
 ## Usage
 
@@ -422,7 +430,7 @@ To interact with the VehiTrack frontend, follow these steps:
 
 2. **Configuration:**
 
-   - If necessary, configure environment variables. Check the [Documentation Link](#) for any specific configuration requirements.
+   
 
 3. **Development Server:**
 
@@ -433,26 +441,17 @@ To interact with the VehiTrack frontend, follow these steps:
 
    - Use the predefined user accounts for testing:
      - **Super Admin:**
-       - User ID: SA00001
-       - Password: 123456
+       - User ID: 
+       - Password: 
      - **Admin:**
-       - User ID: A00001
-       - Password: 123456
-     - **Driver:**
-       - User ID: D00001
-       - Password: 123456
-     - **Helper:**
-       - User ID: H00001
-       - Password: 123456
+       - User ID: 
+       - Password: 
+   
 
 5. **Explore Features:**
 
    - Navigate through the dashboard to access different features:
-     - Manage Vehicles, Drivers, and Helpers.
-     - Plan Trips and record expenses.
-     - Use the real-time collaborative chat system.
-     - View reports and analytics for insights.
-
+     
 6. **Animation with Framer Motion:**
 
    - Experience smooth and interactive animations integrated with Framer Motion.
