@@ -1,15 +1,22 @@
 "use client";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
-import FormTextArea from "@/components/Forms/FormTextArea";
 import { Button, Col, Row, message } from "antd";
 import { useState } from "react";
+import UploadImage from "../ui/UploadImage";
+import TextEditor from "../TextEditor/TextEditor";
+import FormColorPicker from "../Forms/FormColorPicker";
 import FormSelectField from "../Forms/FormSelectField";
 import { genderOptions } from "@/constants/global";
-import Loading from "@/app/loading";
-import UploadImage from "../ui/UploadImage";
-import Add from "../TextEditor/TextEditor";
-import TextEditor from "../TextEditor/TextEditor";
+import FormSearchableSelectField from "../Forms/FormSearchAbleSelectField";
+import FormGroupCheckBox from "../Forms/FormGroupCheckBox";
+
+const options = [
+  { label: "L", value: "L" },
+  { label: "M", value: "M" },
+  { label: "X", value: "X" },
+  { label: "XL", value: "XL" },
+];
 
 const AddUpdateProduct = ({ id }: { id?: string }) => {
   const [image, setimage] = useState("");
@@ -80,41 +87,104 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 />
               </Col>
 
-              <Col xs={24} md={24} lg={24}>
-                <TextEditor name="productDescription" label="Product Details" required/>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                xs={24}
+                md={24}
+                lg={24}
+              >
+                <TextEditor
+                  name="productDescription"
+                  label="Product Details"
+                  required
+                />
               </Col>
-              <Col xs={24} md={12} lg={8}>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                xs={24}
+                md={12}
+                lg={8}
+              >
                 <FormInput
                   name="odoMeter"
-                  label="Odometer"
+                  label="Main Price"
                   type="number"
                   size="large"
                   required={true}
                 />
               </Col>
-              <Col xs={24} md={12} lg={8}>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                xs={24}
+                md={12}
+                lg={8}
+              >
                 <FormInput
                   name="fee"
-                  label="Fee"
+                  label="Discount Price"
                   type="number"
                   size="large"
                   required={true}
+                />
+              </Col>
+
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                xs={24}
+                md={12}
+                lg={8}
+              >
+                <FormSearchableSelectField
+                  name="Product SKU"
+                  options={genderOptions}
+                  label="Product SKU"
+                />
+              </Col>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                xs={24}
+                md={12}
+                lg={8}
+              >
+                <FormColorPicker name="colors" label="Color" required />
+              </Col>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                xs={24}
+                md={12}
+                lg={8}
+              >
+                <FormGroupCheckBox
+                  options={options}
+                  checkboxLabel="Abailable Size"
                 />
               </Col>
             </Row>
 
             <Row className="my-4" gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
               {" "}
-              <Col className="gutter-row" xs={10} sm={6} md={6} lg={4}>
-                <UploadImage setImageStatus={setimage} name="profileImg" />
-              </Col>
-              <Col className="gutter-row" xs={10} sm={6} md={6} lg={4}>
-                <UploadImage setImageStatus={setimage} name="profileImg" />
-              </Col>
-              <Col className="gutter-row" xs={10} sm={6} md={6} lg={4}>
-                <UploadImage setImageStatus={setimage} name="profileImg" />
-              </Col>
-              <Col className="gutter-row" xs={10} sm={6} md={6} lg={4}>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                className="gutter-row"
+                xs={10}
+                sm={6}
+                md={6}
+                lg={4}
+              >
                 <UploadImage setImageStatus={setimage} name="profileImg" />
               </Col>
             </Row>

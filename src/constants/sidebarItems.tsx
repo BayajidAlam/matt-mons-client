@@ -184,6 +184,14 @@ export const sidebarItems = (role: string) => {
           key: `/${role}/orders`,
         },
         {
+          label: <Link href={`/${role}/cupons`}>Cupons</Link>,
+          key: `/${role}/cupons`,
+        },
+        {
+          label: <Link href={`/${role}/skus`}>SKUS</Link>,
+          key: `/${role}/skus`,
+        },
+        {
           label: <Link href={`/${role}/returns`}>Returns</Link>,
           key: `/${role}/returns`,
         },

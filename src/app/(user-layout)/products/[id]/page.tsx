@@ -112,6 +112,7 @@ const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
               type="color"
               name=""
               id=""
+              disabled
             />
             <input
               className="w-10 h-10 border-none outline-none"

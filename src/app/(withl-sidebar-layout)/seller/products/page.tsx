@@ -18,9 +18,7 @@ import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
-import AddUpdateCustomers from "@/components/addUpdateFrom/AddUpdateCustomers";
-import AddUpdateOrders from "@/components/addUpdateFrom/AddUpdateOrders";
-import AddUpdateProduct from "@/components/addUpdateFrom/AddUpdateProducts";
+import AddUpdateProduct from "@/components/addUpdateFrom/AddUpdateProduct";
 
 const MyProductsPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;

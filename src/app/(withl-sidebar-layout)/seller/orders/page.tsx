@@ -19,7 +19,7 @@ import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
 import AddUpdateCustomers from "@/components/addUpdateFrom/AddUpdateCustomers";
-import AddUpdateOrders from "@/components/addUpdateFrom/AddUpdateOrders";
+import AddUpdateOrders from "@/components/addUpdateFrom/AddUpdateOrder";
 
 const MyOrdersPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;

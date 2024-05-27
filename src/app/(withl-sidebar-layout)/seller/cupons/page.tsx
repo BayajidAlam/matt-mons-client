@@ -1,6 +1,5 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
@@ -9,21 +8,15 @@ import {
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { useState } from "react";
-
 import dayjs from "dayjs";
-
 import ModalComponent from "@/components/ui/Modal";
 import { USER_ROLE } from "@/constants/role";
 import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
-import AddUpdateCustomers from "@/components/addUpdateFrom/AddUpdateCustomers";
-import AddUpdateOrders from "@/components/addUpdateFrom/AddUpdateOrder";
-import AddUpdateProduct from "@/components/addUpdateFrom/AddUpdateProducts";
-import AddUpdateReturnedProduct from "@/components/addUpdateFrom/AddUpdateReturnedProduct";
+import AddUpdateCupon from "@/components/addUpdateFrom/AddUpdateCupon";
 
-const ReturnedProducts = () => {
+const CuponsPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
@@ -137,7 +130,7 @@ const ReturnedProducts = () => {
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddUpdateManager id={data} />
+                <AddUpdateCupon />
               </ModalComponent>
             </div>
             <Button
@@ -179,7 +172,7 @@ const ReturnedProducts = () => {
   // }
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Returned Products List">
+      <ActionBar inline title="Cupons List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -203,10 +196,10 @@ const ReturnedProducts = () => {
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
-            buttonText="Add Returned"
+            buttonText="Add Cupon"
             icon={<IoMdAdd />}
           >
-            <AddUpdateReturnedProduct />
+            <AddUpdateCupon />
           </ModalComponent>
         </div>
       </ActionBar>
@@ -226,4 +219,4 @@ const ReturnedProducts = () => {
   );
 };
 
-export default ReturnedProducts;
+export default CuponsPage;
