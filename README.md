@@ -14,7 +14,7 @@ git commit -m "test: add unit tests for user service"
 
 - [Project Overview](#project-overview)
 - [Technology Stack](#technology-stack)
-- [System Design]($system-design)
+- [System Design](#system-design)
 - [Getting Started](#getting-started)
 - [Folder Structure](#folder-structure)
 - [Usage](#usage)
