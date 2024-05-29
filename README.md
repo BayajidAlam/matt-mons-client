@@ -199,109 +199,8 @@ The payments table contains the payment-related data with the corresponding `tri
 
 While our data model seems quite relational, we don't necessarily need to store everything in a single database, as this can limit our scalability and quickly become a bottleneck.
 
-We will split the data between different services each having ownership over a particular table. Then we can use a relational database such as [PostgreSQL](https://www.postgresql.org) or a distributed NoSQL database such as [Apache Cassandra](https://cassandra.apache.org/_/index.html) for our use case.
+We will split the data between different services each having ownership over a particular table. Then we can use a relational database such as [PostgreSQL](https://www.postgresql.org).
 
-## API design
-
-Let us do a basic API design for our services:
-
-### Request a Ride
-
-Through this API, customers will be able to request a ride.
-
-```tsx
-requestRide(customerID: UUID, source: Tuple<float>, destination: Tuple<float>, cabType: Enum<string>, paymentMethod: Enum<string>): Ride
-```
-
-**Parameters**
-
-Customer ID (`UUID`): ID of the customer.
-
-Source (`Tuple<float>`): Tuple containing the latitude and longitude of the trip's starting location.
-
-Destination (`Tuple<float>`): Tuple containing the latitude and longitude of the trip's destination.
-
-**Returns**
-
-Result (`Ride`): Associated ride information of the trip.
-
-### Cancel the Ride
-
-This API will allow customers to cancel the ride.
-
-```tsx
-cancelRide(customerID: UUID, reason?: string): boolean
-```
-
-**Parameters**
-
-Customer ID (`UUID`): ID of the customer.
-
-Reason (`UUID`): Reason for canceling the ride _(optional)_.
-
-**Returns**
-
-Result (`boolean`): Represents whether the operation was successful or not.
-
-### Accept or Deny the Ride
-
-This API will allow the driver to accept or deny the trip.
-
-```tsx
-acceptRide(driverID: UUID, rideID: UUID): boolean
-denyRide(driverID: UUID, rideID: UUID): boolean
-```
-
-**Parameters**
-
-Driver ID (`UUID`): ID of the driver.
-
-Ride ID (`UUID`): ID of the customer requested ride.
-
-**Returns**
-
-Result (`boolean`): Represents whether the operation was successful or not.
-
-### Start or End the Trip
-
-Using this API, a driver will be able to start and end the trip.
-
-```tsx
-startTrip(driverID: UUID, tripID: UUID): boolean
-endTrip(driverID: UUID, tripID: UUID): boolean
-```
-
-**Parameters**
-
-Driver ID (`UUID`): ID of the driver.
-
-Trip ID (`UUID`): ID of the requested trip.
-
-**Returns**
-
-Result (`boolean`): Represents whether the operation was successful or not.
-
-### Rate the Trip
-
-This API will enable customers to rate the trip.
-
-```tsx
-rateTrip(customerID: UUID, tripID: UUID, rating: int, feedback?: string): boolean
-```
-
-**Parameters**
-
-Customer ID (`UUID`): ID of the customer.
-
-Trip ID (`UUID`): ID of the completed trip.
-
-Rating (`int`): Rating of the trip.
-
-Feedback (`string`): Feedback about the trip by the customer _(optional)_.
-
-**Returns**
-
-Result (`boolean`): Represents whether the operation was successful or not.
 
 ## High-level design
 
@@ -309,41 +208,11 @@ Now let us do a high-level design of our system.
 
 ### Architecture
 
-We will be using [microservices architecture](https://karanpratapsingh.com/courses/system-design/monoliths-microservices#microservices) since it will make it easier to horizontally scale and decouple our services. Each service will have ownership of its own data model. Let's try to divide our system into some core services.
-
-**Customer Service**
-
-This service handles customer-related concerns such as authentication and customer information.
-
-**Driver Service**
-
-This service handles driver-related concerns such as authentication and driver information.
-
-**Ride Service**
-
-This service will be responsible for ride matching and quadtree aggregation. It will be discussed in detail separately.
-
-**Trip Service**
-
-This service handles trip-related functionality in our system.
-
-**Payment Service**
-
-This service will be responsible for handling payments in our system.
-
-**Notification Service**
-
-This service will simply send push notifications to the users. It will be discussed in detail separately.
-
-**Analytics Service**
-
-This service will be used for metrics and analytics use cases.
+We will be using Monolith architecure while we are building our first version. According to demand we will scale it horizontally and If it reach to limitations we will consider to build to microservice(May be on v3). 
 
 ### How is the service expected to work?
 
 Here's how our service is expected to work:
-
-![uber-working](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-V/uber/uber-working.png)
 
 1. Customer requests a ride by specifying the source, destination, cab type, payment method, etc.
 2. Ride service registers this request, finds nearby drivers, and calculates the estimated time of arrival (ETA).
@@ -356,13 +225,11 @@ Here's how our service is expected to work:
 
 ### Payments
 
-Handling payments at scale is challenging, to simplify our system we can use a third-party payment processor like [Stripe](https://stripe.com) or [PayPal](https://www.paypal.com). Once the payment is complete, the payment processor will redirect the user back to our application and we can set up a [webhook](https://en.wikipedia.org/wiki/Webhook) to capture all the payment-related data.
+Handling payments at scale is challenging, to simplify our system we can use a third-party payment processor like [Stripe](https://stripe.com) or [SSLCommerz](https://www.paypal.com). Once the payment is complete, the payment processor will redirect the user back to our application and we can set up a [webhook](https://en.wikipedia.org/wiki/Webhook) to capture all the payment-related data.
 
 ### Notifications
 
-Push notifications will be an integral part of our platform. We can use a message queue or a message broker such as [Apache Kafka](https://kafka.apache.org) with the notification service to dispatch requests to [Firebase Cloud Messaging (FCM)](https://firebase.google.com/docs/cloud-messaging) or [Apple Push Notification Service (APNS)](https://developer.apple.com/documentation/usernotifications) which will handle the delivery of the push notifications to user devices.
-
-_For more details, refer to the [WhatsApp](https://karanpratapsingh.com/courses/system-design/whatsapp#notifications) system design where we discuss push notifications in detail._
+We will send notifications through our server(v2)
 
 ## Detailed design
 
@@ -371,23 +238,15 @@ It's time to discuss our design decisions in detail.
 
 ## Identify and resolve bottlenecks
 
-![uber-advanced-design](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-V/uber/uber-advanced-design.png)
-
 Let us identify and resolve bottlenecks such as single points of failure in our design:
 
 - "What if one of our services crashes?"
-- "How will we distribute our traffic between our components?"
 - "How can we reduce the load on our database?"
-- "How to improve the availability of our cache?"
-- "How can we make our notification system more robust?"
 
 To make our system more resilient we can do the following:
 
-- Running multiple instances of each of our services.
-- Introducing [load balancers](https://karanpratapsingh.com/courses/system-design/load-balancing) between clients, servers, databases, and cache servers.
-- Using multiple read replicas for our databases.
-- Multiple instances and replicas for our distributed cache.
-- Exactly once delivery and message ordering is challenging in a distributed system, we can use a dedicated [message broker](https://karanpratapsingh.com/courses/system-design/message-brokers) such as [Apache Kafka](https://kafka.apache.org) or [NATS](https://nats.io) to make our notification system more robust.
+- Implement logging to identify the problem
+- Using caching to reduce load on our database.
 
 ## Getting Started
 
@@ -395,10 +254,8 @@ To get started with the VehiTrack frontend, follow these steps:
 
 1. Clone the repository: `git clone [frontend_repository_url]`
 2. Install dependencies: `yarn install`
-3. Configure environment variables. (Contact with developer team)
+3. Configure environment variables. (Check env.example)
 4. Start the development server: `yarn dev`
-
-For more detailed instructions and configuration options, refer to the [Documentation Link](https://docs.google.com/document/d/1p9UTRG0EbPuOUZziWcvhrJbCLFHpTxKn5TNf2t-Sji0/edit?usp=sharing).
 
 ## Folder Structure
 
