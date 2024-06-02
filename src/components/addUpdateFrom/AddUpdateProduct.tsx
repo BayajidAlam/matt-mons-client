@@ -150,16 +150,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                   label="Product SKU"
                 />
               </Col>
-              <Col
-                style={{
-                  marginTop: "10px",
-                }}
-                xs={24}
-                md={12}
-                lg={8}
-              >
-                <FormColorPicker name="colors" label="Color" required />
-              </Col>
+
               <Col
                 style={{
                   marginTop: "10px",
@@ -172,6 +163,16 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                   options={options}
                   checkboxLabel="Abailable Size"
                 />
+              </Col>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                xs={24}
+                md={12}
+                lg={8}
+              >
+                <FormColorPicker name="colors" label="Color" required />
               </Col>
             </Row>
             <Row className="my-4" gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
@@ -203,7 +204,12 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 md={6}
                 lg={4}
               >
-                <UploadImage setImageStatus={setimage} name="profileImg" label="Product Image" required/>
+                <UploadImage
+                  setImageStatus={setimage}
+                  name="profileImg"
+                  label="Product Image"
+                  required
+                />
               </Col>
               <Col
                 style={{
@@ -215,7 +221,11 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 md={6}
                 lg={4}
               >
-                <UploadMultipleImage name="additionalImage" label="Additional Image" setImageStatus={setImages}/>
+                <UploadMultipleImage
+                  name="additionalImage"
+                  label="Additional Image"
+                  setImageStatus={setImages}
+                />
               </Col>
             </Row>
 

@@ -30,7 +30,7 @@ const FormColorPicker: React.FC<ColorPickerProps> = ({
       <Controller
         control={control}
         name={name}
-        defaultValue={["#fffff"]}
+        defaultValue={["#FFDBDB"]}
         render={({ field }) => (
           <div className="flex items-start justify-start gap-2">
             {(field.value || []).map((color: string, index: number) => (
