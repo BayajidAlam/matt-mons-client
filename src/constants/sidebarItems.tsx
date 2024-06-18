@@ -3,10 +3,6 @@ import {
   ProfileOutlined,
   TableOutlined,
   AppstoreOutlined,
-  ScheduleOutlined,
-  ThunderboltOutlined,
-  CreditCardOutlined,
-  FileTextOutlined,
   MessageOutlined,
   DashboardOutlined,
   HomeOutlined,
@@ -46,6 +42,9 @@ export const sidebarItems = (role: string) => {
       key: "/inbox",
       icon: <MessageOutlined />,
     },
+  ];
+
+  const commonAdminSidebarItems: MenuProps["items"] = [
     {
       label: "Profile",
       key: "profile",
@@ -63,22 +62,8 @@ export const sidebarItems = (role: string) => {
     },
   ];
 
-  const commonAdminSidebarItems: MenuProps["items"] = [
-    {
-      label: <Link href={`/${role}/manage-student`}>Manage Students</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/manage-student`,
-    },
-    {
-      label: <Link href={`/${role}/manage-faculty`}>Manage Faculty</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/manage-faculty`,
-    },
-  ];
-
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    ...commonAdminSidebarItems,
     {
       label: "Manage academic",
       key: "manage-academic",
@@ -141,11 +126,11 @@ export const sidebarItems = (role: string) => {
         },
       ],
     },
+    ...commonAdminSidebarItems,
   ];
 
   const superAdminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    ...commonAdminSidebarItems,
     {
       label: <Link href={`/${role}/admin`}>Manage Admin</Link>,
       icon: <TableOutlined />,
@@ -167,6 +152,7 @@ export const sidebarItems = (role: string) => {
         },
       ],
     },
+    ...commonAdminSidebarItems,
   ];
 
   const sellerSidebarItems: MenuProps["items"] = [
@@ -222,12 +208,67 @@ export const sidebarItems = (role: string) => {
       key: "/shop-settings",
       icon: <SettingOutlined />,
     },
+    ...commonAdminSidebarItems,
+  ];
+
+  const sellsManagerSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    {
+      label: "Manage shop",
+      key: "manage-products",
+      icon: <ShopOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/products`}>Products</Link>,
+          key: `/${role}/products`,
+        },
+        {
+          label: <Link href={`/${role}/orders`}>Orders</Link>,
+          key: `/${role}/orders`,
+        },
+        {
+          label: <Link href={`/${role}/skus`}>SKUS</Link>,
+          key: `/${role}/skus`,
+        },
+        {
+          label: <Link href={`/${role}/returns`}>Returns</Link>,
+          key: `/${role}/returns`,
+        },
+      ],
+    },
+    {
+      label: "Shop Users",
+      key: "shop-users",
+      icon: <UserSwitchOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/customers`}>Customers</Link>,
+          key: `/${role}/customers`,
+        },
+      ],
+    },
+    {
+      label: (
+        <Link className="text-sm " href={`/${role}/shop-settings`}>
+          Shop Settings
+        </Link>
+      ),
+      key: "/shop-settings",
+      icon: <SettingOutlined />,
+    },
+    ...commonAdminSidebarItems,
+  ];
+
+  const customerSidebarItems: MenuProps["items"] = [
+    ...defaultSidebarItems,
+    ...commonAdminSidebarItems,
   ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.SELLER) return sellerSidebarItems;
+  else if (role === USER_ROLE.SELLS_MANAGER) return sellsManagerSidebarItems;
   else {
-    return defaultSidebarItems;
+    return customerSidebarItems;
   }
 };

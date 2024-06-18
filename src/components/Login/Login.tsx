@@ -7,16 +7,15 @@ import { useUserLoginMutation } from "@/redux/api/authApi";
 import { storeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import FormDatePicker from "../Forms/FormDatePicker";
 import { IoLogoFacebook, IoLogoGoogle } from "react-icons/io";
 
 type FormValues = {
-  id: string;
+  email: string;
   password: string;
 };
 
 const LoginPageComponent = () => {
-  const [userLogin] = useUserLoginMutation();
+  const [userLogin, { isLoading }] = useUserLoginMutation();
   const router = useRouter();
 
   // console.log(isLoggedIn());
@@ -24,12 +23,12 @@ const LoginPageComponent = () => {
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
       const res = await userLogin({ ...data }).unwrap();
-      // console.log(res);
-      if (res?.accessToken) {
-        router.push("/profile");
-        message.success("User logged in successfully!");
+
+      if (res?.data?.accessToken) {
+        router.push("/home");
+        message.success(`${res.message}`);
       }
-      storeUserInfo({ accessToken: res?.accessToken });
+      storeUserInfo({ accessToken: res?.data?.accessToken });
       // console.log(res);
     } catch (err: any) {
       console.error(err.message);
@@ -46,7 +45,7 @@ const LoginPageComponent = () => {
         <div>
           <Form submitHandler={onSubmit}>
             <div>
-              <FormInput name="id" type="email" size="large" label="Email" />
+              <FormInput name="email" type="email" size="large" label="Email" />
             </div>
 
             <div
@@ -67,25 +66,21 @@ const LoginPageComponent = () => {
               <Link href="/home">Forgot Password</Link>
             </div>
             <Button type="primary" htmlType="submit">
-              Login
+              {isLoading ? "Please wait..." : "Login"}
             </Button>
           </Form>
-          {/* <div className="mt-2 flex justify-start items-center gap-2">
-            <h1 className="text-lg">Login with</h1>
-            <IoLogoGoogle className="text-xl" />
-            <IoLogoFacebook className="text-xl" />
-          </div> */}
 
           <Divider className="border-red-500">OR Login With</Divider>
           <div className="mt-2 flex justify-center items-center gap-2">
             <div className="mt-2 flex justify-start items-center gap-2">
-              <IoLogoGoogle className="text-xl" /> <p className="text-lg">Google</p>
+              <IoLogoGoogle className="text-xl" />{" "}
+              <p className="text-lg">Google</p>
             </div>
             <div className="mt-2 flex justify-start items-center gap-2">
-              <IoLogoFacebook className="text-xl" /> <p className="text-lg">Facebook</p>
+              <IoLogoFacebook className="text-xl" />{" "}
+              <p className="text-lg">Facebook</p>
             </div>
           </div>
-
         </div>
       </Col>
     </Row>

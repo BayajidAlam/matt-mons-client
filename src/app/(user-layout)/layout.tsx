@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!userLoggedIn) {
-      router.push("/home");
+      router.push("/login");
     }
     setIsLoading(true);
   }, [router, isLoading, userLoggedIn]);
@@ -34,7 +34,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <Layout style={{ backgroundColor: 'white' }}>
+    <Layout style={{ backgroundColor: "white" }}>
       <UserContents>{children}</UserContents>
     </Layout>
   );

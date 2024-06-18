@@ -6,6 +6,10 @@ import Link from "next/link";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FaTwitter } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io";
+import { Button } from "antd";
+import { removeUserInfo } from "@/services/auth.service";
+import { authKey } from "@/constants/storagekey";
+import { useRouter } from "next/navigation";
 
 const HeaderTop = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,6 +18,8 @@ const HeaderTop = () => {
     flag: englandFlag,
   });
 
+  const router = useRouter();
+
   const toggleOpen = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (option: any) => {
@@ -21,16 +27,16 @@ const HeaderTop = () => {
     setIsOpen(false);
   };
 
+  const logOut = () => {
+    removeUserInfo(authKey);
+    router.push("/login");
+  };
+
   const navItems = (
     <>
       <li>
         <Link className="text-white text-[13px]" href={"/"}>
           Home
-        </Link>
-      </li>
-      <li>
-        <Link className="text-white text-[13px]" href={"/"}>
-          Sign In
         </Link>
       </li>
       <li>
@@ -47,6 +53,14 @@ const HeaderTop = () => {
         <Link className="text-white text-[13px]" href={"/"}>
           About Us
         </Link>
+      </li>
+      <li>
+        <Button
+          onClick={logOut}
+          className="text-white text-[13px] bg-transparent hover:bg-transparent"
+        >
+          Log out
+        </Button>
       </li>
     </>
   );
@@ -131,7 +145,7 @@ const HeaderTop = () => {
             <ul className="hidden md:flex justify-center items-center gap-8 ">
               {navItems}
             </ul>
-            <span className="border border-r-[1px] h-3 border-white"></span>
+            <span className=" h-3 border-white"></span>
             <div className="flex justify-between items-center gap-3 text-white">
               <div className="hover:bg-[#3b5a9a] rounded-full p-2">
                 <TiSocialFacebook className="text-[16px]" />

@@ -1,17 +1,13 @@
 "use client";
 import { Button, Checkbox, Col, Divider, Row, message } from "antd";
-import loginImage from "../../assets/login-image.png";
-import Image from "next/image";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
-import { useUserLoginMutation } from "@/redux/api/authApi";
-import { storeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import Link from "next/link";
 import FormDatePicker from "../Forms/FormDatePicker";
 import { IoLogoFacebook, IoLogoGoogle } from "react-icons/io";
+import { useCreateCustomerMutation } from "@/redux/api/user/userApi";
 
 type FormValues = {
   id: string;
@@ -19,21 +15,25 @@ type FormValues = {
 };
 
 const RegisterPageComponent = () => {
-  const [userLogin] = useUserLoginMutation();
-  const router = useRouter();
 
-  // console.log(isLoggedIn());
+  const [createCustomer] = useCreateCustomerMutation();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
     try {
-      const res = await userLogin({ ...data }).unwrap();
-      // console.log(res);
-      if (res?.accessToken) {
-        router.push("/profile");
-        message.success("User logged in successfully!");
+      const customerData = {
+        email: data.email,
+        password: data.password,
+        customer: {
+          dob: data.dob,
+        },
+      };
+      const res = await createCustomer({ ...customerData }).unwrap();
+    
+      if (res?.success) {
+        router.push("/login");
+        message.success(`${res.message}`);
       }
-      storeUserInfo({ accessToken: res?.accessToken });
-      // console.log(res);
     } catch (err: any) {
       console.error(err.message);
     }
@@ -49,7 +49,7 @@ const RegisterPageComponent = () => {
         <div>
           <Form submitHandler={onSubmit}>
             <div>
-              <FormInput name="id" type="email" size="large" label="Email" />
+              <FormInput name="email" type="email" size="large" label="Email" />
             </div>
 
             <div
@@ -81,11 +81,6 @@ const RegisterPageComponent = () => {
               Register
             </Button>
           </Form>
-          {/* <div className="mt-2 flex justify-start items-center gap-2">
-            <h1 className="text-lg">Login with</h1>
-            <IoLogoGoogle className="text-xl" />
-            <IoLogoFacebook className="text-xl" />
-          </div> */}
 
           <Divider className="border-red-500">OR Login With</Divider>
           <div className="mt-2 flex justify-center items-center gap-2">

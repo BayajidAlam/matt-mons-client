@@ -5,14 +5,12 @@ import { Layout, Menu } from "antd";
 import { sidebarItems } from "@/constants/sidebarItems";
 import { getUserInfo } from "@/services/auth.service";
 import { usePathname, useRouter } from "next/navigation";
-import { USER_ROLE } from "@/constants/role";
 const { Sider } = Layout;
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const role = USER_ROLE.SELLER;
-  // const { role } = getUserInfo() as any;
-  // console.log(role);
+  // const role = USER_ROLE.SELLER;
+  const { role } = getUserInfo() as any;
   const pathName = usePathname();
   const router = useRouter();
 
