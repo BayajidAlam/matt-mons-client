@@ -167,7 +167,7 @@ Here is our high-level estimate:
 
 This is the general data model which reflects our requirements.
 
-![uber-datamodel](https://raw.githubusercontent.com/karanpratapsingh/portfolio/master/public/static/courses/system-design/chapter-V/uber/uber-datamodel.png)
+![matt-mons-datamodel](https://i.ibb.co/cXHJ2Zv/Matt-mons-drawio.png)
 
 We have the following tables:
 
