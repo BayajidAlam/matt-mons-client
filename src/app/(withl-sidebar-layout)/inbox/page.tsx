@@ -6,10 +6,7 @@ export const metadata: Metadata = {
 };
 
 const InboxPage = () => {
-  return <div>Inbox</div>;
+  return <Conversation />;
 };
-// const InboxPage = () => {
-//   return <Conversation />;
-// };
 
 export default InboxPage;

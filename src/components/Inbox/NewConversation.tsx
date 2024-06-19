@@ -3,20 +3,18 @@
 import Form from "@/components/Forms/Form";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import { useCreateConversationMutation } from "@/redux/api/conversation/conversationApi";
-import { useGetAllUserQuery } from "@/redux/api/user/userApi";
 import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
 import FormTextArea from "../Forms/FormTextArea";
-import Loader from "../Utlis/Loader";
+import { useGetAllUserQuery } from "@/redux/api/user/userApi";
+import Loader from "../Utils/Loader";
 
 const NewConversation = ({ setShowModel }: { setShowModel: any }) => {
   const user = getUserInfo() as any;
   //Get
   const { data: userData, isSuccess } = useGetAllUserQuery({ limit: "100" });
 
-  const users = userData?.users || [];
-
-  // console.log(users);
+  const users = userData?.users?.data ;
 
   //Create
   const [createConversation, { isLoading: createLoad }] =

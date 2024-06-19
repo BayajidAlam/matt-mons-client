@@ -15,6 +15,7 @@ export const userApi = baseApi.injectEndpoints({
     //     }),
     //     invalidatesTags: [tagTypes.customer],
     //   }),
+
     //   // create admin
     //   createAdmin: build.mutation({
     //     query: (data: any) => ({
@@ -32,7 +33,7 @@ export const userApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: [tagTypes.customer],
+      invalidatesTags: [tagTypes.user, tagTypes.customer],
     }),
 
     //   // create driver
@@ -44,6 +45,7 @@ export const userApi = baseApi.injectEndpoints({
     //     }),
     //     invalidatesTags: [tagTypes.user, tagTypes.driver],
     //   }),
+
     //   // create helper
     //   createHelper: build.mutation({
     //     query: (data: any) => ({
@@ -53,22 +55,23 @@ export const userApi = baseApi.injectEndpoints({
     //     }),
     //     invalidatesTags: [tagTypes.user],
     //   }),
-    //   // get all
-    //   getAllUser: build.query({
-    //     query: (arg: Record<string, any>) => ({
-    //       url: `${USER_URL}`,
-    //       method: "GET",
-    //       params: arg,
-    //     }),
-    //     transformResponse: (response: any[], meta: IMeta) => {
-    //       return {
-    //         users: response,
-    //         meta,
-    //       };
-    //     },
-    //     providesTags: [tagTypes.user],
-    //   }),
+
+    // get all
+    getAllUser: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${USER_URL}`,
+        method: "GET",
+        params: arg,
+      }),
+      transformResponse: (response: any[], meta: IMeta) => {
+        return {
+          users: response,
+          meta,
+        };
+      },
+      providesTags: [tagTypes.user],
+    }),
   }),
 });
 
-export const { useCreateCustomerMutation } = userApi;
+export const { useCreateCustomerMutation, useGetAllUserQuery } = userApi;

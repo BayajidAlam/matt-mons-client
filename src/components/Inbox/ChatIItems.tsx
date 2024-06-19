@@ -1,19 +1,11 @@
-// import gravatarUrl from "gravatar-url";
 import moment from "moment";
 import { useDispatch } from "react-redux";
-// import { Link } from "react-router-dom";
-// import {
-//   conversationsApi,
-//   useGetConversationsQuery,
-// } from "../../features/conversations/conversationsApi";
-// import getPartnerInfo from "../../utils/getPartnerInfo";
-// import Error from "../ui/Error";
-// import { useGetAllConversationQuery } from "@/redux/api/conversation/conversationApi";
 import { getUserInfo } from "@/services/auth.service";
 import Link from "next/link";
 import { useState } from "react";
 import ChatItem from "./ChatItem";
 import Loading from "@/app/loading";
+import { useGetAllConversationQuery } from "@/redux/api/conversation/conversationApi";
 
 export default function ChatItems() {
   const [page, setPage] = useState(1);
