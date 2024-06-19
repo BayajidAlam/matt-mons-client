@@ -8,12 +8,12 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 type ImageUploadProps = {
-  label: string
-  required?: boolean
+  label: string;
+  required?: boolean;
   name: string;
   defaultImage?: string;
   customChange?: any;
-  setImageStatus:React.Dispatch<React.SetStateAction<any>>
+  setImageStatus: React.Dispatch<React.SetStateAction<any>>;
 };
 
 const UploadImage = ({
@@ -22,7 +22,7 @@ const UploadImage = ({
   name,
   defaultImage,
   customChange,
-  setImageStatus
+  setImageStatus,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
   const [img, setImg] = useState("");
@@ -31,16 +31,13 @@ const UploadImage = ({
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
   ) => {
-  
     // if (info.file.status === "uploading") {
     //   setLoading(true);
     // }
-
     // if (info.file.status === "done") {
     //   setLoading(false);
     //   setValue(name, info.file.response); // Assuming the response contains the Cloudinary URL
     // }
-
     // if (info.file.status === "error") {
     //   setLoading(false);
     //   message.error(`${info.file.name} upload failed.`);
@@ -52,7 +49,7 @@ const UploadImage = ({
       setLoading(true);
       const imgUrl = await uploadImgCloudinary(file); // Cloudinary upload
       // console.log("Cloudinary URL:", imgUrl);
-      setImageStatus(imgUrl)
+      setImageStatus(imgUrl);
       setValue(name, setImg);
       setImg(imgUrl);
       setLoading(false);
@@ -74,7 +71,7 @@ const UploadImage = ({
 
   return (
     <>
-     {label && label}
+      {label && label}
       {required && (
         <span
           style={{
@@ -84,7 +81,7 @@ const UploadImage = ({
           *
         </span>
       )}
-      
+
       <Upload
         name={name}
         listType="picture-card"

@@ -159,7 +159,7 @@ export const sidebarItems = (role: string, shopCount: number) => {
     {
       key: "/seller/create-shop",
       label: (
-        <Link className="text-sm" href={`/`}>
+        <Link className="text-sm" href={`/seller/create-shop`}>
           Create Shop
         </Link>
       ),

@@ -10,7 +10,7 @@ const { Sider } = Layout;
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
   // const role = USER_ROLE.SELLER;
-  const { role, shopCount } = getUserInfo() as any;
+  const { role, shopCount,id } = getUserInfo() as any;
 
   const pathName = usePathname();
   const router = useRouter();
