@@ -10,7 +10,8 @@ const { Sider } = Layout;
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
   // const role = USER_ROLE.SELLER;
-  const { role } = getUserInfo() as any;
+  const { role, shopCount } = getUserInfo() as any;
+
   const pathName = usePathname();
   const router = useRouter();
 
@@ -48,7 +49,7 @@ const SideBar = () => {
           {collapsed ? "ECS" : "E COM SYS"}
         </div>
         <Menu
-          items={sidebarItems(role)}
+          items={sidebarItems(role, shopCount)}
           theme="light"
           defaultSelectedKeys={[`${pathName}`]}
           selectedKeys={[`${pathName}`]}

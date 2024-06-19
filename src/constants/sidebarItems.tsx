@@ -13,7 +13,7 @@ import {
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 
-export const sidebarItems = (role: string) => {
+export const sidebarItems = (role: string, shopCount: number) => {
   const defaultSidebarItems: MenuProps["items"] = [
     {
       key: "/home",
@@ -44,7 +44,7 @@ export const sidebarItems = (role: string) => {
     },
   ];
 
-  const commonAdminSidebarItems: MenuProps["items"] = [
+  const commonUserProfile: MenuProps["items"] = [
     {
       label: "Profile",
       key: "profile",
@@ -126,7 +126,7 @@ export const sidebarItems = (role: string) => {
         },
       ],
     },
-    ...commonAdminSidebarItems,
+    ...commonUserProfile,
   ];
 
   const superAdminSidebarItems: MenuProps["items"] = [
@@ -152,11 +152,22 @@ export const sidebarItems = (role: string) => {
         },
       ],
     },
-    ...commonAdminSidebarItems,
+    ...commonUserProfile,
   ];
 
-  const sellerSidebarItems: MenuProps["items"] = [
-    ...defaultSidebarItems,
+  const createShopForNewSeller: MenuProps["items"] = [
+    {
+      key: "/seller/create-shop",
+      label: (
+        <Link className="text-sm" href={`/`}>
+          Create Shop
+        </Link>
+      ),
+      icon: <HomeOutlined />,
+    },
+  ];
+
+  const sellerWithShopSidebarItems: MenuProps["items"] = [
     {
       label: "Manage shop",
       key: "manage-products",
@@ -208,8 +219,20 @@ export const sidebarItems = (role: string) => {
       key: "/shop-settings",
       icon: <SettingOutlined />,
     },
-    ...commonAdminSidebarItems,
   ];
+
+  let sellerSidebarItems: MenuProps["items"] = [...defaultSidebarItems];
+
+  //if seller has a shop
+  if (role == USER_ROLE.SELLER && shopCount > 0) {
+    sellerSidebarItems.push(...sellerWithShopSidebarItems);
+  }
+  //if seller does not have any shop give him option to create shop
+  else {
+    sellerSidebarItems.push(...createShopForNewSeller);
+  }
+  //push the profile to last of the list
+  sellerSidebarItems.push(...commonUserProfile);
 
   const sellsManagerSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
@@ -256,12 +279,12 @@ export const sidebarItems = (role: string) => {
       key: "/shop-settings",
       icon: <SettingOutlined />,
     },
-    ...commonAdminSidebarItems,
+    ...commonUserProfile,
   ];
 
   const customerSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    ...commonAdminSidebarItems,
+    ...commonUserProfile,
   ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;

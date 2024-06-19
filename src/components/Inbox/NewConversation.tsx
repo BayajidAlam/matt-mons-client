@@ -11,6 +11,8 @@ import Loader from "../Utils/Loader";
 
 const NewConversation = ({ setShowModel }: { setShowModel: any }) => {
   const user = getUserInfo() as any;
+  const userRole = user?.role;
+  console.log(userRole)
   //Get
   const { data: userData, isSuccess } = useGetAllUserQuery({ limit: "100" });
 

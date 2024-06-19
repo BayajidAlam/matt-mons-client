@@ -15,9 +15,10 @@ type FormValues = {
 };
 
 const LoginPageComponent = () => {
+
   const [userLogin, { isLoading }] = useUserLoginMutation();
   const router = useRouter();
-
+  
   // console.log(isLoggedIn());
 
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
@@ -66,7 +67,7 @@ const LoginPageComponent = () => {
               <Link href="/home">Forgot Password</Link>
             </div>
             <Button type="primary" htmlType="submit">
-              {isLoading ? "Please wait..." : "Login"}
+              {isLoading ? "Signing in..." : "Login"}
             </Button>
           </Form>
 

@@ -15,8 +15,7 @@ type FormValues = {
 };
 
 const RegisterPageComponent = () => {
-
-  const [createCustomer] = useCreateCustomerMutation();
+  const [createCustomer, { isLoading }] = useCreateCustomerMutation();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
@@ -25,13 +24,15 @@ const RegisterPageComponent = () => {
         email: data.email,
         password: data.password,
         customer: {
-          dob: data.dob,
+          fullName: data.fullName,
         },
       };
       const res = await createCustomer({ ...customerData }).unwrap();
-    
+
+      //@ts-ignore
       if (res?.success) {
         router.push("/login");
+        //@ts-ignore
         message.success(`${res.message}`);
       }
     } catch (err: any) {
@@ -49,9 +50,20 @@ const RegisterPageComponent = () => {
         <div>
           <Form submitHandler={onSubmit}>
             <div>
+              <FormInput
+                name="fullName"
+                type="text"
+                size="large"
+                label="Full Name"
+              />
+            </div>
+            <div
+              style={{
+                margin: "15px 0px",
+              }}
+            >
               <FormInput name="email" type="email" size="large" label="Email" />
             </div>
-
             <div
               style={{
                 margin: "15px 0px",
@@ -65,20 +77,12 @@ const RegisterPageComponent = () => {
               />
             </div>
 
-            <div
-              style={{
-                margin: "15px 0px",
-              }}
-            >
-              <FormDatePicker label="Date of Birth" name="dob" />
-            </div>
-
             <div className="flex justify-between items-center mb-3">
               <Checkbox onChange={onChange}>Remember me</Checkbox>
               <Link href="/home">Forgot Password</Link>
             </div>
             <Button type="primary" htmlType="submit">
-              Register
+              {isLoading ? "Signing up..." : "Register"}
             </Button>
           </Form>
 
