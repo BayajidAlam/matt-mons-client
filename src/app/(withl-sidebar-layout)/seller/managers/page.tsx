@@ -7,7 +7,7 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, Tag } from "antd";
 import { useState } from "react";
 
 import dayjs from "dayjs";
@@ -18,9 +18,10 @@ import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
+import { useGetAllManagerQuery } from "@/redux/api/manager/managerApi";
+import Loader from "@/components/Utils/Loader";
 
 const AllManagesPage = () => {
-
   const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
@@ -44,6 +45,7 @@ const AllManagesPage = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
+
 
   const columns = [
     {
@@ -71,12 +73,12 @@ const AllManagesPage = () => {
       dataIndex: "fullName",
     },
     {
-      title: "User ID",
-      dataIndex: "driverId",
+      title: "NID Number",
+      dataIndex: "nidNumber",
     },
     {
-      title: "License No",
-      dataIndex: "licenseNo",
+      title: "Contact No",
+      dataIndex: "contactNumber",
       render: (data: any) => (data ? data : "N/A"),
     },
     // {
@@ -90,8 +92,8 @@ const AllManagesPage = () => {
     //     ),
     // },
     {
-      title: "Mobile",
-      dataIndex: "mobile",
+      title: "Emergency Contact Number",
+      dataIndex: "emergencyContactNumber",
       render: (data: any) => (data ? data : "N/A"),
     },
     {
@@ -100,17 +102,11 @@ const AllManagesPage = () => {
       render: (data: any) => (data ? data : "N/A"),
     },
     {
-      title: "Blood Group",
-      dataIndex: "bloodGroup",
-      render: (data: any) => (data ? data : "N/A"),
-    },
-    {
       title: "Joined at",
       dataIndex: "createdAt",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
-      sorter: true,
     },
     {
       title: "Action",
@@ -150,9 +146,9 @@ const AllManagesPage = () => {
     },
   ];
 
-  // const { data, isLoading } = useGetAllDriverQuery({ ...query });
-  const data:any = []
-  const drivers = data?.drivers;
+  const { data, isLoading } = useGetAllManagerQuery({ ...query });
+  console.log(data);
+  const managers = data?.data;
   const meta = data?.meta;
 
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -171,9 +167,9 @@ const AllManagesPage = () => {
     setSearchTerm("");
   };
 
-  // if (isLoading) {
-  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
-  // }
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Managers List">
@@ -183,12 +179,10 @@ const AllManagesPage = () => {
             placeholder="Search"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            style={
-              {
-                // width: "300px",
-                textAlign: "center",
-              }
-            }
+            style={{
+              // width: "300px",
+              textAlign: "center",
+            }}
           />
           {(!!sortBy || !!sortOrder || !!searchTerm) && (
             <Button
@@ -213,7 +207,7 @@ const AllManagesPage = () => {
       <UMTable
         // loading={isLoading}
         columns={columns}
-        dataSource={drivers}
+        dataSource={managers}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
