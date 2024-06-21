@@ -9,7 +9,7 @@ import { genderOptions } from "@/constants/global";
 import Loading from "@/app/loading";
 import UploadImage from "../ui/UploadImage";
 
-const AddUpdateCupon = ({ id }: { id?: string }) => {
+const AddUpdateProductSku = ({ id }: { id?: string }) => {
 
   const [image, setimage] = useState("");
   //Get
@@ -243,4 +243,4 @@ const AddUpdateCupon = ({ id }: { id?: string }) => {
   );
 };
 
-export default AddUpdateCupon;
+export default AddUpdateProductSku;

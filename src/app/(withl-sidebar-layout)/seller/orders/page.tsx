@@ -18,8 +18,8 @@ import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
-import AddUpdateCustomers from "@/components/addUpdateFrom/AddUpdateCustomers";
 import AddUpdateOrders from "@/components/addUpdateFrom/AddUpdateOrder";
+import { useGetAllOrdersQuery } from "@/redux/api/orders/orderApi";
 
 const MyOrdersPage = () => {
   const SUPER_ADMIN = USER_ROLE.ADMIN;
@@ -68,51 +68,49 @@ const MyOrdersPage = () => {
       },
     },
     {
-      title: "Name",
+      title: "Product Name",
+      dataIndex: "bloodGroup",
+      render: (data: any) => (data ? data : "N/A"),
+    },
+    {
+      title: "Customer Name",
       dataIndex: "fullName",
     },
     {
-      title: "User ID",
+      title: "Email",
       dataIndex: "driverId",
     },
     {
-      title: "License No",
-      dataIndex: "licenseNo",
+      title: "Contact No",
+      dataIndex: "contactNumber",
       render: (data: any) => (data ? data : "N/A"),
     },
-    // {
-    //   title: "Active",
-    //   dataIndex: "isActive",
-    //   render: (isActive: boolean) =>
-    //     isActive ? (
-    //       <Tag color="green">Active</Tag>
-    //     ) : (
-    //       <Tag color="red">Not Active</Tag>
-    //     ),
-    // },
     {
-      title: "Mobile",
-      dataIndex: "mobile",
+      title: "Em. Contact No",
+      dataIndex: "emergencyContactNumber",
       render: (data: any) => (data ? data : "N/A"),
     },
     {
       title: "Address",
       dataIndex: "address",
-      render: (data: any) => (data ? data : "N/A"),
     },
     {
-      title: "Blood Group",
-      dataIndex: "bloodGroup",
-      render: (data: any) => (data ? data : "N/A"),
-    },
-    {
-      title: "Joined at",
-      dataIndex: "createdAt",
+      title: "Shipping Charge",
+      dataIndex: "shippingCharge",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
       sorter: true,
     },
+    {
+      title: "Total",
+      dataIndex: "total",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
+      sorter: true,
+    },
+
     {
       title: "Action",
       dataIndex: "id",
@@ -151,9 +149,9 @@ const MyOrdersPage = () => {
     },
   ];
 
-  // const { data, isLoading } = useGetAllDriverQuery({ ...query });
-  const data: any = [];
-  const drivers = data?.drivers;
+  const { data, isLoading } = useGetAllOrdersQuery({ ...query });
+  // const data: any = [];
+  const drivers = data?.data;
   const meta = data?.meta;
 
   const onPaginationChange = (page: number, pageSize: number) => {

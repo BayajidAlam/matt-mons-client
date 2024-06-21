@@ -51,6 +51,10 @@ const CuponsPage = () => {
       dataIndex: "discount",
     },
     {
+      title: "Shipping Charge",
+      dataIndex: "shippingCharge",
+    },
+    {
       title: "Created At",
       dataIndex: "createdAt",
       render: function (data: any) {
