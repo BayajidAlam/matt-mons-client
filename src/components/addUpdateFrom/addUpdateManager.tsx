@@ -4,44 +4,55 @@ import FormInput from "@/components/Forms/FormInput";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { Button, Col, Row, message } from "antd";
 import { useState } from "react";
-import FormSelectField from "../Forms/FormSelectField";
-import { genderOptions } from "@/constants/global";
-import Loading from "@/app/loading";
 import UploadImage from "../ui/UploadImage";
+import {
+  useGetSingleSellsManagerQuery,
+  useUpdateSellsManagerMutation,
+} from "@/redux/api/manager/managerApi";
+import { useCreateSellsManagerMutation } from "@/redux/api/user/userApi";
 
 const AddUpdateManager = ({ id }: { id?: string }) => {
-
+  console.log(id)
   const [image, setimage] = useState("");
   //Get
-  // const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
-  const data:any = []
-  //Update
-  // const [updateDriver, { isLoading: updateLoad }] = useUpdateDriverMutation();
+  const { data, isLoading: getLoad } = useGetSingleSellsManagerQuery(
+    id ? id : ""
+  );
+console.log(data)
+  // Update
+  const [updateSellsManager, { isLoading: updateLoad }] =
+    useUpdateSellsManagerMutation();
 
-  //Create
-  // const [createDriver, { isLoading: createLoad }] = useCreateDriverMutation();
+  // Create
+  const [createSellsManager, { isLoading: createLoad }] =
+    useCreateSellsManagerMutation();
 
   const onSubmit = async (values: any) => {
+    console.log(values)
     message.loading(id ? "Updating...." : "Adding....");
-    id ? values.profileImg : (values.driver.profileImg = image);
+    id ? values.profileImg : (values.sellsManager.profileImg = image);
     try {
-      // const res = id
-      //   ? await updateDriver({
-      //       id,
-      //       data: {
-      //         fullName: values.driver.fullName,
-      //         mobile: values.driver.mobile,
-      //         licenseNo: values.driver.licenseNo,
-      //         bloodGroup: values.driver.bloodGroup,
-      //         address: values.driver.address,
-      //       },
-      //     }).unwrap()
-      //   : await createDriver(values).unwrap();
-      // if (res.id) {
-      //   message.success(`Driver ${id ? "updated" : "added"} successfully`);
-      // } else {
-      //   message.error(res.message);
-      // }
+      const res = id
+        ? await updateSellsManager({
+            id,
+            data: {
+              fullName: values.fullName,
+              contactNumber: values.contactNumber,
+              emergencyContactNumber: values.emergencyContactNumber,
+              address: values.address,
+              nidNumber: values.nidNumber,
+            },
+          }).unwrap()
+        : await createSellsManager({ ...values }).unwrap();
+
+      console.log(res);
+      if (res?.data?.id) {
+        message.success(
+          `sellsManager ${id ? "updated" : "added"} successfully`
+        );
+      } else {
+        message.error(res?.message);
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -53,13 +64,28 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
 
   // console.log(data);
 
+  // id: 'f94366d3-f438-4f72-8209-0a72c8754cb2',
+  //       fullName: 'John Doe',
+  //       contactNumber: '1234567890',
+  //       emergencyContactNumber: '0987654321',
+  //       address: '123 Main St, Anytown, USA',
+  //       profileImg: 'https://example.com/path/to/image.jpg',
+  //       userId: '3113e9bb-c2cb-4d74-a5aa-a2c66eca605d',
+  //       nidNumber: 'AB1234567',
+  //       isActive: true,
+  //       shopId: '8f6f5c26-e800-49bc-842e-9e303d21dcca',
+  //       createdAt: '2024-06-20T03:14:40.179Z',
+  //       updatedAt: '2024-06-20T03:14:40.179Z'
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
         {id ? "Update Manager" : "Add Manager"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={id ? { ...data?.data } : {}}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -86,7 +112,11 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                 //   marginBottom: "10px",
                 // }}
               >
-                <UploadImage setImageStatus={setimage} name="profileImg" />
+                <UploadImage
+                  setImageStatus={setimage}
+                  name="profileImg"
+                  label=""
+                />
               </Col>
 
               <Col
@@ -112,7 +142,7 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                         size="large"
                         label="User Name"
                         required={true}
-                        placeholder="Please enter driver user name"
+                        placeholder="Please enter sellsManager user name"
                       />
                     )}
                   </Col>
@@ -128,7 +158,7 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                         size="large"
                         label="Password"
                         required={true}
-                        placeholder="Please enter driver password"
+                        placeholder="Please enter sellsManager password"
                       />
                     )}
                   </Col>
@@ -146,11 +176,11 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
               >
                 <FormInput
                   type="text"
-                  name={id ? "fullName" : "driver.fullName"}
+                  name={id ? "fullName" : "fullName"}
                   size="large"
                   label="Full Name"
                   required={true}
-                  placeholder="Please enter driver full name"
+                  placeholder="Please enter full name"
                 />
               </Col>
 
@@ -165,11 +195,30 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
               >
                 <FormInput
                   type="tel"
-                  name={id ? "mobile" : "driver.mobile"}
+                  name={id ? "nidNumber" : "nidNumber"}
                   size="large"
-                  label="Mobile"
+                  label="NID Number"
                   required={true}
-                  placeholder="Please enter driver mobile number"
+                  placeholder="Please enter mobile NID number"
+                />
+              </Col>
+
+              <Col
+                className="gutter-row"
+                xs={24}
+                md={12}
+                lg={12}
+                style={{
+                  marginBottom: "10px",
+                }}
+              >
+                <FormInput
+                  type="tel"
+                  name={id ? "contactNumber" : "contactNumber"}
+                  size="large"
+                  label="Contact No"
+                  required={true}
+                  placeholder="Please enter contact number"
                 />
               </Col>
               <Col
@@ -183,29 +232,15 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
               >
                 <FormInput
                   type="text"
-                  name={id ? "licenseNo" : "driver.licenseNo"}
+                  name={
+                    id
+                      ? "emergencyContactNumber"
+                      : "emergencyContactNumber"
+                  }
                   size="large"
-                  label="License No"
-                  // required={true}
-                  placeholder="Please enter driver license number"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name={id ? "bloodGroup" : "driver.bloodGroup"}
-                  options={genderOptions}
-                  label="Blood Group"
-                  placeholder="Select driver blood group"
-                  // required={true}
+                  label="Emergency Contact No"
+                  required={true}
+                  placeholder="Please enter emergency contact number"
                 />
               </Col>
 
@@ -219,11 +254,11 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                 }}
               >
                 <FormTextArea
-                  name={id ? "address" : "driver.address"}
+                  name={id ? "address" : "address"}
                   label="Address"
                   rows={3}
-                  placeholder="Enter driver address"
-                  // required
+                  placeholder="Enter address"
+                  required
                 />
               </Col>
             </Row>

@@ -21,7 +21,6 @@ const ModalComponent = ({
   icon?: any;
   width?: any;
 }) => {
-
   const showModal = () => {
     setShowModel(true);
   };

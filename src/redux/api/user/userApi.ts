@@ -26,6 +26,16 @@ export const userApi = baseApi.injectEndpoints({
     //     invalidatesTags: [tagTypes.user],
     //   }),
 
+    // create
+    createSellsManager: build.mutation({
+      query: (data: any) => ({
+        url: `${USER_URL}/create-sells-manager`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.sells_manager],
+    }),
+
     //  create customer
     createCustomer: build.mutation({
       query: (data: any) => ({
@@ -74,4 +84,8 @@ export const userApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useCreateCustomerMutation, useGetAllUserQuery } = userApi;
+export const {
+  useCreateCustomerMutation,
+  useGetAllUserQuery,
+  useCreateSellsManagerMutation,
+} = userApi;

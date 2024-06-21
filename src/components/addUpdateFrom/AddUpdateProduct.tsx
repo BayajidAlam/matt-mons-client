@@ -20,6 +20,7 @@ const options = [
 ];
 
 const AddUpdateProduct = ({ id }: { id?: string }) => {
+  console.log('modal clicked with id: ' + id);
   const [image, setimage] = useState("");
   const [images, setImages] = useState<string[]>([]);
   //Get

@@ -15,9 +15,9 @@ import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import AddUpdateCupon from "@/components/addUpdateFrom/AddUpdateCupon";
+import { useGetAllCouponsQuery } from "@/redux/api/cupons/cuponsApi";
 
 const CuponsPage = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
 
@@ -43,66 +43,24 @@ const CuponsPage = () => {
 
   const columns = [
     {
-      title: "",
-      dataIndex: "profileImg",
-      render: function (data: any) {
-        const image = `${
-          data ||
-          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
-        } `;
-        return (
-          <Image
-            src={image}
-            width={100}
-            height={100}
-            alt=""
-            style={{ width: "70px", height: "50px" }}
-          />
-          // <Avatar shape="square" size={64} icon={<CarOutlined />} />
-        );
-      },
+      title: "Coupon Name",
+      dataIndex: "CouponName",
     },
     {
-      title: "Name",
-      dataIndex: "fullName",
+      title: "Discount(%)",
+      dataIndex: "discount",
     },
     {
-      title: "User ID",
-      dataIndex: "driverId",
-    },
-    {
-      title: "License No",
-      dataIndex: "licenseNo",
-      render: (data: any) => (data ? data : "N/A"),
-    },
-    // {
-    //   title: "Active",
-    //   dataIndex: "isActive",
-    //   render: (isActive: boolean) =>
-    //     isActive ? (
-    //       <Tag color="green">Active</Tag>
-    //     ) : (
-    //       <Tag color="red">Not Active</Tag>
-    //     ),
-    // },
-    {
-      title: "Mobile",
-      dataIndex: "mobile",
-      render: (data: any) => (data ? data : "N/A"),
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      render: (data: any) => (data ? data : "N/A"),
-    },
-    {
-      title: "Blood Group",
-      dataIndex: "bloodGroup",
-      render: (data: any) => (data ? data : "N/A"),
-    },
-    {
-      title: "Joined at",
+      title: "Created At",
       dataIndex: "createdAt",
+      render: function (data: any) {
+        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+      },
+      sorter: true,
+    },
+    {
+      title: "Valid Till",
+      dataIndex: "validTill",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
@@ -146,9 +104,10 @@ const CuponsPage = () => {
     },
   ];
 
-  // const { data, isLoading } = useGetAllDriverQuery({ ...query });
-  const data: any = [];
-  const drivers = data?.drivers;
+  const { data, isLoading } = useGetAllCouponsQuery({ ...query });
+
+  // const data: any = [];
+  const drivers = data?.data;
   const meta = data?.meta;
 
   const onPaginationChange = (page: number, pageSize: number) => {

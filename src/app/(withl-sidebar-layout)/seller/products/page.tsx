@@ -9,21 +9,19 @@ import {
 } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { useState } from "react";
-
 import dayjs from "dayjs";
-
 import ModalComponent from "@/components/ui/Modal";
 import { USER_ROLE } from "@/constants/role";
 import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
 import AddUpdateProduct from "@/components/addUpdateFrom/AddUpdateProduct";
+import { useGetAllProductsQuery } from "@/redux/api/products/productsApi";
 
 const MyProductsPage = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
+  const [id, setId] = useState("");
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -118,12 +116,12 @@ const MyProductsPage = () => {
       // width: "15%",
       render: function (data: any) {
         return (
-          <div className="flex">
-            {/* <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
-                <EyeOutlined />
-              </Button>
-            </Link> */}
+          <div
+            onClick={() => {
+              setId(data);
+            }}
+            className="flex"
+          >
             <div
               style={{
                 margin: "0px 5px",
@@ -134,7 +132,7 @@ const MyProductsPage = () => {
                 setShowModel={setShowModel}
                 icon={<EditOutlined />}
               >
-                <AddUpdateManager id={data} />
+                <AddUpdateProduct id={id} />
               </ModalComponent>
             </div>
             <Button
@@ -150,9 +148,9 @@ const MyProductsPage = () => {
     },
   ];
 
-  // const { data, isLoading } = useGetAllDriverQuery({ ...query });
-  const data: any = [];
-  const drivers = data?.drivers;
+  const { data, isLoading } = useGetAllProductsQuery({ ...query });
+  // const data: any = [];
+  const products = data?.data;
   const meta = data?.meta;
 
   const onPaginationChange = (page: number, pageSize: number) => {
@@ -211,7 +209,7 @@ const MyProductsPage = () => {
       <UMTable
         // loading={isLoading}
         columns={columns}
-        dataSource={drivers}
+        dataSource={products}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

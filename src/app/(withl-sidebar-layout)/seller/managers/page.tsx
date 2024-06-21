@@ -1,30 +1,28 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-
 import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Tag } from "antd";
+import { Button, Input } from "antd";
 import { useState } from "react";
-
 import dayjs from "dayjs";
-
 import ModalComponent from "@/components/ui/Modal";
-import { USER_ROLE } from "@/constants/role";
 import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
 import { useGetAllManagerQuery } from "@/redux/api/manager/managerApi";
 import Loader from "@/components/Utils/Loader";
+import { IMeta } from "@/types";
 
 const AllManagesPage = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+
   const query: Record<string, any> = {};
   const [showModel, setShowModel] = useState(false);
+
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -46,7 +44,6 @@ const AllManagesPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-
   const columns = [
     {
       title: "",
@@ -64,7 +61,6 @@ const AllManagesPage = () => {
             alt=""
             style={{ width: "70px", height: "50px" }}
           />
-          // <Avatar shape="square" size={64} icon={<CarOutlined />} />
         );
       },
     },
@@ -92,7 +88,7 @@ const AllManagesPage = () => {
     //     ),
     // },
     {
-      title: "Emergency Contact Number",
+      title: "Emg Contact No",
       dataIndex: "emergencyContactNumber",
       render: (data: any) => (data ? data : "N/A"),
     },
@@ -114,13 +110,8 @@ const AllManagesPage = () => {
       // width: "15%",
       render: function (data: any) {
         return (
-          <div className="flex">
-            {/* <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
-                <EyeOutlined />
-              </Button>
-            </Link> */}
-            <div
+          <div  className="flex">
+            <div onClick={() => {}}
               style={{
                 margin: "0px 5px",
               }}
@@ -147,14 +138,16 @@ const AllManagesPage = () => {
   ];
 
   const { data, isLoading } = useGetAllManagerQuery({ ...query });
-  console.log(data);
-  const managers = data?.data;
-  const meta = data?.meta;
 
+  // const data = [];
+  const managersData = data?.data;
+  const meta = data?.meta;
+  console.log(managersData);
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);
   };
+
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
     setSortBy(field as string);
@@ -167,9 +160,10 @@ const AllManagesPage = () => {
     setSearchTerm("");
   };
 
-  if (isLoading) {
-    return <Loader className="h-[50vh] flex items-end justify-center" />;
-  }
+  // if (isLoading) {
+  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
+  // }
+
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Managers List">
@@ -207,7 +201,7 @@ const AllManagesPage = () => {
       <UMTable
         // loading={isLoading}
         columns={columns}
-        dataSource={managers}
+        dataSource={managersData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -215,15 +209,6 @@ const AllManagesPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-
-      {/* <UMModal
-        title="Remove admin"
-        isOpen={open}
-        closeModal={() => setOpen(false)}
-        handleOk={() => deleteGeneralUserHandler(adminId)}
-      >
-        <p className="my-5">Do you want to remove this admin?</p>
-      </UMModal> */}
     </div>
   );
 };

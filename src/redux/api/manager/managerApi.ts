@@ -16,35 +16,29 @@ export const managerApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.sells_manager],
     }),
 
-    // create
-    // createAccountType: build.mutation({
-    //   query: (data: any) => ({
-    //     url: `${MANAGER_URL}/create`,
-    //     method: 'POST',
-    //     data: data,
-    //   }),
-    //   invalidatesTags: [tagTypes.accountType],
-    // }),
-
     // get single
-    // getSingleSeller: build.query({
-    //   query: (id: string) => ({
-    //     url: `${MANAGER_URL}/${id}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: [tagTypes.seller],
-    // }),
+    getSingleSellsManager: build.query({
+      query: (id: string) => ({
+        url: `${MANAGER_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.sells_manager],
+    }),
 
     // update
-    // updateAccountType: build.mutation({
-    //   query: (data: any) => ({
-    //     url: `${ACCOUNT_TYPE_URL}/${data?.id}`,
-    //     method: 'PATCH',
-    //     data: data?.data,
-    //   }),
-    //   invalidatesTags: [tagTypes.accountType],
-    // }),
+    updateSellsManager: build.mutation({
+      query: (data: any) => ({
+        url: `${MANAGER_URL}/${data?.id}`,
+        method: "PATCH",
+        data: data?.data,
+      }),
+      invalidatesTags: [tagTypes.sells_manager],
+    }),
   }),
 });
 
-export const { useGetAllManagerQuery } = managerApi;
+export const {
+  useGetAllManagerQuery,
+  useGetSingleSellsManagerQuery,
+  useUpdateSellsManagerMutation,
+} = managerApi;

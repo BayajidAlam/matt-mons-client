@@ -86,7 +86,7 @@ const AddUpdateCustomers = ({ id }: { id?: string }) => {
                 //   marginBottom: "10px",
                 // }}
               >
-                <UploadImage setImageStatus={setimage} name="profileImg" />
+                <UploadImage setImageStatus={setimage} name="profileImg" label=""/>
               </Col>
 
               <Col
