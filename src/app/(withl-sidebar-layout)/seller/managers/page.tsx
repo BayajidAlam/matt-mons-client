@@ -17,12 +17,13 @@ import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
 import { useGetAllManagerQuery } from "@/redux/api/manager/managerApi";
 import Loader from "@/components/Utils/Loader";
 import { IMeta } from "@/types";
+import AddManagerForm from "@/components/addUpdateFrom/manager/AddManager";
+import UpdateManagerForm from "@/components/addUpdateFrom/manager/UpdateManager";
 
 const AllManagesPage = () => {
-
   const query: Record<string, any> = {};
-  const [showModel, setShowModel] = useState(false);
 
+  const [showModel, setShowModel] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -110,8 +111,9 @@ const AllManagesPage = () => {
       // width: "15%",
       render: function (data: any) {
         return (
-          <div  className="flex">
-            <div onClick={() => {}}
+          <div className="flex">
+            <div
+              onClick={() => {}}
               style={{
                 margin: "0px 5px",
               }}

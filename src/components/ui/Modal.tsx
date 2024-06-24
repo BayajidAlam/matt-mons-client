@@ -2,7 +2,7 @@
 import { Button, Modal } from "antd";
 import React from "react";
 
-const ModalComponent = ({
+const CustomModalWrapper = ({
   children,
   icon,
   buttonText,
@@ -60,7 +60,7 @@ const ModalComponent = ({
           </Button>
         </div>
       </div>
-      <Modal
+      <Modal 
         open={showModel}
         confirmLoading={loading ? loading : false}
         onCancel={handleCancel}
@@ -81,4 +81,4 @@ const ModalComponent = ({
   );
 };
 
-export default ModalComponent;
+export default CustomModalWrapper;

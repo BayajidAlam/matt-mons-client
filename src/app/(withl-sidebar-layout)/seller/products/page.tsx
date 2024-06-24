@@ -23,6 +23,8 @@ const MyProductsPage = () => {
   const [showModel, setShowModel] = useState(false);
   const [id, setId] = useState("");
 
+  console.log(showModel, "showModel", id, "id");
+
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
@@ -146,6 +148,42 @@ const MyProductsPage = () => {
         );
       },
     },
+    // {
+    //   title: "Action",
+    //   dataIndex: "id",
+    //   // width: "15%",
+    //   render: function (data: any) {
+    //     return (
+    //       <div
+    //         onClick={() => {
+    //           setId(data);
+    //         }}
+    //         className="flex"
+    //       >
+    //         <div
+    //           style={{
+    //             margin: "0px 5px",
+    //           }}
+    //         >
+    //           <ModalComponent
+    //             showModel={showModel}
+    //             setShowModel={setShowModel}
+    //             icon={<EditOutlined />}
+    //           >
+    //             <AddUpdateProduct id={id} />
+    //           </ModalComponent>
+    //         </div>
+    //         <Button
+    //           //   onClick={() => deleteGeneralUserHandler(data)}
+    //           type="primary"
+    //           danger
+    //         >
+    //           <DeleteOutlined />
+    //         </Button>
+    //       </div>
+    //     );
+    //   },
+    // },
   ];
 
   const { data, isLoading } = useGetAllProductsQuery({ ...query });

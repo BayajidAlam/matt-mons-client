@@ -36,7 +36,7 @@ const SideBar = () => {
         }}
       >
         <div
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/home")}
           style={{
             color: "Black",
             fontSize: "2rem",

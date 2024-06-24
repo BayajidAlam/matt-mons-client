@@ -18,7 +18,6 @@ const AddsModal = React.lazy(
   () => import("@/components/ui/Modal/AddsModal")
 );
 
-
 const UserPage = () => {
   
   return (
