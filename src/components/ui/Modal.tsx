@@ -36,7 +36,7 @@ const CustomModalWrapper = ({
   return (
     <>
       <div>
-        <div className="md:hidden ">
+        <div className="md:hidden">
           <Button
             onClick={showModal}
             type="primary"

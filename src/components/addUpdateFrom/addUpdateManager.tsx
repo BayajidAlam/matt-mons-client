@@ -10,15 +10,17 @@ import {
   useUpdateSellsManagerMutation,
 } from "@/redux/api/manager/managerApi";
 import { useCreateSellsManagerMutation } from "@/redux/api/user/userApi";
+import { getUserInfo } from "@/services/auth.service";
 
 const AddUpdateManager = ({ id }: { id?: string }) => {
-  console.log(id)
+  const { shopId } = getUserInfo();
+  console.log(shopId);
   const [image, setimage] = useState("");
   //Get
   const { data, isLoading: getLoad } = useGetSingleSellsManagerQuery(
     id ? id : ""
   );
-console.log(data)
+  console.log(data);
   // Update
   const [updateSellsManager, { isLoading: updateLoad }] =
     useUpdateSellsManagerMutation();
@@ -28,9 +30,10 @@ console.log(data)
     useCreateSellsManagerMutation();
 
   const onSubmit = async (values: any) => {
-    console.log(values)
+    console.log(values, "value");
     message.loading(id ? "Updating...." : "Adding....");
     id ? values.profileImg : (values.sellsManager.profileImg = image);
+    id? values: values.sellsManager.shopId = shopId;
     try {
       const res = id
         ? await updateSellsManager({
@@ -114,7 +117,7 @@ console.log(data)
               >
                 <UploadImage
                   setImageStatus={setimage}
-                  name="profileImg"
+                  name="sellsManager.profileImg"
                   label=""
                 />
               </Col>
@@ -135,16 +138,14 @@ console.log(data)
                       padding: "0px",
                     }}
                   >
-                    {!id && (
-                      <FormInput
-                        type="text"
-                        name="userName"
-                        size="large"
-                        label="User Name"
-                        required={true}
-                        placeholder="Please enter sellsManager user name"
-                      />
-                    )}
+                    <FormInput
+                      type="text"
+                      name={id ? "email" : "email"}
+                      size="large"
+                      label="Email Address"
+                       required={!id}
+                      placeholder="Please enter sellsManager email"
+                    />
                   </Col>
                   <Col
                     style={{
@@ -157,7 +158,7 @@ console.log(data)
                         name="password"
                         size="large"
                         label="Password"
-                        required={true}
+                         required={!id}
                         placeholder="Please enter sellsManager password"
                       />
                     )}
@@ -176,10 +177,10 @@ console.log(data)
               >
                 <FormInput
                   type="text"
-                  name={id ? "fullName" : "fullName"}
+                  name={id ? "fullName" : "sellsManager.fullName"}
                   size="large"
                   label="Full Name"
-                  required={true}
+                   required={!id}
                   placeholder="Please enter full name"
                 />
               </Col>
@@ -195,10 +196,10 @@ console.log(data)
               >
                 <FormInput
                   type="tel"
-                  name={id ? "nidNumber" : "nidNumber"}
+                  name={id ? "nidNumber" : "sellsManager.nidNumber"}
                   size="large"
                   label="NID Number"
-                  required={true}
+                   required={!id}
                   placeholder="Please enter mobile NID number"
                 />
               </Col>
@@ -214,10 +215,10 @@ console.log(data)
               >
                 <FormInput
                   type="tel"
-                  name={id ? "contactNumber" : "contactNumber"}
+                  name={id ? "contactNumber" : "sellsManager.contactNumber"}
                   size="large"
                   label="Contact No"
-                  required={true}
+                   required={!id}
                   placeholder="Please enter contact number"
                 />
               </Col>
@@ -235,11 +236,11 @@ console.log(data)
                   name={
                     id
                       ? "emergencyContactNumber"
-                      : "emergencyContactNumber"
+                      : "sellsManager.emergencyContactNumber"
                   }
                   size="large"
                   label="Emergency Contact No"
-                  required={true}
+                   required={!id}
                   placeholder="Please enter emergency contact number"
                 />
               </Col>
@@ -254,7 +255,7 @@ console.log(data)
                 }}
               >
                 <FormTextArea
-                  name={id ? "address" : "address"}
+                  name={id ? "address" : "sellsManager.address"}
                   label="Address"
                   rows={3}
                   placeholder="Enter address"

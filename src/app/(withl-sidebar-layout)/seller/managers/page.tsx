@@ -6,7 +6,7 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import ModalComponent from "@/components/ui/Modal";
@@ -14,7 +14,7 @@ import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
-import { useGetAllManagerQuery } from "@/redux/api/manager/managerApi";
+import { useDeleteSellsManagerMutation, useGetAllManagerQuery } from "@/redux/api/manager/managerApi";
 import Loader from "@/components/Utils/Loader";
 import { IMeta } from "@/types";
 import AddManagerForm from "@/components/addUpdateFrom/manager/AddManager";
@@ -24,6 +24,9 @@ const AllManagesPage = () => {
   const query: Record<string, any> = {};
 
   const [showModel, setShowModel] = useState(false);
+  const [showModalWithId, setShowModalWithId] = useState(false);
+
+  const [id,setId] = useState("");
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -43,6 +46,20 @@ const AllManagesPage = () => {
 
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
+  }
+
+  const [deleteSellsManager] = useDeleteSellsManagerMutation();
+
+  const deleteSellsManagerHandler = async(id: string) => {
+    try {
+      message.loading('Deleting.....');
+      const res = await deleteSellsManager(id).unwrap();
+      if (res) {
+        message.success('Successfully Deleted!');
+      }
+    } catch (error: any) {
+      message.error(`${error.data}`);
+    }
   }
 
   const columns = [
@@ -113,21 +130,21 @@ const AllManagesPage = () => {
         return (
           <div className="flex">
             <div
-              onClick={() => {}}
+              onClick={() => {setId(data)}}
               style={{
                 margin: "0px 5px",
               }}
             >
               <ModalComponent
-                showModel={showModel}
-                setShowModel={setShowModel}
+                showModel={showModalWithId}
+                setShowModel={setShowModalWithId}
                 icon={<EditOutlined />}
               >
-                <AddUpdateManager id={data} />
+                <AddUpdateManager id={id} />
               </ModalComponent>
             </div>
             <Button
-              //   onClick={() => deleteGeneralUserHandler(data)}
+              onClick={() => deleteSellsManagerHandler(data)}
               type="primary"
               danger
             >
@@ -162,9 +179,9 @@ const AllManagesPage = () => {
     setSearchTerm("");
   };
 
-  // if (isLoading) {
-  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
-  // }
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
 
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">

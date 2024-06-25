@@ -34,6 +34,15 @@ export const managerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [tagTypes.sells_manager],
     }),
+
+    // delete
+    deleteSellsManager: build.mutation({
+      query: (id: string) => ({
+        url: `${MANAGER_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.sells_manager],
+    }),
   }),
 });
 
@@ -41,4 +50,5 @@ export const {
   useGetAllManagerQuery,
   useGetSingleSellsManagerQuery,
   useUpdateSellsManagerMutation,
+  useDeleteSellsManagerMutation
 } = managerApi;
