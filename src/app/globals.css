@@ -48,10 +48,7 @@
 }
 
 
-/* modal bg  */
-/* .ant-modal-mask{
-   background-color: rgba(0, 0, 0, 0.15)important
-} */
+
 /* Override base SVG style to work with Ant Design */
 svg {
   vertical-align: initial;

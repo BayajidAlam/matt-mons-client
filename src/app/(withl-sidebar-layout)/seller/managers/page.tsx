@@ -14,11 +14,14 @@ import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
-import { useDeleteSellsManagerMutation, useGetAllManagerQuery } from "@/redux/api/manager/managerApi";
+import {
+  useDeleteSellsManagerMutation,
+  useGetAllManagerQuery,
+} from "@/redux/api/manager/managerApi";
 import Loader from "@/components/Utils/Loader";
 import { IMeta } from "@/types";
-import AddManagerForm from "@/components/addUpdateFrom/manager/AddManager";
-import UpdateManagerForm from "@/components/addUpdateFrom/manager/UpdateManager";
+import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
+import EComModalWrapper from "@/components/ui/EComModalWrapper";
 
 const AllManagesPage = () => {
   const query: Record<string, any> = {};
@@ -26,7 +29,7 @@ const AllManagesPage = () => {
   const [showModel, setShowModel] = useState(false);
   const [showModalWithId, setShowModalWithId] = useState(false);
 
-  const [id,setId] = useState("");
+  const [id, setId] = useState("");
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -50,17 +53,17 @@ const AllManagesPage = () => {
 
   const [deleteSellsManager] = useDeleteSellsManagerMutation();
 
-  const deleteSellsManagerHandler = async(id: string) => {
+  const deleteSellsManagerHandler = async (id: string) => {
     try {
-      message.loading('Deleting.....');
+      message.loading("Deleting.....");
       const res = await deleteSellsManager(id).unwrap();
       if (res) {
-        message.success('Successfully Deleted!');
+        message.success("Successfully Deleted!");
       }
     } catch (error: any) {
       message.error(`${error.data}`);
     }
-  }
+  };
 
   const columns = [
     {
@@ -130,18 +133,17 @@ const AllManagesPage = () => {
         return (
           <div className="flex">
             <div
-              onClick={() => {setId(data)}}
+              onClick={() => {
+                setId(data);
+              }}
               style={{
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent
-                showModel={showModalWithId}
+              <ModalTriggerButton
                 setShowModel={setShowModalWithId}
                 icon={<EditOutlined />}
-              >
-                <AddUpdateManager id={id} />
-              </ModalComponent>
+              />
             </div>
             <Button
               onClick={() => deleteSellsManagerHandler(data)}
@@ -206,6 +208,13 @@ const AllManagesPage = () => {
               <ReloadOutlined />
             </Button>
           )}
+
+          {/* <ModalTriggerButton
+            setShowModel={setShowModalWithId}
+            icon={<IoMdAdd />}
+             buttonText="Add Managers"
+          /> */}
+
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
@@ -228,6 +237,13 @@ const AllManagesPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+
+      <EComModalWrapper
+        showModel={showModalWithId}
+        setShowModel={setShowModalWithId}
+      >
+        <AddUpdateManager id={id} />
+      </EComModalWrapper>
     </div>
   );
 };

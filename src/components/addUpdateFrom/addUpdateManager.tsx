@@ -11,16 +11,18 @@ import {
 } from "@/redux/api/manager/managerApi";
 import { useCreateSellsManagerMutation } from "@/redux/api/user/userApi";
 import { getUserInfo } from "@/services/auth.service";
+import Loading from "@/app/loading";
 
 const AddUpdateManager = ({ id }: { id?: string }) => {
+
   const { shopId } = getUserInfo();
-  console.log(shopId);
   const [image, setimage] = useState("");
+
   //Get
   const { data, isLoading: getLoad } = useGetSingleSellsManagerQuery(
     id ? id : ""
   );
-  console.log(data);
+
   // Update
   const [updateSellsManager, { isLoading: updateLoad }] =
     useUpdateSellsManagerMutation();
@@ -30,10 +32,9 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
     useCreateSellsManagerMutation();
 
   const onSubmit = async (values: any) => {
-    console.log(values, "value");
     message.loading(id ? "Updating...." : "Adding....");
     id ? values.profileImg : (values.sellsManager.profileImg = image);
-    id? values: values.sellsManager.shopId = shopId;
+    id ? values : (values.sellsManager.shopId = shopId);
     try {
       const res = id
         ? await updateSellsManager({
@@ -61,24 +62,10 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
     }
   };
 
-  // if (id && getLoad) {
-  //   return <Loading />;
-  // }
+  if (id && getLoad) {
+    return <Loading />;
+  }
 
-  // console.log(data);
-
-  // id: 'f94366d3-f438-4f72-8209-0a72c8754cb2',
-  //       fullName: 'John Doe',
-  //       contactNumber: '1234567890',
-  //       emergencyContactNumber: '0987654321',
-  //       address: '123 Main St, Anytown, USA',
-  //       profileImg: 'https://example.com/path/to/image.jpg',
-  //       userId: '3113e9bb-c2cb-4d74-a5aa-a2c66eca605d',
-  //       nidNumber: 'AB1234567',
-  //       isActive: true,
-  //       shopId: '8f6f5c26-e800-49bc-842e-9e303d21dcca',
-  //       createdAt: '2024-06-20T03:14:40.179Z',
-  //       updatedAt: '2024-06-20T03:14:40.179Z'
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
@@ -138,14 +125,16 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                       padding: "0px",
                     }}
                   >
-                    <FormInput
-                      type="text"
-                      name={id ? "email" : "email"}
-                      size="large"
-                      label="Email Address"
-                       required={!id}
-                      placeholder="Please enter sellsManager email"
-                    />
+                    {!id && (
+                      <FormInput
+                        type="text"
+                        name={id ? "email" : "email"}
+                        size="large"
+                        label="Email Address"
+                        required={!id}
+                        placeholder="Please enter sellsManager email"
+                      />
+                    )}
                   </Col>
                   <Col
                     style={{
@@ -158,7 +147,7 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                         name="password"
                         size="large"
                         label="Password"
-                         required={!id}
+                        required={!id}
                         placeholder="Please enter sellsManager password"
                       />
                     )}
@@ -180,7 +169,7 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                   name={id ? "fullName" : "sellsManager.fullName"}
                   size="large"
                   label="Full Name"
-                   required={!id}
+                  required={!id}
                   placeholder="Please enter full name"
                 />
               </Col>
@@ -199,7 +188,7 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                   name={id ? "nidNumber" : "sellsManager.nidNumber"}
                   size="large"
                   label="NID Number"
-                   required={!id}
+                  required={!id}
                   placeholder="Please enter mobile NID number"
                 />
               </Col>
@@ -218,7 +207,7 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                   name={id ? "contactNumber" : "sellsManager.contactNumber"}
                   size="large"
                   label="Contact No"
-                   required={!id}
+                  required={!id}
                   placeholder="Please enter contact number"
                 />
               </Col>
@@ -240,7 +229,7 @@ const AddUpdateManager = ({ id }: { id?: string }) => {
                   }
                   size="large"
                   label="Emergency Contact No"
-                   required={!id}
+                  required={!id}
                   placeholder="Please enter emergency contact number"
                 />
               </Col>
