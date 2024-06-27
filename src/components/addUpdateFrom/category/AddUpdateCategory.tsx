@@ -5,12 +5,11 @@ import FormTextArea from "@/components/Forms/FormTextArea";
 import { Button, Col, Row, message } from "antd";
 import { useState } from "react";
 import FormSelectField from "../Forms/FormSelectField";
-import { genderOption, genderOptions } from "@/constants/global";
+import { genderOptions } from "@/constants/global";
 import Loading from "@/app/loading";
 import UploadImage from "../ui/UploadImage";
-import FormMultiSelectField from "../Forms/FormMultiSelectField";
 
-const AddUpdateProductSku = ({ id }: { id?: string }) => {
+const AddUpdateCategory = ({ id }: { id?: string }) => {
   const [image, setimage] = useState("");
   //Get
   // const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
@@ -56,7 +55,7 @@ const AddUpdateProductSku = ({ id }: { id?: string }) => {
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
-        {id ? "Update SKU" : "Add SKU"}
+        {id ? "Update Color" : "Add Color"}
       </h1>
       <div>
         <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
@@ -87,77 +86,11 @@ const AddUpdateProductSku = ({ id }: { id?: string }) => {
               >
                 <FormInput
                   type="text"
-                  name={id ? "fullName" : "driver.fullName"}
+                  name={id ? "title" : "title"}
                   size="large"
-                  label="Full Name"
+                  label="Color"
                   required={true}
-                  placeholder="Please enter driver full name"
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormMultiSelectField name="" label="" options={genderOption} />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name={id ? "licenseNo" : "driver.licenseNo"}
-                  size="large"
-                  label="License No"
-                  // required={true}
-                  placeholder="Please enter driver license number"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormSelectField
-                  size="large"
-                  name={id ? "bloodGroup" : "driver.bloodGroup"}
-                  options={genderOptions}
-                  label="Blood Group"
-                  placeholder="Select driver blood group"
-                  // required={true}
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={24}
-                style={{
-                  marginBottom: "15px",
-                }}
-              >
-                <FormTextArea
-                  name={id ? "address" : "driver.address"}
-                  label="Address"
-                  rows={3}
-                  placeholder="Enter driver address"
-                  // required
+                  placeholder="Please enter Color Name"
                 />
               </Col>
             </Row>
@@ -177,4 +110,4 @@ const AddUpdateProductSku = ({ id }: { id?: string }) => {
   );
 };
 
-export default AddUpdateProductSku;
+export default AddUpdateCategory;

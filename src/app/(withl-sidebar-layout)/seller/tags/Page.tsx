@@ -10,19 +10,17 @@ import { Button, Input, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import ModalComponent from "@/components/ui/Modal";
-import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import {
-  useDeleteSellsManagerMutation,
-} from "@/redux/api/manager/managerApi";
+import { useDeleteSellsManagerMutation } from "@/redux/api/manager/managerApi";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
-import AddUpdateProductSku from "@/components/addUpdateFrom/AddUpdateSku";
 import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
+import AddUpdateColor from "@/components/addUpdateFrom/AddUpdateColor";
+import AddUpdateCategory from "@/components/addUpdateFrom/category/AddUpdateCategory";
 
-const ManagerProductSKUPage = () => {
+const ManageProductTagsPage = () => {
   const query: Record<string, any> = {};
 
   const [id, setId] = useState("");
@@ -67,25 +65,6 @@ const ManagerProductSKUPage = () => {
     {
       title: "Title",
       dataIndex: "title",
-    },
-    {
-      title: "Available Color",
-      dataIndex: "availableColor",
-      key: "availableColor",
-      render: (availableColors: string[]) =>
-        availableColors ? availableColors.join(", ") : "N/A",
-    },
-    {
-      title: "Available Size",
-      dataIndex: "availableSize",
-      key: "availableSize",
-      render: (availableSizes: string[]) =>
-        availableSizes ? availableSizes.join(", ") : "N/A",
-    },
-    {
-      title: "Quantity",
-      dataIndex: "quantity",
-      render: (data: any) => (data ? data : "0"),
     },
     {
       title: "Created At",
@@ -156,7 +135,7 @@ const ManagerProductSKUPage = () => {
 
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="SKU'S List">
+      <ActionBar inline title="Tags List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -181,10 +160,10 @@ const ManagerProductSKUPage = () => {
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
-            buttonText="Add SKU"
+            buttonText="Add Tag"
             icon={<IoMdAdd />}
           >
-            <AddUpdateProductSku />
+            <AddUpdateCategory />
           </ModalComponent>
         </div>
       </ActionBar>
@@ -205,10 +184,10 @@ const ManagerProductSKUPage = () => {
         showModel={showModalWithId}
         setShowModel={setShowModalWithId}
       >
-        <AddUpdateProductSku id={id} />
+        <AddUpdateCategory id={id} />
       </EComModalWrapper>
     </div>
   );
 };
 
-export default ManagerProductSKUPage;
+export default ManageProductTagsPage;

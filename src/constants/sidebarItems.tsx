@@ -186,8 +186,25 @@ export const sidebarItems = (role: string, shopCount: number) => {
           key: `/${role}/cupons`,
         },
         {
+          label: <Link href={`/${role}/category`}>Category</Link>,
+          key: `/${role}/category`,
+        },
+
+        {
+          label: <Link href={`/${role}/color`}>Color</Link>,
+          key: `/${role}/color`,
+        },
+        {
+          label: <Link href={`/${role}/size`}>Size</Link>,
+          key: `/${role}/size`,
+        },
+        {
           label: <Link href={`/${role}/skus`}>SKUS</Link>,
           key: `/${role}/skus`,
+        },
+        {
+          label: <Link href={`/${role}/tags`}>Tags</Link>,
+          key: `/${role}/tags`,
         },
         {
           label: <Link href={`/${role}/returns`}>Returns</Link>,

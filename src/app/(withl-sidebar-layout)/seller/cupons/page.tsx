@@ -60,7 +60,6 @@ const CuponsPage = () => {
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
-      sorter: true,
     },
     {
       title: "Valid Till",
@@ -68,7 +67,10 @@ const CuponsPage = () => {
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
-      sorter: true,
+    },
+    {
+      title: "Created By",
+      dataIndex: "createdBy",
     },
     {
       title: "Action",
