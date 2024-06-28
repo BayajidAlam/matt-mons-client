@@ -9,6 +9,7 @@ import {
   ShopOutlined,
   UserSwitchOutlined,
   SettingOutlined,
+  ShoppingOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -169,17 +170,28 @@ export const sidebarItems = (role: string, shopCount: number) => {
 
   const sellerWithShopSidebarItems: MenuProps["items"] = [
     {
-      label: "Manage shop",
+      label: "Manage order",
+      key: "manage-orders",
+      icon: <ShoppingOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/orders`}>Orders</Link>,
+          key: `/${role}/orders`,
+        },
+        {
+          label: <Link href={`/${role}/returns`}>Returns</Link>,
+          key: `/${role}/returns`,
+        },
+      ],
+    },
+    {
+      label: "Manage product",
       key: "manage-products",
       icon: <ShopOutlined />,
       children: [
         {
           label: <Link href={`/${role}/products`}>Products</Link>,
           key: `/${role}/products`,
-        },
-        {
-          label: <Link href={`/${role}/orders`}>Orders</Link>,
-          key: `/${role}/orders`,
         },
         {
           label: <Link href={`/${role}/cupons`}>Cupons</Link>,
@@ -189,7 +201,10 @@ export const sidebarItems = (role: string, shopCount: number) => {
           label: <Link href={`/${role}/category`}>Category</Link>,
           key: `/${role}/category`,
         },
-
+        {
+          label: <Link href={`/${role}/tags`}>Tags</Link>,
+          key: `/${role}/tags`,
+        },
         {
           label: <Link href={`/${role}/color`}>Color</Link>,
           key: `/${role}/color`,
@@ -202,18 +217,10 @@ export const sidebarItems = (role: string, shopCount: number) => {
           label: <Link href={`/${role}/skus`}>SKUS</Link>,
           key: `/${role}/skus`,
         },
-        {
-          label: <Link href={`/${role}/tags`}>Tags</Link>,
-          key: `/${role}/tags`,
-        },
-        {
-          label: <Link href={`/${role}/returns`}>Returns</Link>,
-          key: `/${role}/returns`,
-        },
       ],
     },
     {
-      label: "Shop Users",
+      label: "Manage Users",
       key: "shop-users",
       icon: <UserSwitchOutlined />,
       children: [

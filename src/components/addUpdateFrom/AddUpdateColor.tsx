@@ -1,46 +1,42 @@
 "use client";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
-import FormTextArea from "@/components/Forms/FormTextArea";
 import { Button, Col, Row, message } from "antd";
-import { useState } from "react";
-import FormSelectField from "../Forms/FormSelectField";
-import { genderOptions } from "@/constants/global";
-import Loading from "@/app/loading";
-import UploadImage from "../ui/UploadImage";
+import {
+  useCreateColorMutation,
+  useGetSingleColorQuery,
+  useUpdateColorMutation,
+} from "@/redux/api/color/colorApi";
 
 const AddUpdateColor = ({ id }: { id?: string }) => {
-  const [image, setimage] = useState("");
+
   //Get
-  // const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
-  const data: any = [];
+  const { data, isLoading: getLoad } = useGetSingleColorQuery(id ? id : "");
+  const colorData = data?.data
+
   //Update
-  // const [updateDriver, { isLoading: updateLoad }] = useUpdateDriverMutation();
+  const [updateColor, { isLoading: updateLoad }] = useUpdateColorMutation();
 
   //Create
-  // const [createDriver, { isLoading: createLoad }] = useCreateDriverMutation();
+  const [createColor, { isLoading: createLoad }] = useCreateColorMutation();
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
-    id ? values.profileImg : (values.driver.profileImg = image);
     try {
-      // const res = id
-      //   ? await updateDriver({
-      //       id,
-      //       data: {
-      //         fullName: values.driver.fullName,
-      //         mobile: values.driver.mobile,
-      //         licenseNo: values.driver.licenseNo,
-      //         bloodGroup: values.driver.bloodGroup,
-      //         address: values.driver.address,
-      //       },
-      //     }).unwrap()
-      //   : await createDriver(values).unwrap();
-      // if (res.id) {
-      //   message.success(`Driver ${id ? "updated" : "added"} successfully`);
-      // } else {
-      //   message.error(res.message);
-      // }
+      const res = id
+        ? await updateColor({
+            id,
+            data: {
+              title: values.title,
+            },
+          }).unwrap()
+        : await createColor(values).unwrap();
+      if (res.data) {
+        message.success(`Color ${id ? "updated" : "added"} successfully`);
+      } else {
+        message.error(res.message);
+      }
+      console.log(res)
     } catch (err: any) {
       console.error(err.message);
     }
@@ -58,7 +54,7 @@ const AddUpdateColor = ({ id }: { id?: string }) => {
         {id ? "Update Color" : "Add Color"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+        <Form submitHandler={onSubmit} defaultValues={id ? { ...colorData } : {}}>
           <div
             style={{
               border: "1px solid #d9d9d9",

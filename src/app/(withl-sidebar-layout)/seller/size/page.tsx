@@ -10,17 +10,14 @@ import { Button, Input, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import ModalComponent from "@/components/ui/Modal";
-import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import {
-  useDeleteSellsManagerMutation,
-} from "@/redux/api/manager/managerApi";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
 import AddUpdateProductSku from "@/components/addUpdateFrom/AddUpdateSku";
 import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
+import { useDeleteColorMutation } from "@/redux/api/color/colorApi";
 
 const ManagerProductSizePage = () => {
   const query: Record<string, any> = {};
@@ -49,12 +46,12 @@ const ManagerProductSizePage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const [deleteSellsManager] = useDeleteSellsManagerMutation();
-
-  const deleteSellsManagerHandler = async (id: string) => {
+  const [deleteColor] = useDeleteColorMutation();
+  
+  const DeleteColorHandler = async (id: string) => {
     try {
       message.loading("Deleting.....");
-      const res = await deleteSellsManager(id).unwrap();
+      const res = await deleteColor(id).unwrap();
       if (res) {
         message.success("Successfully Deleted!");
       }
@@ -96,7 +93,7 @@ const ManagerProductSizePage = () => {
               />
             </div>
             <Button
-              onClick={() => deleteSellsManagerHandler(data)}
+              onClick={() => DeleteColorHandler(data)}
               type="primary"
               danger
             >

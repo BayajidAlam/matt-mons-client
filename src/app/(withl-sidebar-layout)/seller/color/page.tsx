@@ -10,18 +10,16 @@ import { Button, Input, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import ModalComponent from "@/components/ui/Modal";
-import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import {
-  useDeleteSellsManagerMutation,
-} from "@/redux/api/manager/managerApi";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
-import AddUpdateProductSku from "@/components/addUpdateFrom/AddUpdateSku";
-import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
 import AddUpdateColor from "@/components/addUpdateFrom/AddUpdateColor";
+import {
+  useDeleteColorMutation,
+  useGetAllColorsQuery,
+} from "@/redux/api/color/colorApi";
 
 const ManageProductColorPage = () => {
   const query: Record<string, any> = {};
@@ -50,12 +48,11 @@ const ManageProductColorPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const [deleteSellsManager] = useDeleteSellsManagerMutation();
-
-  const deleteSellsManagerHandler = async (id: string) => {
+  const [deleteColor] = useDeleteColorMutation();
+  const deleteColorHandler = async (id: string) => {
     try {
       message.loading("Deleting.....");
-      const res = await deleteSellsManager(id).unwrap();
+      const res = await deleteColor(id).unwrap();
       if (res) {
         message.success("Successfully Deleted!");
       }
@@ -97,7 +94,7 @@ const ManageProductColorPage = () => {
               />
             </div>
             <Button
-              onClick={() => deleteSellsManagerHandler(data)}
+              onClick={() => deleteColorHandler(data)}
               type="primary"
               danger
             >
@@ -109,12 +106,12 @@ const ManageProductColorPage = () => {
     },
   ];
 
-  const { data, isLoading } = useGetAllProductSkuQuery({ ...query });
+  const { data, isLoading } = useGetAllColorsQuery({ ...query });
 
   // const data = [];
   const managersData = data?.data;
   const meta = data?.meta;
-  console.log(managersData);
+
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);
