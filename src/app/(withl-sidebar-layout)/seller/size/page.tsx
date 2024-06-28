@@ -18,6 +18,8 @@ import AddUpdateProductSku from "@/components/addUpdateFrom/AddUpdateSku";
 import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
 import { useDeleteColorMutation } from "@/redux/api/color/colorApi";
+import { useGetAllSizesQuery } from "@/redux/api/size/sizeApi";
+import AddUpdateSize from "@/components/addUpdateFrom/size/AddUpdateSizeMutation";
 
 const ManagerProductSizePage = () => {
   const query: Record<string, any> = {};
@@ -46,12 +48,12 @@ const ManagerProductSizePage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const [deleteColor] = useDeleteColorMutation();
-  
-  const DeleteColorHandler = async (id: string) => {
+  const [deleteSize] = useDeleteColorMutation();
+
+  const DeleteSizeHandler = async (id: string) => {
     try {
       message.loading("Deleting.....");
-      const res = await deleteColor(id).unwrap();
+      const res = await deleteSize(id).unwrap();
       if (res) {
         message.success("Successfully Deleted!");
       }
@@ -93,7 +95,7 @@ const ManagerProductSizePage = () => {
               />
             </div>
             <Button
-              onClick={() => DeleteColorHandler(data)}
+              onClick={() => DeleteSizeHandler(data)}
               type="primary"
               danger
             >
@@ -105,7 +107,7 @@ const ManagerProductSizePage = () => {
     },
   ];
 
-  const { data, isLoading } = useGetAllProductSkuQuery({ ...query });
+  const { data, isLoading } = useGetAllSizesQuery({ ...query });
 
   // const data = [];
   const managersData = data?.data;
@@ -162,7 +164,7 @@ const ManagerProductSizePage = () => {
             buttonText="Add Size"
             icon={<IoMdAdd />}
           >
-            <AddUpdateProductSku />
+            <AddUpdateSize />
           </ModalComponent>
         </div>
       </ActionBar>
@@ -183,7 +185,7 @@ const ManagerProductSizePage = () => {
         showModel={showModalWithId}
         setShowModel={setShowModalWithId}
       >
-        <AddUpdateProductSku id={id} />
+        <AddUpdateSize id={id} />
       </EComModalWrapper>
     </div>
   );
