@@ -10,17 +10,15 @@ import { Button, Input, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import ModalComponent from "@/components/ui/Modal";
-import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import {
-  useDeleteSellsManagerMutation,
-} from "@/redux/api/manager/managerApi";
+import { useDeleteSellsManagerMutation } from "@/redux/api/manager/managerApi";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
 import AddUpdateProductSku from "@/components/addUpdateFrom/AddUpdateSku";
 import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
+import { useDeleteSkuMutation } from "@/redux/api/sku/skuApi";
 
 const ManagerProductSKUPage = () => {
   const query: Record<string, any> = {};
@@ -49,12 +47,12 @@ const ManagerProductSKUPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const [deleteSellsManager] = useDeleteSellsManagerMutation();
+  const [deleteSku, { isLoading: deleteLoading }] = useDeleteSkuMutation();
 
-  const deleteSellsManagerHandler = async (id: string) => {
+  const deleteSkuHandler = async (id: string) => {
     try {
       message.loading("Deleting.....");
-      const res = await deleteSellsManager(id).unwrap();
+      const res = await deleteSku(id).unwrap();
       if (res) {
         message.success("Successfully Deleted!");
       }
@@ -115,7 +113,7 @@ const ManagerProductSKUPage = () => {
               />
             </div>
             <Button
-              onClick={() => deleteSellsManagerHandler(data)}
+              onClick={() => deleteSkuHandler(data)}
               type="primary"
               danger
             >
@@ -132,7 +130,7 @@ const ManagerProductSKUPage = () => {
   // const data = [];
   const managersData = data?.data;
   const meta = data?.meta;
-  console.log(managersData);
+
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);
@@ -150,7 +148,7 @@ const ManagerProductSKUPage = () => {
     setSearchTerm("");
   };
 
-  if (isLoading) {
+  if (isLoading || deleteLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
 

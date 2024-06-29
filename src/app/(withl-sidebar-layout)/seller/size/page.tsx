@@ -14,12 +14,10 @@ import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
-import AddUpdateProductSku from "@/components/addUpdateFrom/AddUpdateSku";
-import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
 import { useDeleteColorMutation } from "@/redux/api/color/colorApi";
 import { useGetAllSizesQuery } from "@/redux/api/size/sizeApi";
-import AddUpdateSize from "@/components/addUpdateFrom/size/AddUpdateSizeMutation";
+import AddUpdateSize from "@/components/addUpdateFrom/AddUpdateSizeMutation";
 
 const ManagerProductSizePage = () => {
   const query: Record<string, any> = {};

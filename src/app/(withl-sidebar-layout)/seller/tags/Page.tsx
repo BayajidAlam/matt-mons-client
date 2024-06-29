@@ -18,7 +18,7 @@ import Loader from "@/components/Utils/Loader";
 import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
 import AddUpdateColor from "@/components/addUpdateFrom/AddUpdateColor";
-import AddUpdateCategory from "@/components/addUpdateFrom/category/AddUpdateCategory";
+import AddUpdateCategory from "@/components/addUpdateFrom/AddUpdateCategory";
 
 const ManageProductTagsPage = () => {
   const query: Record<string, any> = {};
