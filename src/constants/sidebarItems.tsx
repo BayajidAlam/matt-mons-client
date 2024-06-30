@@ -206,16 +206,16 @@ export const sidebarItems = (role: string, shopCount: number) => {
           key: `/${role}/tags`,
         },
         {
+          label: <Link href={`/${role}/skus`}>SKUS</Link>,
+          key: `/${role}/skus`,
+        },
+        {
           label: <Link href={`/${role}/color`}>Color</Link>,
           key: `/${role}/color`,
         },
         {
           label: <Link href={`/${role}/size`}>Size</Link>,
           key: `/${role}/size`,
-        },
-        {
-          label: <Link href={`/${role}/skus`}>SKUS</Link>,
-          key: `/${role}/skus`,
         },
       ],
     },

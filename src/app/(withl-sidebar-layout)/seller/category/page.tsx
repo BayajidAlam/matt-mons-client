@@ -19,6 +19,10 @@ import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
 import AddUpdateColor from "@/components/addUpdateFrom/AddUpdateColor";
 import AddUpdateCategory from "@/components/addUpdateFrom/AddUpdateCategory";
+import {
+  useDeleteCategoryMutation,
+  useGetAllCategoryQuery,
+} from "@/redux/api/category/categoryApi";
 
 const ManagerProductCategoriesPage = () => {
   const query: Record<string, any> = {};
@@ -47,12 +51,12 @@ const ManagerProductCategoriesPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const [deleteSellsManager] = useDeleteSellsManagerMutation();
+  const [deleteCategory] = useDeleteCategoryMutation();
 
   const deleteSellsManagerHandler = async (id: string) => {
     try {
       message.loading("Deleting.....");
-      const res = await deleteSellsManager(id).unwrap();
+      const res = await deleteCategory(id).unwrap();
       if (res) {
         message.success("Successfully Deleted!");
       }
@@ -106,9 +110,9 @@ const ManagerProductCategoriesPage = () => {
     },
   ];
 
-  const { data, isLoading } = useGetAllProductSkuQuery({ ...query });
+  const { data, isLoading } = useGetAllCategoryQuery({ ...query });
 
-  // const data = [];
+
   const managersData = data?.data;
   const meta = data?.meta;
   console.log(managersData);

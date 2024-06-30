@@ -15,10 +15,10 @@ import UMTable from "@/components/ui/Table";
 import { useDeleteSellsManagerMutation } from "@/redux/api/manager/managerApi";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
-import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
-import AddUpdateColor from "@/components/addUpdateFrom/AddUpdateColor";
 import AddUpdateCategory from "@/components/addUpdateFrom/AddUpdateCategory";
+import { useGetAllTagsQuery } from "@/redux/api/tags/tagsApi";
+import AddUpdateTags from "@/components/addUpdateFrom/AddUpdateTag";
 
 const ManageProductTagsPage = () => {
   const query: Record<string, any> = {};
@@ -49,7 +49,7 @@ const ManageProductTagsPage = () => {
 
   const [deleteSellsManager] = useDeleteSellsManagerMutation();
 
-  const deleteSellsManagerHandler = async (id: string) => {
+  const deleteProductTagHandler = async (id: string) => {
     try {
       message.loading("Deleting.....");
       const res = await deleteSellsManager(id).unwrap();
@@ -94,7 +94,7 @@ const ManageProductTagsPage = () => {
               />
             </div>
             <Button
-              onClick={() => deleteSellsManagerHandler(data)}
+              onClick={() => deleteProductTagHandler(data)}
               type="primary"
               danger
             >
@@ -106,12 +106,12 @@ const ManageProductTagsPage = () => {
     },
   ];
 
-  const { data, isLoading } = useGetAllProductSkuQuery({ ...query });
+  const { data, isLoading } = useGetAllTagsQuery({ ...query });
 
   // const data = [];
   const managersData = data?.data;
   const meta = data?.meta;
-  console.log(managersData);
+
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);
@@ -163,7 +163,7 @@ const ManageProductTagsPage = () => {
             buttonText="Add Tag"
             icon={<IoMdAdd />}
           >
-            <AddUpdateCategory />
+            <AddUpdateTags />
           </ModalComponent>
         </div>
       </ActionBar>
@@ -184,7 +184,7 @@ const ManageProductTagsPage = () => {
         showModel={showModalWithId}
         setShowModel={setShowModalWithId}
       >
-        <AddUpdateCategory id={id} />
+        <AddUpdateTags id={id} />
       </EComModalWrapper>
     </div>
   );

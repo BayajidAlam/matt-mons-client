@@ -1,41 +1,40 @@
 "use client";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
+import {
+  useCreateTagMutation,
+  useGetSingleTagQuery,
+  useUpdateTagMutation,
+} from "@/redux/api/tags/tagsApi";
 import { Button, Col, Row, message } from "antd";
-import { useState } from "react";
 
 const AddUpdateTags = ({ id }: { id?: string }) => {
-  const [image, setimage] = useState("");
   //Get
-  // const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
-  const data: any = [];
+  const { data, isLoading: getLoad } = useGetSingleTagQuery(id ? id : "");
+
   //Update
-  // const [updateDriver, { isLoading: updateLoad }] = useUpdateDriverMutation();
+  const [updateTag, { isLoading: updateLoad }] = useUpdateTagMutation();
 
   //Create
-  // const [createDriver, { isLoading: createLoad }] = useCreateDriverMutation();
+  const [createTag, { isLoading: createLoad }] = useCreateTagMutation();
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
-    id ? values.profileImg : (values.driver.profileImg = image);
+
     try {
-      // const res = id
-      //   ? await updateDriver({
-      //       id,
-      //       data: {
-      //         fullName: values.driver.fullName,
-      //         mobile: values.driver.mobile,
-      //         licenseNo: values.driver.licenseNo,
-      //         bloodGroup: values.driver.bloodGroup,
-      //         address: values.driver.address,
-      //       },
-      //     }).unwrap()
-      //   : await createDriver(values).unwrap();
-      // if (res.id) {
-      //   message.success(`Driver ${id ? "updated" : "added"} successfully`);
-      // } else {
-      //   message.error(res.message);
-      // }
+      const res = id
+        ? await updateTag({
+            id,
+            data: {
+              ...values,
+            },
+          }).unwrap()
+        : await createTag(values).unwrap();
+      if (res?.data) {
+        message.success(`Tags ${id ? "updated" : "added"} successfully`);
+      } else {
+        message.error(res?.message);
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -53,7 +52,10 @@ const AddUpdateTags = ({ id }: { id?: string }) => {
         {id ? "Update Color" : "Add Color"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={id ? { ...data?.data } : {}}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -93,7 +95,7 @@ const AddUpdateTags = ({ id }: { id?: string }) => {
               <Button
                 htmlType="submit"
                 type="primary"
-                // disabled={createLoad || updateLoad}
+                disabled={createLoad || updateLoad}
               >
                 {id ? "Update" : "Add"}
               </Button>

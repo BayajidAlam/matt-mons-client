@@ -1,46 +1,42 @@
 "use client";
+
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
-import FormTextArea from "@/components/Forms/FormTextArea";
 import { Button, Col, Row, message } from "antd";
-import { useState } from "react";
-import FormSelectField from "../Forms/FormSelectField";
-import { genderOptions } from "@/constants/global";
-import Loading from "@/app/loading";
-import UploadImage from "../ui/UploadImage";
+import {
+  useCreateCategoryMutation,
+  useGetSingleCategoryQuery,
+  useUpdateCategoryMutation,
+} from "@/redux/api/category/categoryApi";
 
 const AddUpdateCategory = ({ id }: { id?: string }) => {
-  const [image, setimage] = useState("");
   //Get
-  // const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
-  const data: any = [];
+  const { data, isLoading: getLoad } = useGetSingleCategoryQuery(id ? id : "");
+
   //Update
-  // const [updateDriver, { isLoading: updateLoad }] = useUpdateDriverMutation();
+  const [updateCategory, { isLoading: updateLoad }] =
+    useUpdateCategoryMutation();
 
   //Create
-  // const [createDriver, { isLoading: createLoad }] = useCreateDriverMutation();
+  const [createCategory, { isLoading: createLoad }] =
+    useCreateCategoryMutation();
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
-    id ? values.profileImg : (values.driver.profileImg = image);
     try {
-      // const res = id
-      //   ? await updateDriver({
-      //       id,
-      //       data: {
-      //         fullName: values.driver.fullName,
-      //         mobile: values.driver.mobile,
-      //         licenseNo: values.driver.licenseNo,
-      //         bloodGroup: values.driver.bloodGroup,
-      //         address: values.driver.address,
-      //       },
-      //     }).unwrap()
-      //   : await createDriver(values).unwrap();
-      // if (res.id) {
-      //   message.success(`Driver ${id ? "updated" : "added"} successfully`);
-      // } else {
-      //   message.error(res.message);
-      // }
+      const res = id
+        ? await updateCategory({
+            id,
+            data: {
+              ...values,
+            },
+          }).unwrap()
+        : await createCategory(values).unwrap();
+      if (res?.data) {
+        message.success(`Category ${id ? "updated" : "added"} successfully`);
+      } else {
+        message.error(res?.message);
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -58,7 +54,10 @@ const AddUpdateCategory = ({ id }: { id?: string }) => {
         {id ? "Update Color" : "Add Color"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={id ? { ...data?.data } : {}}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -98,7 +97,7 @@ const AddUpdateCategory = ({ id }: { id?: string }) => {
               <Button
                 htmlType="submit"
                 type="primary"
-                // disabled={createLoad || updateLoad}
+                disabled={createLoad || updateLoad}
               >
                 {id ? "Update" : "Add"}
               </Button>

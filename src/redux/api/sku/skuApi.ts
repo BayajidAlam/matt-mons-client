@@ -12,7 +12,7 @@ export const skuApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: [tagTypes.color],
+      invalidatesTags: [tagTypes.sku],
     }),
 
     // get all
@@ -22,7 +22,7 @@ export const skuApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      providesTags: [tagTypes.color],
+      providesTags: [tagTypes.sku],
     }),
 
     // get single
@@ -31,7 +31,7 @@ export const skuApi = baseApi.injectEndpoints({
         url: `${SKU_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.color],
+      providesTags: [tagTypes.sku],
     }),
 
     // update
@@ -41,7 +41,7 @@ export const skuApi = baseApi.injectEndpoints({
         method: "PATCH",
         data: data?.data,
       }),
-      invalidatesTags: [tagTypes.color],
+      invalidatesTags: [tagTypes.sku],
     }),
 
     // delete
@@ -50,7 +50,7 @@ export const skuApi = baseApi.injectEndpoints({
         url: `${SKU_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [tagTypes.color],
+      invalidatesTags: [tagTypes.sku],
     }),
   }),
 });

@@ -12,15 +12,16 @@ import dayjs from "dayjs";
 import ModalComponent from "@/components/ui/Modal";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import { useDeleteSellsManagerMutation } from "@/redux/api/manager/managerApi";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
-import AddUpdateProductSku from "@/components/addUpdateFrom/AddUpdateSku";
-import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
-import { useDeleteSkuMutation } from "@/redux/api/sku/skuApi";
+import { useDeleteColorMutation } from "@/redux/api/color/colorApi";
+import { useGetAllSizesQuery } from "@/redux/api/size/sizeApi";
+import AddUpdateSize from "@/components/addUpdateFrom/AddUpdateSizeMutation";
+import { useDeleteSkuMutation, useGetAllSkusQuery } from "@/redux/api/sku/skuApi";
+import AddUpdateProductSku from "@/components/addUpdateFrom/AddUpdateSku";
 
-const ManagerProductSKUPage = () => {
+const ProductSkuPage = () => {
   const query: Record<string, any> = {};
 
   const [id, setId] = useState("");
@@ -47,7 +48,7 @@ const ManagerProductSKUPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const [deleteSku, { isLoading: deleteLoading }] = useDeleteSkuMutation();
+  const [deleteSku] = useDeleteSkuMutation();
 
   const deleteSkuHandler = async (id: string) => {
     try {
@@ -125,12 +126,12 @@ const ManagerProductSKUPage = () => {
     },
   ];
 
-  const { data, isLoading } = useGetAllProductSkuQuery({ ...query });
+  const { data, isLoading } = useGetAllSkusQuery({ ...query });
 
   // const data = [];
   const managersData = data?.data;
   const meta = data?.meta;
-
+  console.log(managersData);
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);
@@ -148,13 +149,13 @@ const ManagerProductSKUPage = () => {
     setSearchTerm("");
   };
 
-  if (isLoading || deleteLoading) {
+  if (isLoading) {
     return <Loader className="h-[50vh] flex items-end justify-center" />;
   }
 
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="SKU'S List">
+      <ActionBar inline title="Sku List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -179,7 +180,7 @@ const ManagerProductSKUPage = () => {
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
-            buttonText="Add SKU"
+            buttonText="Add Sku"
             icon={<IoMdAdd />}
           >
             <AddUpdateProductSku />
@@ -209,4 +210,4 @@ const ManagerProductSKUPage = () => {
   );
 };
 
-export default ManagerProductSKUPage;
+export default ProductSkuPage;

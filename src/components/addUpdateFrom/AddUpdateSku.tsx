@@ -9,6 +9,7 @@ import {
   useGetSingleSkuQuery,
   useUpdateSkuMutation,
 } from "@/redux/api/sku/skuApi";
+import Loading from "@/app/loading";
 
 const AddUpdateProductSku = ({ id }: { id?: string }) => {
   //Get
@@ -33,7 +34,7 @@ const AddUpdateProductSku = ({ id }: { id?: string }) => {
           }).unwrap()
         : await createSku(values).unwrap();
       if (res?.data) {
-        message.success(`Driver ${id ? "updated" : "added"} successfully`);
+        message.success(`Sku ${id ? "updated" : "added"} successfully`);
       } else {
         message.error(res.message);
       }
@@ -42,9 +43,9 @@ const AddUpdateProductSku = ({ id }: { id?: string }) => {
     }
   };
 
-  // if (id && getLoad) {
-  //   return <Loading />;
-  // }
+  if (id && getLoad) {
+    return <Loading />;
+  }
 
   // console.log(data);
 
