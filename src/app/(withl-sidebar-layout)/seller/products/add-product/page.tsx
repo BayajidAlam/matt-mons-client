@@ -1,26 +1,17 @@
 "use client";
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
+import FormKeyValuePairInput from "@/components/Forms/FormKeyValuePairInput";
+import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
+import FormSearchableSelectField from "@/components/Forms/FormSearchAbleSelectField";
+import TextEditor from "@/components/TextEditor/TextEditor";
+import UploadImage from "@/components/ui/UploadImage";
+import { genderOptions } from "@/constants/global";
 import { Button, Col, Row, message } from "antd";
 import { useState } from "react";
-import UploadImage from "../ui/UploadImage";
-import TextEditor from "../TextEditor/TextEditor";
-import FormColorPicker from "../Forms/FormColorPicker";
-import { genderOptions } from "@/constants/global";
-import FormSearchableSelectField from "../Forms/FormSearchAbleSelectField";
-import FormGroupCheckBox from "../Forms/FormGroupCheckBox";
-import FormKeyValuePairInput from "../Forms/FormKeyValuePairInput";
-import UploadMultipleImage from "../UploadMultipleImage";
-
-const options = [
-  { label: "L", value: "L" },
-  { label: "M", value: "M" },
-  { label: "X", value: "X" },
-  { label: "XL", value: "XL" },
-];
 
 const AddUpdateProduct = ({ id }: { id?: string }) => {
-  console.log('modal clicked with id: ' + id);
+  console.log("modal clicked with id: " + id);
   const [image, setimage] = useState("");
   const [images, setImages] = useState<string[]>([]);
   //Get
@@ -34,7 +25,8 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
-    id ? values.profileImg : (values.driver.profileImg = image);
+
+    console.log(values);
     try {
       // const res = id
       //   ? await updateDriver({
@@ -65,19 +57,19 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
   // console.log(data);
 
   return (
-    <div>
-      <h1 className="text-center my-1 font-bold text-2xl">
+    <div className="bg-white border border-blue-200 rounded-lg  shadow-md shadow-blue-200  space-y-3 lg:m-5 md:m-1">
+      <h1 className="text-start my-1 font-bold text-lg border-b p-5">
         {id ? "Update Product" : "Add Product"}
       </h1>
-      <div>
+      <div className="bg-white p-5 w-full lg:w-3/6 ">
         <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
           <div
-            style={{
-              border: "1px solid #d9d9d9",
-              borderRadius: "8px",
-              padding: "20px",
-              marginBottom: "10px",
-            }}
+            // style={{
+            //   border: "1px solid #d9d9d9",
+            //   borderRadius: "8px",
+            //   padding: "20px",
+            //   marginBottom: "10px",
+            // }}
             className="my-4"
           >
             <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
@@ -151,7 +143,6 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                   label="Product SKU"
                 />
               </Col>
-
               <Col
                 style={{
                   marginTop: "10px",
@@ -160,9 +151,10 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 md={12}
                 lg={8}
               >
-                <FormGroupCheckBox
-                  options={options}
-                  checkboxLabel="Abailable Size"
+                <FormSearchableSelectField
+                  name="categoryId"
+                  options={genderOptions}
+                  label="Product Category"
                 />
               </Col>
               <Col
@@ -173,7 +165,11 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 md={12}
                 lg={8}
               >
-                <FormColorPicker name="colors" label="Color" required />
+                <FormMultiSelectField
+                  name="productTags"
+                  options={genderOptions}
+                  label="Product Tags"
+                />
               </Col>
             </Row>
             <Row className="my-4" gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
@@ -222,11 +218,11 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 md={6}
                 lg={4}
               >
-                <UploadMultipleImage
+                {/* <UploadMultipleImage
                   name="additionalImage"
                   label="Additional Image"
                   setImageStatus={setImages}
-                />
+                /> */}
               </Col>
             </Row>
 

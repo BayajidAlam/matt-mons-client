@@ -20,10 +20,9 @@ const UploadImage = ({
   label,
   required,
   name,
-  defaultImage,
-  customChange,
   setImageStatus
 }: ImageUploadProps) => {
+  
   const [loading, setLoading] = useState(false);
   const [imgs, setImgs] = useState<string[]>([]);
   const { control } = useFormContext();

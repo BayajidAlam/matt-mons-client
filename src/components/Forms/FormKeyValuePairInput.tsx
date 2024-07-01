@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useFormContext, useFieldArray, Controller } from "react-hook-form";
-import { Input } from "antd";
-import { MinusCircleOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { Button, Input, Tooltip } from "antd";
+import {
+  CloseOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 
 interface FormKeyValuePairInputProps {
   name: string;
@@ -55,17 +58,27 @@ const FormKeyValuePairInput: React.FC<FormKeyValuePairInputProps> = ({
               name={`${name}.${index}.value`}
               render={({ field }) => <Input placeholder="Value" {...field} />}
             />
-            <button className="text-xl" onClick={() => remove(index)}>
-              <MinusCircleOutlined />
-            </button>
+            <Tooltip title="Remove Row">
+              <Button
+                type="primary"
+                icon={<CloseOutlined style={{ fontSize: 16 }} />}
+                size="small"
+                style={{ color: "#fff", background: "red", padding: "10px" }}
+                onClick={() => remove(index)}
+              />
+            </Tooltip>
           </div>
         ))}
-        <button
-          className="text-xl text-end"
-          onClick={() => append({ key: "", value: "" })}
-        >
-          <span className="text-base">Add</span> <PlusCircleOutlined />
-        </button>
+        <div className="flex justify-end">
+          <Tooltip title="Add Row">
+            <Button
+              onClick={() => append({ key: "", value: "" })}
+              type="primary"
+              icon={<PlusOutlined />}
+              size="small"
+            />
+          </Tooltip>
+        </div>
       </div>
     </>
   );

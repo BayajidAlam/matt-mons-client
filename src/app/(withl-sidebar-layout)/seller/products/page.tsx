@@ -19,11 +19,14 @@ import {
 } from "@/redux/api/manager/managerApi";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
-import AddUpdateProduct from "@/components/addUpdateFrom/AddUpdateProduct";
 import { useGetAllProductsQuery } from "@/redux/api/products/productsApi";
 import Loader from "@/components/Utils/Loader";
+import Link from "next/link";
+import { getUserInfo } from "@/services/auth.service";
 
 const ManagerAllProductsPage = () => {
+  const { role } = getUserInfo() as any;
+  console.log(role);
   const query: Record<string, any> = {};
 
   const [id, setId] = useState("");
@@ -62,6 +65,10 @@ const ManagerAllProductsPage = () => {
     } catch (error: any) {
       message.error(`${error.data}`);
     }
+  };
+
+  const showModal = () => {
+    setShowModel(true);
   };
 
   const columns = [
@@ -139,11 +146,29 @@ const ManagerAllProductsPage = () => {
                 margin: "0px 5px",
               }}
             >
-              <ModalTriggerButton
-                setShowModel={setShowModalWithId}
-                icon={<EditOutlined />}
-              />
+              <div className="md:hidden">
+                <Button
+                  onClick={showModal}
+                  type="primary"
+                  style={{ width: "100%" }}
+                  className="!flex !items-center !gap-2 !justify-center"
+                >
+                  <EditOutlined />
+                </Button>
+              </div>
+              <div className="hidden md:block">
+                <Button
+                  style={{ width: "100%" }}
+                  type="primary"
+                  onClick={showModal}
+                  className="!flex !items-center !gap-2 !justify-center"
+                >
+                  <EditOutlined />
+                  Add Product
+                </Button>
+              </div>
             </div>
+
             <Button
               onClick={() => deleteSellsManagerHandler(data)}
               type="primary"
@@ -186,7 +211,7 @@ const ManagerAllProductsPage = () => {
 
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Managers List">
+      <ActionBar inline title="Products List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -208,20 +233,31 @@ const ManagerAllProductsPage = () => {
             </Button>
           )}
 
-          {/* <ModalTriggerButton
-            setShowModel={setShowModalWithId}
-            icon={<IoMdAdd />}
-             buttonText="Add Managers"
-          /> */}
-
-          <ModalComponent
-            showModel={showModel}
-            setShowModel={setShowModel}
-            buttonText="Add Product"
-            icon={<IoMdAdd />}
-          >
-            <AddUpdateProduct />
-          </ModalComponent>
+          <div className="md:hidden">
+            <Link href={`/${role}/products/add-product`}>
+              <Button
+                onClick={showModal}
+                type="primary"
+                style={{ width: "100%" }}
+                className="!flex !items-center !gap-2 !justify-center"
+              >
+                <IoMdAdd />
+              </Button>
+            </Link>
+          </div>
+          <div className="hidden md:block">
+            <Link href={`/${role}/products/add-product`}>
+              <Button
+                style={{ width: "100%" }}
+                type="primary"
+                onClick={showModal}
+                className="!flex !items-center !gap-2 !justify-center"
+              >
+                <IoMdAdd />
+                Add Product
+              </Button>
+            </Link>
+          </div>
         </div>
       </ActionBar>
 
@@ -237,12 +273,12 @@ const ManagerAllProductsPage = () => {
         showPagination={true}
       />
 
-      <EComModalWrapper
+      {/* <EComModalWrapper
         showModel={showModalWithId}
         setShowModel={setShowModalWithId}
       >
         <AddUpdateProduct id={id} />
-      </EComModalWrapper>
+      </EComModalWrapper> */}
     </div>
   );
 };
