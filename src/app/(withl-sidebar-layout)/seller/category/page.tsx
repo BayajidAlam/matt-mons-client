@@ -12,12 +12,9 @@ import dayjs from "dayjs";
 import ModalComponent from "@/components/ui/Modal";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import { useDeleteSellsManagerMutation } from "@/redux/api/manager/managerApi";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
-import { useGetAllProductSkuQuery } from "@/redux/api/productSku/productSkuApi";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
-import AddUpdateColor from "@/components/addUpdateFrom/AddUpdateColor";
 import AddUpdateCategory from "@/components/addUpdateFrom/AddUpdateCategory";
 import {
   useDeleteCategoryMutation,
@@ -115,7 +112,7 @@ const ManagerProductCategoriesPage = () => {
 
   const managersData = data?.data;
   const meta = data?.meta;
-  console.log(managersData);
+
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);

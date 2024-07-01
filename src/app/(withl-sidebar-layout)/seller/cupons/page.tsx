@@ -6,20 +6,28 @@ import {
   EditOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import ModalComponent from "@/components/ui/Modal";
-import { USER_ROLE } from "@/constants/role";
-import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import AddUpdateCupon from "@/components/addUpdateFrom/AddUpdateCupon";
-import { useGetAllCouponsQuery } from "@/redux/api/cupons/cuponsApi";
+import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
+import Loader from "@/components/Utils/Loader";
+import EComModalWrapper from "@/components/ui/EComModalWrapper";
+import {
+  useDeleteColorMutation,
+} from "@/redux/api/color/colorApi";
+import AddUpdateCoupon from "@/components/addUpdateFrom/AddUpdateCoupon";
+import { useDeleteCouponMutation, useGetAllCouponQuery } from "@/redux/api/coupon/couponApi";
 
-const CuponsPage = () => {
+const ManageProductColorPage = () => {
+
   const query: Record<string, any> = {};
+
+  const [id, setId] = useState("");
   const [showModel, setShowModel] = useState(false);
+  const [showModalWithId, setShowModalWithId] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -41,10 +49,23 @@ const CuponsPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
+  const [deleteCoupon] = useDeleteCouponMutation();
+  const deleteCouponHandler = async (id: string) => {
+    try {
+      message.loading("Deleting.....");
+      const res = await deleteCoupon(id).unwrap();
+      if (res?.data) {
+        message.success("Successfully Deleted!");
+      }
+    } catch (error: any) {
+      message.error(`${error.data}`);
+    }
+  };
+
   const columns = [
     {
       title: "Coupon Name",
-      dataIndex: "CouponName",
+      dataIndex: "couponName",
     },
     {
       title: "Discount(%)",
@@ -79,26 +100,21 @@ const CuponsPage = () => {
       render: function (data: any) {
         return (
           <div className="flex">
-            {/* <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
-                <EyeOutlined />
-              </Button>
-            </Link> */}
-            <div
+          <div
+              onClick={() => {
+                setId(data);
+              }}
               style={{
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent
-                showModel={showModel}
-                setShowModel={setShowModel}
+              <ModalTriggerButton
+                setShowModel={setShowModalWithId}
                 icon={<EditOutlined />}
-              >
-                <AddUpdateCupon />
-              </ModalComponent>
+              />
             </div>
             <Button
-              //   onClick={() => deleteGeneralUserHandler(data)}
+                onClick={() => deleteCouponHandler(data)}
               type="primary"
               danger
             >
@@ -110,16 +126,17 @@ const CuponsPage = () => {
     },
   ];
 
-  const { data, isLoading } = useGetAllCouponsQuery({ ...query });
+  const { data, isLoading } = useGetAllCouponQuery({ ...query });
 
-  // const data: any = [];
-  const drivers = data?.data;
+  // const data = [];
+  const managersData = data?.data;
   const meta = data?.meta;
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);
   };
+
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
     setSortBy(field as string);
@@ -132,12 +149,13 @@ const CuponsPage = () => {
     setSearchTerm("");
   };
 
-  // if (isLoading) {
-  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
-  // }
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
+
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Cupons List">
+      <ActionBar inline title="Color List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -158,21 +176,22 @@ const CuponsPage = () => {
               <ReloadOutlined />
             </Button>
           )}
+
           <ModalComponent
             showModel={showModel}
             setShowModel={setShowModel}
-            buttonText="Add Cupon"
+            buttonText="Add Coupon"
             icon={<IoMdAdd />}
           >
-            <AddUpdateCupon />
+            <AddUpdateCoupon />
           </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        // loading={isLoading}
+        loading={isLoading}
         columns={columns}
-        dataSource={drivers}
+        dataSource={managersData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -180,8 +199,15 @@ const CuponsPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+
+      <EComModalWrapper
+        showModel={showModalWithId}
+        setShowModel={setShowModalWithId}
+      >
+        <AddUpdateCoupon id={id} />
+      </EComModalWrapper>
     </div>
   );
 };
 
-export default CuponsPage;
+export default ManageProductColorPage;

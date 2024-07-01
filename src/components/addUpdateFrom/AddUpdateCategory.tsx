@@ -51,7 +51,7 @@ const AddUpdateCategory = ({ id }: { id?: string }) => {
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
-        {id ? "Update Color" : "Add Color"}
+        {id ? "Update Category" : "Add Category"}
       </h1>
       <div>
         <Form
@@ -87,9 +87,9 @@ const AddUpdateCategory = ({ id }: { id?: string }) => {
                   type="text"
                   name={id ? "title" : "title"}
                   size="large"
-                  label="Color"
+                  label="Category"
                   required={true}
-                  placeholder="Please enter Color Name"
+                  placeholder="Please enter Category Name"
                 />
               </Col>
             </Row>

@@ -8,6 +8,7 @@ type UMDatePikerProps = {
   label?: string;
   value?: Dayjs;
   size?: "large" | "small";
+  required?: boolean;
 };
 
 const FormDatePicker = ({
@@ -15,6 +16,7 @@ const FormDatePicker = ({
   label,
   onChange,
   size = "large",
+  required,
 }: UMDatePikerProps) => {
   const { control, setValue } = useFormContext();
 
@@ -26,7 +28,16 @@ const FormDatePicker = ({
 
   return (
     <div>
-      {label ? label : null}
+      {label && label}
+      {required && (
+        <span
+          style={{
+            color: "red",
+          }}
+        >
+          *
+        </span>
+      )}
       <br />
       <Controller
         name={name}
@@ -37,6 +48,7 @@ const FormDatePicker = ({
             size={size}
             onChange={handleOnChange}
             style={{ width: "100%" }}
+            required={required}
           />
         )}
       />
