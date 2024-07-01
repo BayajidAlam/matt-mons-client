@@ -2,21 +2,17 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import FormKeyValuePairInput from "@/components/Forms/FormKeyValuePairInput";
-import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
-import FormSearchableSelectField from "@/components/Forms/FormSearchAbleSelectField";
 import SelectProductCategoryOptions from "@/components/Forms/ProductCategoryOptions";
 import SelectProductSkuOptions from "@/components/Forms/ProductSkuOptions";
 import SelectProductTagsOptions from "@/components/Forms/ProductTagOptions";
 import TextEditor from "@/components/TextEditor/TextEditor";
 import UploadImage from "@/components/ui/UploadImage";
 import UploadMultipleImage from "@/components/ui/UploadMultipleImage";
-import { genderOptions } from "@/constants/global";
 import {
   useCreateProductMutation,
   useGetSingProductQuery,
   useUpdateProductMutation,
 } from "@/redux/api/products/productsApi";
-import { useGetAllSkusQuery } from "@/redux/api/sku/skuApi";
 import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
 import Link from "next/link";
@@ -52,6 +48,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
           }).unwrap()
         : await createProduct({
             ...values,
+            productAdditionalImages: images,
             shopId,
             createdBy: fullName,
           }).unwrap();
@@ -68,8 +65,6 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
   // if (id && getLoad) {
   //   return <Loading />;
   // }
-
-  // console.log(data);
 
   return (
     <div className="bg-white border border-blue-200 rounded-lg  shadow-md shadow-blue-200  space-y-3 lg:m-5 md:m-1">
@@ -163,7 +158,10 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 md={12}
                 lg={8}
               >
-                <SelectProductSkuOptions name="prodSku" label="Product SKU" />
+                <SelectProductSkuOptions
+                  name="productSkuId"
+                  label="Product SKU"
+                />
               </Col>
               <Col
                 style={{
@@ -239,6 +237,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 lg={20}
               >
                 <UploadMultipleImage
+                  required
                   name="additionalImage"
                   label="Additional Image"
                   setImageStatus={setImages}

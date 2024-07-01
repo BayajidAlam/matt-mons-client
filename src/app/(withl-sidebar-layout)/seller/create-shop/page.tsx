@@ -2,31 +2,26 @@
 
 import Loading from "@/app/loading";
 import Form from "@/components/Forms/Form";
-import FormDatePicker from "@/components/Forms/FormDatePicker";
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField from "@/components/Forms/FormSelectField";
-import FormTextArea from "@/components/Forms/FormTextArea";
 import ActionBar from "@/components/ui/ActionBar";
-import UMBreadCrumb from "@/components/ui/UMBreadCrumb";
 import UploadImage from "@/components/ui/UploadImage";
-import { genderOptions } from "@/constants/global";
+import { authKey } from "@/constants/storagekey";
 import { useGetSingleSellerQuery } from "@/redux/api/seller/sellerApi";
 import { useCreateNewShopMutation } from "@/redux/api/shop/shopApi";
-import { getUserInfo } from "@/services/auth.service";
-
+import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const CreateAdminPage = () => {
-
   const [image, setImage] = useState("");
   const { id, sellerId, shopCount } = getUserInfo() as any;
   const { data, isLoading } = useGetSingleSellerQuery(id);
   const { profileImg = "/" } = data?.data ?? {};
 
-  // Ensure profileImg is correctly formatted for next/image
+  const router = useRouter();
+
   const formattedProfileImg =
     profileImg.startsWith("http://") ||
     profileImg.startsWith("https://") ||
@@ -37,10 +32,6 @@ const CreateAdminPage = () => {
   const [createNewShop, { isLoading: createShopLoading }] =
     useCreateNewShopMutation();
 
-  // sellerId     String
-  // shopName     String
-  // shopImage    String
-  // location     String
   const onSubmit = async (values: any) => {
     const shopData = {
       sellerId,
@@ -48,12 +39,12 @@ const CreateAdminPage = () => {
       shopImage: image,
       location: values.location,
     };
-
-    console.log(shopData);
     try {
       const res = (await createNewShop(shopData)) as any;
-      if (res?.success) {
-        message.success(`${res?.message}`);
+      if (res?.data?.success) {
+        message.success(`${res?.data?.message}`);
+        removeUserInfo(authKey);
+        router.push("/login");
       }
       console.log(res);
     } catch (err: any) {

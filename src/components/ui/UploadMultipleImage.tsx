@@ -1,92 +1,51 @@
-import uploadImgCloudinary from "@/hooks/uploadImgCloudinary";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
 import { Upload, message } from "antd";
-import type { UploadChangeParam } from "antd/es/upload";
-import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import Image from "next/image";
-import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import uploadImgCloudinary from "@/hooks/uploadImgCloudinary";
 
-type ImageUploadProps = {
+type IUploadMultipleImageProps = {
   label: string;
-  required?: boolean;
+  required: boolean;
   name: string;
-  defaultImage?: string[];
-  customChange?: any;
-  setImageStatus: React.Dispatch<React.SetStateAction<any>>;
+  setImageStatus: any;
 };
 
 const UploadMultipleImage = ({
   label,
   required,
   name,
-  defaultImage,
-  customChange,
   setImageStatus,
-}: ImageUploadProps) => {
+}: IUploadMultipleImageProps) => {
   const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState([]);
   const { setValue } = useFormContext();
 
-  const handleChange: UploadProps["onChange"] = async (
-    info: UploadChangeParam<UploadFile>
-  ) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-    }
-    if (info.file.status === "done") {
-      setImages((prevImages) => {
-        const updatedImages = [...prevImages, info.file.response];
-        setValue(name, updatedImages);
-        return updatedImages;
-      });
-      setLoading(false);
-    }
-    if (info.file.status === "error") {
-      setLoading(false);
-      message.error(`${info.file.name} upload failed.`);
-    }
-  };
-
-  const beforeUpload = async (file: RcFile) => {
-    if (images.length >= 4) {
-      message.error("You can only upload a maximum of 4 images.");
-      return false;
-    }
+  const uploadImages = async (files: File[]) => {
+    setLoading(true);
+    const uploadPromises = files.map((file: File) => uploadImgCloudinary(file));
     try {
-      setLoading(true);
-      const imgUrl = await uploadImgCloudinary(file);
-      setImageStatus(imgUrl);
-      setImages((prevImages) => {
-        const updatedImages = [...prevImages, imgUrl];
-        setValue(name, updatedImages); 
-        return updatedImages;
-      });
-      setLoading(false);
-      return false;
+      const imageUrls = await Promise.all(uploadPromises);
+      setImages(imageUrls);
+      setValue(name, imageUrls);
+      setImageStatus(imageUrls); // Update the state in parent component
     } catch (error) {
-      console.error("Failed to upload image to Cloudinary", error);
       message.error("Upload failed");
+      console.error("Failed to upload images", error);
+    } finally {
       setLoading(false);
-      throw error;
     }
   };
 
-  console.log(images, "images");
-  const uploadedImages = (
-    <div className="md:flex justify-start items-center gap-2">
-      {images.map((img) => (
-        <Image
-          key={img}
-          src={img}
-          alt="avatar"
-          style={{ width: "100px", height: "100px" }}
-          width={100}
-          height={100}
-        />
-      ))}
-    </div>
-  );
+  const beforeUpload = (file: File, fileList: File[]) => {
+    uploadImages(fileList);
+    return false;
+  };
+
+  const uploadedImages = images.map((img, i) => (
+    <Image key={img} src={img} alt="uploaded image" width={100} height={100} />
+  ));
 
   const uploadButton = (
     <div>
@@ -97,20 +56,24 @@ const UploadMultipleImage = ({
 
   return (
     <>
-      {label && label}
+      {label && <span>{label}</span>}
       {required && <span style={{ color: "red" }}>*</span>}
 
-      <Upload
-        name={name}
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        beforeUpload={beforeUpload}
-        onChange={handleChange}
-        multiple
-      >
-        {images.length > 0 ? uploadedImages : uploadButton}
-      </Upload>
+      <div className="flex justify-start items-center gap-2">
+        <div className="uploaded-images flex justify-start items-center gap-2">
+          {uploadedImages}
+        </div>
+        <Upload
+          name={name}
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          beforeUpload={beforeUpload}
+          multiple
+        >
+          {images.length >= 4 ? null : uploadButton}
+        </Upload>
+      </div>
     </>
   );
 };
