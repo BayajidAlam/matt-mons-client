@@ -5,15 +5,16 @@ const PRODUCTS_URL = "/products";
 
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (build: any) => ({
+
     // create
-    // createAccountHead: build.mutation({
-    //   query: (data: any) => ({
-    //     url: `${ACCOUNT_HEAD_URL}/create`,
-    //     method: 'POST',
-    //     data: data,
-    //   }),
-    //   invalidatesTags: [tagTypes.accountHead],
-    // }),
+    createProduct: build.mutation({
+      query: (data: any) => ({
+        url: `${PRODUCTS_URL}/create-product`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.product],
+    }),
 
     // get all
     getAllProducts: build.query({
@@ -22,28 +23,43 @@ export const productsApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      providesTags: [tagTypes.sells_manager],
+      providesTags: [tagTypes.product],
     }),
 
     // get single
-    // getSingleSellsManager: build.query({
-    //   query: (id: string) => ({
-    //     url: `${PRODUCTS_URL}/${id}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: [tagTypes.sells_manager],
-    // }),
+    getSingProduct: build.query({
+      query: (id: string) => ({
+        url: `${PRODUCTS_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.product],
+    }),
 
     // update
-    // updateSellsManager: build.mutation({
-    //   query: (data: any) => ({
-    //     url: `${PRODUCTS_URL}/${data?.id}`,
-    //     method: "PATCH",
-    //     data: data?.data,
-    //   }),
-    //   invalidatesTags: [tagTypes.sells_manager],
-    // }),
+    updateProduct: build.mutation({
+      query: (data: any) => ({
+        url: `${PRODUCTS_URL}/${data?.id}`,
+        method: "PATCH",
+        data: data?.data,
+      }),
+      invalidatesTags: [tagTypes.product],
+    }),
+
+    // delete
+    deleteProduct: build.mutation({
+      query: (id: string) => ({
+        url: `${PRODUCTS_URL}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.product],
+    }),
   }),
 });
 
-export const { useGetAllProductsQuery } = productsApi;
+export const {
+  useCreateProductMutation,
+  useGetAllProductsQuery,
+  useGetSingProductQuery,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
+} = productsApi;

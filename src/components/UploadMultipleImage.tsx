@@ -8,21 +8,20 @@ import { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 type ImageUploadProps = {
-  label?: string
-  required?: boolean
+  label?: string;
+  required?: boolean;
   name: string;
   defaultImage?: string;
   customChange?: any;
-  setImageStatus:React.Dispatch<React.SetStateAction<any>>
+  setImageStatus: React.Dispatch<React.SetStateAction<any>>;
 };
 
-const UploadImage = ({
+const UploadMultipleImages = ({
   label,
   required,
   name,
-  setImageStatus
+  setImageStatus,
 }: ImageUploadProps) => {
-  
   const [loading, setLoading] = useState(false);
   const [imgs, setImgs] = useState<string[]>([]);
   const { control } = useFormContext();
@@ -49,14 +48,14 @@ const UploadImage = ({
     try {
       setLoading(true);
       const imgUrl = await uploadImgCloudinary(file); // Cloudinary upload
-      setImageStatus(imgUrl)
+      setImageStatus(imgUrl);
       setLoading(false);
       return imgUrl; // Returning the Cloudinary URL for Ant Design to use
     } catch (error) {
       console.error("Failed to upload image to Cloudinary", error);
       message.error("Upload failed");
       setLoading(false);
-      throw error; // Throw the error to prevent the file from being added to the upload list
+      throw error; 
     }
   };
 
@@ -69,7 +68,7 @@ const UploadImage = ({
 
   return (
     <>
-     {label && label}
+      {label && label}
       {required && (
         <span
           style={{
@@ -79,7 +78,7 @@ const UploadImage = ({
           *
         </span>
       )}
-      
+
       <Controller
         control={control}
         name={name}
@@ -113,4 +112,4 @@ const UploadImage = ({
   );
 };
 
-export default UploadImage;
+export default UploadMultipleImages;

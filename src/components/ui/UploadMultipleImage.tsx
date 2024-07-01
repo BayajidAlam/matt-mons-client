@@ -11,12 +11,12 @@ type ImageUploadProps = {
   label: string;
   required?: boolean;
   name: string;
-  defaultImage?: string;
+  defaultImage?: string[];
   customChange?: any;
   setImageStatus: React.Dispatch<React.SetStateAction<any>>;
 };
 
-const UploadImage = ({
+const UploadMultipleImage = ({
   label,
   required,
   name,
@@ -25,34 +25,45 @@ const UploadImage = ({
   setImageStatus,
 }: ImageUploadProps) => {
   const [loading, setLoading] = useState(false);
-  const [img, setImg] = useState("");
+  const [images, setImages] = useState<string[]>([]);
   const { setValue } = useFormContext();
 
   const handleChange: UploadProps["onChange"] = async (
     info: UploadChangeParam<UploadFile>
   ) => {
-    // if (info.file.status === "uploading") {
-    //   setLoading(true);
-    // }
-    // if (info.file.status === "done") {
-    //   setLoading(false);
-    //   setValue(name, info.file.response); // Assuming the response contains the Cloudinary URL
-    // }
-    // if (info.file.status === "error") {
-    //   setLoading(false);
-    //   message.error(`${info.file.name} upload failed.`);
-    // }
+    if (info.file.status === "uploading") {
+      setLoading(true);
+    }
+    if (info.file.status === "done") {
+      setImages((prevImages) => {
+        const updatedImages = [...prevImages, info.file.response];
+        setValue(name, updatedImages);
+        return updatedImages;
+      });
+      setLoading(false);
+    }
+    if (info.file.status === "error") {
+      setLoading(false);
+      message.error(`${info.file.name} upload failed.`);
+    }
   };
 
   const beforeUpload = async (file: RcFile) => {
+    if (images.length >= 4) {
+      message.error("You can only upload a maximum of 4 images.");
+      return false;
+    }
     try {
       setLoading(true);
       const imgUrl = await uploadImgCloudinary(file);
       setImageStatus(imgUrl);
-      setValue(name, setImg);
-      setImg(imgUrl);
+      setImages((prevImages) => {
+        const updatedImages = [...prevImages, imgUrl];
+        setValue(name, updatedImages); 
+        return updatedImages;
+      });
       setLoading(false);
-      return imgUrl;
+      return false;
     } catch (error) {
       console.error("Failed to upload image to Cloudinary", error);
       message.error("Upload failed");
@@ -61,8 +72,24 @@ const UploadImage = ({
     }
   };
 
+  console.log(images, "images");
+  const uploadedImages = (
+    <div className="md:flex justify-start items-center gap-2">
+      {images.map((img) => (
+        <Image
+          key={img}
+          src={img}
+          alt="avatar"
+          style={{ width: "100px", height: "100px" }}
+          width={100}
+          height={100}
+        />
+      ))}
+    </div>
+  );
+
   const uploadButton = (
-    <div className="">
+    <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
@@ -71,15 +98,7 @@ const UploadImage = ({
   return (
     <>
       {label && label}
-      {required && (
-        <span
-          style={{
-            color: "red",
-          }}
-        >
-          *
-        </span>
-      )}
+      {required && <span style={{ color: "red" }}>*</span>}
 
       <Upload
         name={name}
@@ -88,21 +107,12 @@ const UploadImage = ({
         showUploadList={false}
         beforeUpload={beforeUpload}
         onChange={handleChange}
+        multiple
       >
-        {img ? (
-          <Image
-            src={img as string}
-            alt="avatar"
-            style={{ width: "100px", height: "100px"}}
-            width={100}
-            height={100}
-          />
-        ) : (
-          uploadButton
-        )}
+        {images.length > 0 ? uploadedImages : uploadButton}
       </Upload>
     </>
   );
 };
 
-export default UploadImage;
+export default UploadMultipleImage;

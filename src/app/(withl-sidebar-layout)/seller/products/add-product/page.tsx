@@ -4,47 +4,62 @@ import FormInput from "@/components/Forms/FormInput";
 import FormKeyValuePairInput from "@/components/Forms/FormKeyValuePairInput";
 import FormMultiSelectField from "@/components/Forms/FormMultiSelectField";
 import FormSearchableSelectField from "@/components/Forms/FormSearchAbleSelectField";
+import SelectProductCategoryOptions from "@/components/Forms/ProductCategoryOptions";
+import SelectProductSkuOptions from "@/components/Forms/ProductSkuOptions";
+import SelectProductTagsOptions from "@/components/Forms/ProductTagOptions";
 import TextEditor from "@/components/TextEditor/TextEditor";
 import UploadImage from "@/components/ui/UploadImage";
+import UploadMultipleImage from "@/components/ui/UploadMultipleImage";
 import { genderOptions } from "@/constants/global";
+import {
+  useCreateProductMutation,
+  useGetSingProductQuery,
+  useUpdateProductMutation,
+} from "@/redux/api/products/productsApi";
+import { useGetAllSkusQuery } from "@/redux/api/sku/skuApi";
+import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
+import Link from "next/link";
 import { useState } from "react";
 
 const AddUpdateProduct = ({ id }: { id?: string }) => {
-  console.log("modal clicked with id: " + id);
+  const { shopId, fullName, role } = getUserInfo() as any;
+
   const [image, setimage] = useState("");
   const [images, setImages] = useState<string[]>([]);
   //Get
-  // const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
-  const data: any = [];
+  const { data, isLoading: getLoad } = useGetSingProductQuery(id ? id : "");
+
   //Update
-  // const [updateDriver, { isLoading: updateLoad }] = useUpdateDriverMutation();
+  const [updateProduct, { isLoading: updateLoad }] = useUpdateProductMutation();
 
   //Create
-  // const [createDriver, { isLoading: createLoad }] = useCreateDriverMutation();
+  const [createProduct, { isLoading: createLoad }] = useCreateProductMutation();
 
+  console.log(images, "imgs");
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
 
-    console.log(values);
+    values.productMainImage = image;
+    console.log(values, "vault");
     try {
-      // const res = id
-      //   ? await updateDriver({
-      //       id,
-      //       data: {
-      //         fullName: values.driver.fullName,
-      //         mobile: values.driver.mobile,
-      //         licenseNo: values.driver.licenseNo,
-      //         bloodGroup: values.driver.bloodGroup,
-      //         address: values.driver.address,
-      //       },
-      //     }).unwrap()
-      //   : await createDriver(values).unwrap();
-      // if (res.id) {
-      //   message.success(`Driver ${id ? "updated" : "added"} successfully`);
-      // } else {
-      //   message.error(res.message);
-      // }
+      const res = id
+        ? await updateProduct({
+            id,
+            data: {
+              ...values,
+            },
+          }).unwrap()
+        : await createProduct({
+            ...values,
+            shopId,
+            createdBy: fullName,
+          }).unwrap();
+      if (res?.data) {
+        message.success(`Product ${id ? "updated" : "added"} successfully`);
+      } else {
+        message.error(res.message);
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -58,11 +73,22 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
 
   return (
     <div className="bg-white border border-blue-200 rounded-lg  shadow-md shadow-blue-200  space-y-3 lg:m-5 md:m-1">
-      <h1 className="text-start my-1 font-bold text-lg border-b p-5">
-        {id ? "Update Product" : "Add Product"}
-      </h1>
-      <div className="bg-white p-5 w-full lg:w-3/6 ">
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+      <div className="border-b p-4 flex justify-between items-center">
+        <h1 className="my-1 font-bold text-lg ">
+          {id ? "Update Product" : "Add Product"}
+        </h1>
+
+        <Link href={`/${role}/products`}>
+          <Button type="primary" className="text-md">
+            Back
+          </Button>
+        </Link>
+      </div>
+      <div className="bg-white p-5 pt-0 w-full lg:w-3/6">
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={id ? { ...data?.data } : {}}
+        >
           <div
             // style={{
             //   border: "1px solid #d9d9d9",
@@ -91,7 +117,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 lg={24}
               >
                 <TextEditor
-                  name="productDescription"
+                  name="productDetails"
                   label="Product Details"
                   required
                 />
@@ -105,9 +131,9 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 lg={8}
               >
                 <FormInput
-                  name="odoMeter"
+                  name="minPrice"
                   label="Main Price"
-                  type="number"
+                  type="text"
                   size="large"
                   required={true}
                 />
@@ -121,9 +147,9 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 lg={8}
               >
                 <FormInput
-                  name="fee"
+                  name="discountPrice"
                   label="Discount Price"
-                  type="number"
+                  type="text"
                   size="large"
                   required={true}
                 />
@@ -137,11 +163,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 md={12}
                 lg={8}
               >
-                <FormSearchableSelectField
-                  name="Product SKU"
-                  options={genderOptions}
-                  label="Product SKU"
-                />
+                <SelectProductSkuOptions name="prodSku" label="Product SKU" />
               </Col>
               <Col
                 style={{
@@ -149,11 +171,10 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 }}
                 xs={24}
                 md={12}
-                lg={8}
+                lg={12}
               >
-                <FormSearchableSelectField
+                <SelectProductCategoryOptions
                   name="categoryId"
-                  options={genderOptions}
                   label="Product Category"
                 />
               </Col>
@@ -163,11 +184,10 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 }}
                 xs={24}
                 md={12}
-                lg={8}
+                lg={12}
               >
-                <FormMultiSelectField
+                <SelectProductTagsOptions
                   name="productTags"
-                  options={genderOptions}
                   label="Product Tags"
                 />
               </Col>
@@ -182,14 +202,14 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                 lg={24}
               >
                 <FormKeyValuePairInput
-                  name="additionalInfo"
+                  name="productAdditionalInfo"
                   label="Additional Info"
                   required
                 />
               </Col>
             </Row>
 
-            <Row className="my-4" gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
+            <Row className="my-4" gutter={{ xs: 24, xl: 24, lg: 24, md: 24 }}>
               {" "}
               <Col
                 style={{
@@ -203,7 +223,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
               >
                 <UploadImage
                   setImageStatus={setimage}
-                  name="profileImg"
+                  name="productMainImage"
                   label="Product Image"
                   required
                 />
@@ -213,16 +233,16 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
                   marginTop: "10px",
                 }}
                 className="gutter-row"
-                xs={10}
-                sm={6}
-                md={6}
-                lg={4}
+                xs={14}
+                sm={18}
+                md={18}
+                lg={20}
               >
-                {/* <UploadMultipleImage
+                <UploadMultipleImage
                   name="additionalImage"
                   label="Additional Image"
                   setImageStatus={setImages}
-                /> */}
+                />
               </Col>
             </Row>
 

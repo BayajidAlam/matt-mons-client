@@ -7,11 +7,12 @@ export enum tagTypes {
   customer = "customer",
   category = "category",
   shop = "shop",
+  product = "product",
   sku = "sku",
   color = "color",
   size = "size",
   tags = "tags",
-  coupon="coupon",
+  coupon = "coupon",
 }
 
 export const tagTypesList = [
@@ -22,9 +23,10 @@ export const tagTypesList = [
   tagTypes.customer,
   tagTypes.category,
   tagTypes.shop,
+  tagTypes.product,
   tagTypes.sku,
   tagTypes.color,
   tagTypes.size,
   tagTypes.tags,
-  tagTypes.coupon
+  tagTypes.coupon,
 ];
