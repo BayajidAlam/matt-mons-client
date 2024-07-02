@@ -14,29 +14,31 @@ import {
 } from "@/redux/api/products/productsApi";
 import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
+import Image from "next/image";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { useState } from "react";
 
 const UpdateProduct = ({ params }: any) => {
-  const id = params?.id;
 
-  const { shopId, fullName, role } = getUserInfo() as any;
+  const id = params?.id;
+  const { role } = getUserInfo() as any;
+  const router = useRouter();
 
   const [image, setimage] = useState("");
   const [images, setImages] = useState<string[]>([]);
+
   //Get
   const { data, isLoading: getLoad } = useGetSingProductQuery(id);
-  console.log(data);
   const prodData = data?.data;
 
   //Update
   const [updateProduct, { isLoading: updateLoad }] = useUpdateProductMutation();
-  const router = useRouter();
+ 
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
-    
+
     if (image) {
       values.productMainImage = image;
     } else {
@@ -87,12 +89,6 @@ const UpdateProduct = ({ params }: any) => {
       <div className="bg-white p-5 pt-0 w-full lg:w-3/6">
         <Form submitHandler={onSubmit} defaultValues={{ ...data?.data }}>
           <div
-            // style={{
-            //   border: "1px solid #d9d9d9",
-            //   borderRadius: "8px",
-            //   padding: "20px",
-            //   marginBottom: "10px",
-            // }}
             className="my-4"
           >
             <Row gutter={{ xs: 24, xl: 8, lg: 8, md: 24 }}>
@@ -208,7 +204,53 @@ const UpdateProduct = ({ params }: any) => {
                 />
               </Col>
             </Row>
+            <Row className="my-4" gutter={{ xs: 24, xl: 24, lg: 24, md: 24 }}>
+              {" "}
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                className="gutter-row"
+                xs={10}
+                sm={6}
+                md={6}
+                lg={4}
+              >
+                <Image
+                  src={prodData?.productMainImage}
+                  alt="avatar"
+                  style={{ width: "100px", height: "100px" }}
+                  width={100}
+                  height={100}
+                />
+              </Col>
+              <Col
+                style={{
+                  marginTop: "10px",
+                }}
+                className="gutter-row"
+                xs={14}
+                sm={18}
+                md={18}
+                lg={20}
+              >
 
+                <div className="flex justify-start items-center gap-2">
+                  {prodData?.productAdditionalImages?.map(
+                    (image: string, i: number) => (
+                      <Image
+                        key={i}
+                        src={image}
+                        alt="avatar"
+                        style={{ width: "100px", height: "100px" }}
+                        width={100}
+                        height={100}
+                      />
+                    )
+                  )}
+                </div>
+              </Col>
+            </Row>
             <Row className="my-4" gutter={{ xs: 24, xl: 24, lg: 24, md: 24 }}>
               {" "}
               <Col
