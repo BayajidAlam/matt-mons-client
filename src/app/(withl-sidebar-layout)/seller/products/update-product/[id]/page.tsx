@@ -9,51 +9,41 @@ import TextEditor from "@/components/TextEditor/TextEditor";
 import UploadImage from "@/components/ui/UploadImage";
 import UploadMultipleImage from "@/components/ui/UploadMultipleImage";
 import {
-  useCreateProductMutation,
   useGetSingProductQuery,
   useUpdateProductMutation,
 } from "@/redux/api/products/productsApi";
 import { getUserInfo } from "@/services/auth.service";
 import { Button, Col, Row, message } from "antd";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
-const AddUpdateProduct = ({ id }: { id?: string }) => {
+const UpdateProduct = ({ params }: any) => {
+  const id = params?.id;
   const { shopId, fullName, role } = getUserInfo() as any;
 
   const [image, setimage] = useState("");
   const [images, setImages] = useState<string[]>([]);
   //Get
-  const { data, isLoading: getLoad } = useGetSingProductQuery(id ? id : "");
+  const { data, isLoading: getLoad } = useGetSingProductQuery(id);
 
   //Update
   const [updateProduct, { isLoading: updateLoad }] = useUpdateProductMutation();
-
-  //Create
-  const [createProduct, { isLoading: createLoad }] = useCreateProductMutation();
   const router = useRouter();
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
     try {
-      const res = id
-        ? await updateProduct({
-            id,
-            data: {
-              ...values,
-            },
-          }).unwrap()
-        : await createProduct({
-            ...values,
-            productMainImage: image,
-            productAdditionalImages: images,
-            shopId,
-            createdBy: fullName,
-          }).unwrap();
+      const res = await updateProduct({
+        id,
+        data: {
+          ...values,
+        },
+      }).unwrap();
+
       if (res?.data) {
-        message.success(`Product ${id ? "updated" : "added"} successfully`);
-        router.push(`/${role}/products`);
+        message.success(`Product updated successfully`);
+        router.push(`/${role}/products/${id}`);
       } else {
         message.error(res.message);
       }
@@ -80,10 +70,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
         </Link>
       </div>
       <div className="bg-white p-5 pt-0 w-full lg:w-3/6">
-        <Form
-          submitHandler={onSubmit}
-          defaultValues={id ? { ...data?.data } : {}}
-        >
+        <Form submitHandler={onSubmit} defaultValues={{ ...data?.data }}>
           <div
             // style={{
             //   border: "1px solid #d9d9d9",
@@ -246,12 +233,8 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
             </Row>
 
             <div className="flex justify-end items-center mt-3">
-              <Button
-                htmlType="submit"
-                type="primary"
-                // disabled={createLoad || updateLoad}
-              >
-                {id ? "Update" : "Add"}
+              <Button htmlType="submit" type="primary" disabled={updateLoad}>
+                Update
               </Button>
             </div>
           </div>
@@ -261,4 +244,4 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
   );
 };
 
-export default AddUpdateProduct;
+export default UpdateProduct;

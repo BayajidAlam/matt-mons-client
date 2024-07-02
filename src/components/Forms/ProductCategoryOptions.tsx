@@ -48,7 +48,7 @@ const SelectProductCategoryOptions: React.FC<SelectFieldProps> = ({
     categories?.map((category) => {
       return {
         label: category?.title,
-        value: category?.id,
+        value: category?.title,
       };
     });
 

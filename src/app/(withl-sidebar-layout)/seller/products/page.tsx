@@ -11,7 +11,7 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import ModalComponent from "@/components/ui/Modal";
 import Image from "next/image";
-import { IoMdAdd } from "react-icons/io";
+import { IoMdAdd, IoMdExit } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
 import {
   useDeleteSellsManagerMutation,
@@ -74,7 +74,7 @@ const ManagerAllProductsPage = () => {
   const columns = [
     {
       title: "",
-      dataIndex: "profileImg",
+      dataIndex: "productMainImage",
       render: function (data: any) {
         const image = `${
           data ||
@@ -92,40 +92,60 @@ const ManagerAllProductsPage = () => {
       },
     },
     {
-      title: "Name",
-      dataIndex: "fullName",
+      title: "Product Name",
+      dataIndex: "productName",
     },
     {
-      title: "NID Number",
-      dataIndex: "nidNumber",
+      title: "Min Price",
+      dataIndex: "minPrice",
     },
     {
-      title: "Contact No",
-      dataIndex: "contactNumber",
+      title: "Discount Price",
+      dataIndex: "discountPrice",
+    },
+    {
+      title: "Discount",
+      dataIndex: "moneySaved",
+    },
+    {
+      title: "Sku Name",
+      dataIndex: "ProductSku",
+      key: "ProductSku",
+      render: (ProductSku: { title: string }) => ProductSku.title,
+    },
+    {
+      title: "Sku Name",
+      dataIndex: "ProductSku",
+      key: "ProductSku",
+      render: (ProductSku: { title: string }) => ProductSku.title,
+    },
+    {
+      title: "Quantity",
+      dataIndex: "ProductSku",
+      key: "quantity",
+      render: (ProductSku: { quantity: string }) => ProductSku.quantity,
+    },
+    {
+      title: "Available Sizes",
+      dataIndex: "ProductSku",
+      key: "availableSize",
+      render: (ProductSku: { availableSize: string[] }) =>
+        ProductSku.availableSize.join(", "),
+    },
+    {
+      title: "Available Colors",
+      dataIndex: "ProductSku",
+      key: "availableColor",
+      render: (ProductSku: { availableColor: string[] }) =>
+        ProductSku.availableColor.join(", "),
+    },
+    {
+      title: "Created By",
+      dataIndex: "createdBy",
       render: (data: any) => (data ? data : "N/A"),
     },
-    // {
-    //   title: "Active",
-    //   dataIndex: "isActive",
-    //   render: (isActive: boolean) =>
-    //     isActive ? (
-    //       <Tag color="green">Active</Tag>
-    //     ) : (
-    //       <Tag color="red">Not Active</Tag>
-    //     ),
-    // },
     {
-      title: "Emg Contact No",
-      dataIndex: "emergencyContactNumber",
-      render: (data: any) => (data ? data : "N/A"),
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      render: (data: any) => (data ? data : "N/A"),
-    },
-    {
-      title: "Joined at",
+      title: "Created At",
       dataIndex: "createdAt",
       render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
@@ -137,16 +157,9 @@ const ManagerAllProductsPage = () => {
       // width: "15%",
       render: function (data: any) {
         return (
-          <div className="flex">
-            <div
-              onClick={() => {
-                setId(data);
-              }}
-              style={{
-                margin: "0px 5px",
-              }}
-            >
-              <div className="md:hidden">
+          <div className="flex gap-2">
+            <div className="">
+              <Link href={`/${role}/products/update-product/${data}`}>
                 <Button
                   onClick={showModal}
                   type="primary"
@@ -155,18 +168,7 @@ const ManagerAllProductsPage = () => {
                 >
                   <EditOutlined />
                 </Button>
-              </div>
-              <div className="hidden md:block">
-                <Button
-                  style={{ width: "100%" }}
-                  type="primary"
-                  onClick={showModal}
-                  className="!flex !items-center !gap-2 !justify-center"
-                >
-                  <EditOutlined />
-                  Add Product
-                </Button>
-              </div>
+              </Link>
             </div>
 
             <Button
