@@ -13,15 +13,17 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import { useDeleteSellsManagerMutation } from "@/redux/api/manager/managerApi";
-import { useGetAllProductsQuery } from "@/redux/api/products/productsApi";
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+} from "@/redux/api/products/productsApi";
 import Loader from "@/components/Utils/Loader";
 import Link from "next/link";
 import { getUserInfo } from "@/services/auth.service";
 
 const ManagerAllProductsPage = () => {
   const { role, shopId } = getUserInfo() as any;
-  console.log(role);
+
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -45,13 +47,13 @@ const ManagerAllProductsPage = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const [deleteSellsManager] = useDeleteSellsManagerMutation();
+  const [deleteProduct] = useDeleteProductMutation();
 
-  const deleteSellsManagerHandler = async (id: string) => {
+  const deleteProductHandler = async (id: string) => {
     try {
       message.loading("Deleting.....");
-      const res = await deleteSellsManager(id).unwrap();
-      if (res) {
+      const res = await deleteProduct(id).unwrap();
+      if (res?.data) {
         message.success("Successfully Deleted!");
       }
     } catch (error: any) {
@@ -100,13 +102,7 @@ const ManagerAllProductsPage = () => {
       dataIndex: "moneySaved",
     },
     {
-      title: "Sku Name",
-      dataIndex: "ProductSku",
-      key: "ProductSku",
-      render: (ProductSku: { title: string }) => ProductSku.title,
-    },
-    {
-      title: "Sku Name",
+      title: "SKU",
       dataIndex: "ProductSku",
       key: "ProductSku",
       render: (ProductSku: { title: string }) => ProductSku.title,
@@ -157,7 +153,7 @@ const ManagerAllProductsPage = () => {
                   style={{ width: "100%" }}
                   className="!flex !items-center !gap-2 !justify-center"
                 >
-                <EyeOutlined />
+                  <EyeOutlined />
                 </Button>
               </Link>
             </div>
@@ -174,7 +170,7 @@ const ManagerAllProductsPage = () => {
             </div>
 
             <Button
-              onClick={() => deleteSellsManagerHandler(data)}
+              onClick={() => deleteProductHandler(data)}
               type="primary"
               danger
             >
@@ -188,10 +184,9 @@ const ManagerAllProductsPage = () => {
 
   const { data, isLoading } = useGetAllProductsQuery({ ...query });
 
-  // const data = [];
-  const managersData = data?.data;
+  const productsData = data?.data;
   const meta = data?.meta;
-  console.log(managersData);
+
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);
@@ -264,9 +259,9 @@ const ManagerAllProductsPage = () => {
       </ActionBar>
 
       <UMTable
-        // loading={isLoading}
+        loading={isLoading}
         columns={columns}
-        dataSource={managersData}
+        dataSource={productsData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

@@ -29,7 +29,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
   const onSubmit = async (values: any) => {
     message.loading("Adding....");
     try {
-      const res = id;
+      const res = 
       await createProduct({
         ...values,
         productMainImage: image,
@@ -37,9 +37,10 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
         shopId,
         createdBy: fullName,
       }).unwrap();
+      console.log(res.data)
       if (res?.data) {
         message.success(`Product ${id ? "updated" : "added"} successfully`);
-        router.push(`/${role}/products/${res?.data?.data?.id}`);
+        router.push(`/${role}/products/${res?.data?.id}`);
       } else {
         message.error(res?.data?.message);
       }
@@ -211,7 +212,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
               >
                 <UploadMultipleImage
                   required
-                  name="additionalImage"
+                  name="productAdditionalImages"
                   label="Additional Image"
                   setImageStatus={setImages}
                 />
