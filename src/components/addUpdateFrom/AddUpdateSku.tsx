@@ -10,8 +10,12 @@ import {
   useUpdateSkuMutation,
 } from "@/redux/api/sku/skuApi";
 import Loading from "@/app/loading";
+import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 
 const AddUpdateProductSku = ({ id }: { id?: string }) => {
+  const { shopId } = getUserInfo() as UserInfo;
+
   //Get
   const { data, isLoading: getLoad } = useGetSingleSkuQuery(id ? id : "");
 
@@ -32,7 +36,10 @@ const AddUpdateProductSku = ({ id }: { id?: string }) => {
               ...values,
             },
           }).unwrap()
-        : await createSku(values).unwrap();
+        : await createSku({
+            ...values,
+            shopId,
+          }).unwrap();
       if (res?.data) {
         message.success(`Sku ${id ? "updated" : "added"} successfully`);
       } else {
@@ -55,7 +62,10 @@ const AddUpdateProductSku = ({ id }: { id?: string }) => {
         {id ? "Update SKU" : "Add SKU"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data?.data } : {}}>
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={id ? { ...data?.data } : {}}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",

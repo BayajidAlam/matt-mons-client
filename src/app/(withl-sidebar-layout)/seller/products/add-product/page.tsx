@@ -37,7 +37,7 @@ const AddUpdateProduct = ({ id }: { id?: string }) => {
         shopId,
         createdBy: fullName,
       }).unwrap();
-      console.log(res.data)
+
       if (res?.data) {
         message.success(`Product ${id ? "updated" : "added"} successfully`);
         router.push(`/${role}/products/${res?.data?.id}`);

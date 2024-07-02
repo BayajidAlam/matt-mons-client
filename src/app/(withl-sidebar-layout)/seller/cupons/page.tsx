@@ -15,14 +15,17 @@ import UMTable from "@/components/ui/Table";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
-import {
-  useDeleteColorMutation,
-} from "@/redux/api/color/colorApi";
 import AddUpdateCoupon from "@/components/addUpdateFrom/AddUpdateCoupon";
-import { useDeleteCouponMutation, useGetAllCouponQuery } from "@/redux/api/coupon/couponApi";
+import {
+  useDeleteCouponMutation,
+  useGetAllCouponQuery,
+} from "@/redux/api/coupon/couponApi";
+import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 
 const ManageProductColorPage = () => {
 
+  const { shopId } = getUserInfo() as UserInfo;
   const query: Record<string, any> = {};
 
   const [id, setId] = useState("");
@@ -39,6 +42,7 @@ const ManageProductColorPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["shopId"] = shopId;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -100,7 +104,7 @@ const ManageProductColorPage = () => {
       render: function (data: any) {
         return (
           <div className="flex">
-          <div
+            <div
               onClick={() => {
                 setId(data);
               }}
@@ -114,7 +118,7 @@ const ManageProductColorPage = () => {
               />
             </div>
             <Button
-                onClick={() => deleteCouponHandler(data)}
+              onClick={() => deleteCouponHandler(data)}
               type="primary"
               danger
             >

@@ -19,11 +19,14 @@ import {
   useGetAllManagerQuery,
 } from "@/redux/api/manager/managerApi";
 import Loader from "@/components/Utils/Loader";
-import { IMeta } from "@/types";
+import { IMeta, UserInfo } from "@/types";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
+import { getUserInfo } from "@/services/auth.service";
 
 const AllManagesPage = () => {
+  const { shopId } = getUserInfo() as UserInfo;
+
   const query: Record<string, any> = {};
 
   const [showModel, setShowModel] = useState(false);
@@ -41,6 +44,7 @@ const AllManagesPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["shopId"] = shopId;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -227,7 +231,7 @@ const AllManagesPage = () => {
       </ActionBar>
 
       <UMTable
-        // loading={isLoading}
+        loading={isLoading}
         columns={columns}
         dataSource={managersData}
         pageSize={size}

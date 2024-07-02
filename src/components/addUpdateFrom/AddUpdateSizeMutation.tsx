@@ -7,17 +7,21 @@ import {
   useGetSingleSizeQuery,
   useUpdateSizeMutation,
 } from "@/redux/api/size/sizeApi";
+import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 
 const AddUpdateSize = ({ id }: { id?: string }) => {
+  const { shopId } = getUserInfo() as UserInfo;
+
   //Get
   const { data, isLoading: getLoad } = useGetSingleSizeQuery(id ? id : "");
   const colorData = data?.data;
 
   //Update
-  const [updateSize, { isLoading: updateLoad }] = useUpdateSizeMutation();
+  const [updateSize, { isLoading: isUpdateLoading }] = useUpdateSizeMutation();
 
   //Create
-  const [createSize, { isLoading: createLoad }] = useCreateSizeMutation();
+  const [createSize, { isLoading: isCreateLoading }] = useCreateSizeMutation();
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
@@ -29,7 +33,10 @@ const AddUpdateSize = ({ id }: { id?: string }) => {
               title: values.title,
             },
           }).unwrap()
-        : await createSize(values).unwrap();
+        : await createSize({
+            ...values,
+            shopId,
+          }).unwrap();
       if (res.data) {
         message.success(`Size ${id ? "updated" : "added"} successfully`);
       } else {
@@ -96,7 +103,7 @@ const AddUpdateSize = ({ id }: { id?: string }) => {
               <Button
                 htmlType="submit"
                 type="primary"
-                // disabled={createLoad || updateLoad}
+                disabled={isCreateLoading || isUpdateLoading}
               >
                 {id ? "Update" : "Add"}
               </Button>

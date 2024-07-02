@@ -20,8 +20,12 @@ import {
   useDeleteColorMutation,
   useGetAllColorsQuery,
 } from "@/redux/api/color/colorApi";
+import { UserInfo } from "@/types";
+import { getUserInfo } from "@/services/auth.service";
 
 const ManageProductColorPage = () => {
+
+  const { shopId } = getUserInfo() as UserInfo;
   const query: Record<string, any> = {};
 
   const [id, setId] = useState("");
@@ -38,6 +42,7 @@ const ManageProductColorPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["shopId"] = shopId;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,

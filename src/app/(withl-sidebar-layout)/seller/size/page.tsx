@@ -18,8 +18,11 @@ import EComModalWrapper from "@/components/ui/EComModalWrapper";
 import { useDeleteColorMutation } from "@/redux/api/color/colorApi";
 import { useGetAllSizesQuery } from "@/redux/api/size/sizeApi";
 import AddUpdateSize from "@/components/addUpdateFrom/AddUpdateSizeMutation";
+import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 
 const ManagerProductSizePage = () => {
+  const { shopId } = getUserInfo() as UserInfo;
   const query: Record<string, any> = {};
 
   const [id, setId] = useState("");
@@ -36,6 +39,7 @@ const ManagerProductSizePage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["shopId"] = shopId;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -107,10 +111,9 @@ const ManagerProductSizePage = () => {
 
   const { data, isLoading } = useGetAllSizesQuery({ ...query });
 
-  // const data = [];
   const managersData = data?.data;
   const meta = data?.meta;
-  console.log(managersData);
+ 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);

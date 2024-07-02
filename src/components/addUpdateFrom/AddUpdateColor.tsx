@@ -7,12 +7,16 @@ import {
   useGetSingleColorQuery,
   useUpdateColorMutation,
 } from "@/redux/api/color/colorApi";
+import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 
 const AddUpdateColor = ({ id }: { id?: string }) => {
+  
+  const { shopId } = getUserInfo() as UserInfo;
 
   //Get
   const { data, isLoading: getLoad } = useGetSingleColorQuery(id ? id : "");
-  const colorData = data?.data
+  const colorData = data?.data;
 
   //Update
   const [updateColor, { isLoading: updateLoad }] = useUpdateColorMutation();
@@ -30,13 +34,16 @@ const AddUpdateColor = ({ id }: { id?: string }) => {
               title: values.title,
             },
           }).unwrap()
-        : await createColor(values).unwrap();
+        : await createColor({
+            ...values,
+            shopId,
+          }).unwrap();
       if (res.data) {
         message.success(`Color ${id ? "updated" : "added"} successfully`);
       } else {
         message.error(res.message);
       }
-      console.log(res)
+      console.log(res);
     } catch (err: any) {
       console.error(err.message);
     }
@@ -54,7 +61,10 @@ const AddUpdateColor = ({ id }: { id?: string }) => {
         {id ? "Update Color" : "Add Color"}
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...colorData } : {}}>
+        <Form
+          submitHandler={onSubmit}
+          defaultValues={id ? { ...colorData } : {}}
+        >
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -94,7 +104,7 @@ const AddUpdateColor = ({ id }: { id?: string }) => {
               <Button
                 htmlType="submit"
                 type="primary"
-                // disabled={createLoad || updateLoad}
+                disabled={createLoad || updateLoad}
               >
                 {id ? "Update" : "Add"}
               </Button>

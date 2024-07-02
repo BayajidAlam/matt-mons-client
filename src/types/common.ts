@@ -19,3 +19,16 @@ export type IGenericErrorMessage = {
   path: string | number;
   message: string;
 };
+
+export interface UserInfo {
+  id: string;
+  role: string;
+  email: string;
+  shopCount: number;
+  sellerId: string;
+  shopId: string;
+  fullName: string;
+  profileImage: string;
+  iat: number;
+  exp: number;
+}

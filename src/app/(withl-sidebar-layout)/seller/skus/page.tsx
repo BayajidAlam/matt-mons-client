@@ -15,13 +15,16 @@ import UMTable from "@/components/ui/Table";
 import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
 import Loader from "@/components/Utils/Loader";
 import EComModalWrapper from "@/components/ui/EComModalWrapper";
-import { useDeleteColorMutation } from "@/redux/api/color/colorApi";
-import { useGetAllSizesQuery } from "@/redux/api/size/sizeApi";
-import AddUpdateSize from "@/components/addUpdateFrom/AddUpdateSizeMutation";
-import { useDeleteSkuMutation, useGetAllSkusQuery } from "@/redux/api/sku/skuApi";
+import {
+  useDeleteSkuMutation,
+  useGetAllSkusQuery,
+} from "@/redux/api/sku/skuApi";
 import AddUpdateProductSku from "@/components/addUpdateFrom/AddUpdateSku";
+import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 
 const ProductSkuPage = () => {
+  const { shopId } = getUserInfo() as UserInfo;
   const query: Record<string, any> = {};
 
   const [id, setId] = useState("");
@@ -38,6 +41,7 @@ const ProductSkuPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["shopId"] = shopId;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -54,7 +58,8 @@ const ProductSkuPage = () => {
     try {
       message.loading("Deleting.....");
       const res = await deleteSku(id).unwrap();
-      if (res) {
+      console.log(res?.data);
+      if (res?.data) {
         message.success("Successfully Deleted!");
       }
     } catch (error: any) {
@@ -131,7 +136,7 @@ const ProductSkuPage = () => {
   // const data = [];
   const managersData = data?.data;
   const meta = data?.meta;
-  console.log(managersData);
+ 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);

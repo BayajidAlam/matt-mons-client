@@ -13,6 +13,7 @@ import {
   useUpdateProductMutation,
 } from "@/redux/api/products/productsApi";
 import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,7 +23,7 @@ import { useState } from "react";
 const UpdateProduct = ({ params }: any) => {
 
   const id = params?.id;
-  const { role } = getUserInfo() as any;
+  const { role } = getUserInfo() as UserInfo;
   const router = useRouter();
 
   const [image, setimage] = useState("");

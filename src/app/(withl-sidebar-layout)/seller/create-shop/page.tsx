@@ -9,6 +9,7 @@ import { authKey } from "@/constants/storagekey";
 import { useGetSingleSellerQuery } from "@/redux/api/seller/sellerApi";
 import { useCreateNewShopMutation } from "@/redux/api/shop/shopApi";
 import { getUserInfo, removeUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 import { Button, Col, Row, message } from "antd";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -16,7 +17,7 @@ import { useState } from "react";
 
 const CreateAdminPage = () => {
   const [image, setImage] = useState("");
-  const { id, sellerId, shopCount } = getUserInfo() as any;
+  const { id, sellerId, shopCount } = getUserInfo() as UserInfo;
   const { data, isLoading } = useGetSingleSellerQuery(id);
   const { profileImg = "/" } = data?.data ?? {};
 

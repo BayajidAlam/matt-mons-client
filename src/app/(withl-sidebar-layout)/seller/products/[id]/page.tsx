@@ -8,13 +8,14 @@ import SelectProductTagsOptions from "@/components/Forms/ProductTagOptions";
 import TextEditor from "@/components/TextEditor/TextEditor";
 import { useGetSingProductQuery } from "@/redux/api/products/productsApi";
 import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 import { Button, Col, Row } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 
 const ViewProduct = ({ params }: any) => {
   const id = params?.id;
-  const { role } = getUserInfo() as any;
+  const { role } = getUserInfo() as UserInfo;
 
   //Get
   const { data, isLoading: getLoad } = useGetSingProductQuery(id);

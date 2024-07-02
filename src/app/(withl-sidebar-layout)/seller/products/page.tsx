@@ -20,9 +20,10 @@ import {
 import Loader from "@/components/Utils/Loader";
 import Link from "next/link";
 import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 
 const ManagerAllProductsPage = () => {
-  const { role, shopId } = getUserInfo() as any;
+  const { role, shopId } = getUserInfo() as UserInfo;
 
   const query: Record<string, any> = {};
 
