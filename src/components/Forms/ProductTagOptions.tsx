@@ -16,6 +16,7 @@ type SelectFieldProps = {
   placeholder?: string;
   label?: string;
   defaultValue?: SelectOptions;
+  disabled?: boolean;
 };
 
 const ProductTagOptions = ({
@@ -25,6 +26,7 @@ const ProductTagOptions = ({
   placeholder = "select",
   label,
   defaultValue,
+  disabled,
 }: SelectFieldProps) => {
   const { control } = useFormContext();
 
@@ -38,7 +40,7 @@ const ProductTagOptions = ({
     tagsData?.map((sku) => {
       return {
         label: sku?.title,
-        value: sku?.id,
+        value: sku?.title,
       };
     });
   return (
@@ -49,6 +51,7 @@ const ProductTagOptions = ({
         name={name}
         render={({ field: { value, onChange } }) => (
           <Select
+            disabled={disabled}
             onChange={onChange}
             size={size}
             options={tagOptions}

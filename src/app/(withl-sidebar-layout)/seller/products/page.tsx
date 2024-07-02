@@ -4,34 +4,25 @@ import { useDebounced } from "@/redux/hooks";
 import {
   DeleteOutlined,
   EditOutlined,
+  EyeOutlined,
   ReloadOutlined,
 } from "@ant-design/icons";
 import { Button, Input, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
-import ModalComponent from "@/components/ui/Modal";
 import Image from "next/image";
-import { IoMdAdd, IoMdExit } from "react-icons/io";
+import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import {
-  useDeleteSellsManagerMutation,
-  useGetAllManagerQuery,
-} from "@/redux/api/manager/managerApi";
-import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
-import EComModalWrapper from "@/components/ui/EComModalWrapper";
+import { useDeleteSellsManagerMutation } from "@/redux/api/manager/managerApi";
 import { useGetAllProductsQuery } from "@/redux/api/products/productsApi";
 import Loader from "@/components/Utils/Loader";
 import Link from "next/link";
 import { getUserInfo } from "@/services/auth.service";
 
 const ManagerAllProductsPage = () => {
-  const { role } = getUserInfo() as any;
+  const { role, shopId } = getUserInfo() as any;
   console.log(role);
   const query: Record<string, any> = {};
-
-  const [id, setId] = useState("");
-  const [showModel, setShowModel] = useState(false);
-  const [showModalWithId, setShowModalWithId] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -43,6 +34,7 @@ const ManagerAllProductsPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["shopId"] = shopId;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -65,10 +57,6 @@ const ManagerAllProductsPage = () => {
     } catch (error: any) {
       message.error(`${error.data}`);
     }
-  };
-
-  const showModal = () => {
-    setShowModel(true);
   };
 
   const columns = [
@@ -94,6 +82,10 @@ const ManagerAllProductsPage = () => {
     {
       title: "Product Name",
       dataIndex: "productName",
+      render: (text: string) => {
+        const words = text.split(" ");
+        return words.length > 4 ? words.slice(0, 4).join(" ") + "..." : text;
+      },
     },
     {
       title: "Min Price",
@@ -159,9 +151,19 @@ const ManagerAllProductsPage = () => {
         return (
           <div className="flex gap-2">
             <div className="">
+              <Link href={`/${role}/products/${data}`}>
+                <Button
+                  type="primary"
+                  style={{ width: "100%" }}
+                  className="!flex !items-center !gap-2 !justify-center"
+                >
+                <EyeOutlined />
+                </Button>
+              </Link>
+            </div>
+            <div className="">
               <Link href={`/${role}/products/update-product/${data}`}>
                 <Button
-                  onClick={showModal}
                   type="primary"
                   style={{ width: "100%" }}
                   className="!flex !items-center !gap-2 !justify-center"
@@ -238,7 +240,6 @@ const ManagerAllProductsPage = () => {
           <div className="md:hidden">
             <Link href={`/${role}/products/add-product`}>
               <Button
-                onClick={showModal}
                 type="primary"
                 style={{ width: "100%" }}
                 className="!flex !items-center !gap-2 !justify-center"
@@ -252,7 +253,6 @@ const ManagerAllProductsPage = () => {
               <Button
                 style={{ width: "100%" }}
                 type="primary"
-                onClick={showModal}
                 className="!flex !items-center !gap-2 !justify-center"
               >
                 <IoMdAdd />
@@ -274,13 +274,6 @@ const ManagerAllProductsPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
-
-      {/* <EComModalWrapper
-        showModel={showModalWithId}
-        setShowModel={setShowModalWithId}
-      >
-        <AddUpdateProduct id={id} />
-      </EComModalWrapper> */}
     </div>
   );
 };

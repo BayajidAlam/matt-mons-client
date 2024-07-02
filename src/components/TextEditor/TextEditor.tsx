@@ -48,6 +48,7 @@ interface ITextEditor {
   defaultValue?: string;
   label: string;
   required?: boolean;
+  disable?: boolean;
 }
 
 const TextEditor: React.FC<ITextEditor> = ({
@@ -55,6 +56,7 @@ const TextEditor: React.FC<ITextEditor> = ({
   defaultValue = "",
   label,
   required,
+  disable
 }) => {
   const { control } = useFormContext();
 
@@ -77,6 +79,7 @@ const TextEditor: React.FC<ITextEditor> = ({
         defaultValue={defaultValue}
         render={({ field }) => (
           <ReactQuill
+            readOnly={disable}
             theme="snow"
             value={field.value}
             onChange={field.onChange}

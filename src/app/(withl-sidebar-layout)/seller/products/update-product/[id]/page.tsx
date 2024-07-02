@@ -20,12 +20,15 @@ import { useState } from "react";
 
 const UpdateProduct = ({ params }: any) => {
   const id = params?.id;
+
   const { shopId, fullName, role } = getUserInfo() as any;
 
   const [image, setimage] = useState("");
   const [images, setImages] = useState<string[]>([]);
   //Get
   const { data, isLoading: getLoad } = useGetSingProductQuery(id);
+  console.log(data);
+  const prodData = data?.data;
 
   //Update
   const [updateProduct, { isLoading: updateLoad }] = useUpdateProductMutation();
@@ -33,6 +36,18 @@ const UpdateProduct = ({ params }: any) => {
 
   const onSubmit = async (values: any) => {
     message.loading(id ? "Updating...." : "Adding....");
+    
+    if (image) {
+      values.productMainImage = image;
+    } else {
+      values.productMainImage = prodData.productMainImage;
+    }
+    if (images.length > 0) {
+      values.productAdditionalImages = images;
+    } else {
+      values.productAdditionalImages = prodData.productAdditionalImages;
+    }
+
     try {
       const res = await updateProduct({
         id,

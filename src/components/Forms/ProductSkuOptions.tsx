@@ -16,6 +16,7 @@ type SelectFieldProps = {
   label?: string;
   defaultValue?: SelectOptions;
   handleChange?: (value: string) => void;
+  disabled?: boolean;
 };
 
 const SelectProductSkuOptions: React.FC<SelectFieldProps> = ({
@@ -26,6 +27,7 @@ const SelectProductSkuOptions: React.FC<SelectFieldProps> = ({
   label,
   defaultValue,
   handleChange,
+  disabled
 }) => {
   const { control } = useFormContext();
 
@@ -60,6 +62,7 @@ const SelectProductSkuOptions: React.FC<SelectFieldProps> = ({
         name={name}
         render={({ field: { value, onChange } }) => (
           <Select
+          disabled={disabled}
             showSearch
             placeholder={placeholder}
             optionFilterProp="children"
