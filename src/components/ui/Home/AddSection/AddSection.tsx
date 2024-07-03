@@ -7,16 +7,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import ProductCard from "@/components/Product/ProductCard";
 import CommonTitle from "../../CommonTitle";
+import { useGetAllTodayBestSellsProductsQuery } from "@/redux/api/products/productsApi";
 
 const AddSection = () => {
-  const [products, setProducts] = useState([]);
+  
+  const query: Record<string, any> = {};
+  query["limit"] = 4;
 
-  useEffect(() => {
-    fetch("data.json")
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.error("Error:", error));
-  }, []);
+  const { data } = useGetAllTodayBestSellsProductsQuery({ ...query });
+  const prodData = data?.data;
 
   return (
     <div className="w-[92%] md:w-[95%] lg:w-[90%] xl:w-[70%] mx-auto my-8">
@@ -153,7 +152,7 @@ const AddSection = () => {
             className="grid grid-cols-1 md:grid-cols-2
            lg:grid-cols-3 xl:grid-cols-4 gap-3"
           >
-            {products.map((product, i) => (
+            {prodData?.map((product, i) => (
               <ProductCard key={i} product={product} />
             ))}
           </div>

@@ -3,7 +3,8 @@ import { FaStar } from "react-icons/fa";
 import UserImage from "@/assets/demo1_en.png";
 import Image from "next/image";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
-const ProductReviews = () => {
+
+const ProductReviews = ({ReviewAndRatings}) => {
   return (
     <div className="space-y-4">
       <div className="space-y-2">

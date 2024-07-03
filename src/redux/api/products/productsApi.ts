@@ -5,7 +5,6 @@ const PRODUCTS_URL = "/products";
 
 export const productsApi = baseApi.injectEndpoints({
   endpoints: (build: any) => ({
-
     // create
     createProduct: build.mutation({
       query: (data: any) => ({
@@ -20,6 +19,26 @@ export const productsApi = baseApi.injectEndpoints({
     getAllProducts: build.query({
       query: (arg: Record<string, any>) => ({
         url: `${PRODUCTS_URL}`,
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: [tagTypes.product],
+    }),
+
+    // get all today best sells for home
+    getAllTodayBestSellsProducts: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${PRODUCTS_URL}/daily-best-sell`,
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: [tagTypes.product],
+    }),
+
+    // get all products
+    getAllProductInfinity: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${PRODUCTS_URL}/product-feed`,
         method: "GET",
         params: arg,
       }),
@@ -59,6 +78,8 @@ export const productsApi = baseApi.injectEndpoints({
 export const {
   useCreateProductMutation,
   useGetAllProductsQuery,
+  useGetAllTodayBestSellsProductsQuery,
+  useGetAllProductInfinityQuery,
   useGetSingProductQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,

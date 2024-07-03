@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import CoreDetails from "./ProductCoreDetails";
 import ProductReviews from "./ProductReviews";
 
-const ProductDetailsSection = () => {
+const ProductDetailsSection = ({ productDetails, productAdditionalInfo,ReviewAndRatings }) => {
+  
   const [selectedButton, setSelectedButton] = useState("details");
 
   const handleButtonClick = (buttonName: string) => {
@@ -28,9 +29,9 @@ const ProductDetailsSection = () => {
       >
         Reviews
       </button>
-      {selectedButton === "details" && <CoreDetails />}
+      {selectedButton === "details" && <CoreDetails productDetails={productDetails} productAdditionalInfo={productAdditionalInfo}/>}
 
-      {selectedButton === "reviews" && <ProductReviews />}
+      {selectedButton === "reviews" && <ProductReviews ReviewAndRatings={ReviewAndRatings}/>}
     </div>
   );
 };
