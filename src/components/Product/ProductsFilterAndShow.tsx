@@ -8,6 +8,7 @@ import { useGetAllCategoryQuery } from "@/redux/api/category/categoryApi";
 import { useGetAllSizesQuery } from "@/redux/api/size/sizeApi";
 import { useGetAllColorsQuery } from "@/redux/api/color/colorApi";
 import { Pagination } from "antd";
+import Loading from "@/app/loading";
 
 const ProductFilter = () => {
   const query: Record<string, any> = {};
@@ -45,10 +46,10 @@ const ProductFilter = () => {
   const productData = data?.data;
   const meta = data?.meta;
 
-  const { data: categoryAllData } = useGetAllCategoryQuery({});
+  const { data: categoryAllData,isLoading:isCategoryLoading } = useGetAllCategoryQuery({});
   const categoryData = categoryAllData?.data;
 
-  const { data: sizeAllData } = useGetAllSizesQuery({});
+  const { data: sizeAllData,isLoading:SizeLoading } = useGetAllSizesQuery({});
   const sizeData = sizeAllData?.data;
 
   const uniqueSizes = sizeData?.reduce((acc, current) => {
@@ -60,7 +61,7 @@ const ProductFilter = () => {
     }
   }, []);
 
-  const { data: allColorData } = useGetAllColorsQuery({});
+  const { data: allColorData,isLoading:isColorLoading } = useGetAllColorsQuery({});
   const colorData = allColorData?.data;
 
   const uniqueColor = colorData?.reduce((acc, current) => {
@@ -77,6 +78,8 @@ const ProductFilter = () => {
     setPage(page);
     setSize(pageSize);
   };
+
+  if(isLoading || isCategoryLoading || isColorLoading) return <Loading/>
 
   return (
     <>

@@ -4,18 +4,23 @@ import { BsPlusCircle } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useGetAllCartQuery } from "@/redux/api/cart/cartApi";
+import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
 
 const Cart = () => {
-  const [products, setProducts] = useState([]);
+  const query: Record<string, any> = {};
+  const { id } = getUserInfo() as UserInfo;
 
-  useEffect(() => {
-    fetch("products.json")
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.error("Error:", error));
-  }, []);
+  query["limit"] = 100;
+  query["page"] = 1;
+  query["userId"] = id;
 
-  const subTotal = products?.reduce(
+  const { data: cartAllData } = useGetAllCartQuery({ ...query });
+  
+  const cartData = cartAllData?.data;
+  console.log(cartData);
+  const subTotal = cartData?.reduce(
     (order: any, item: any) => order + item.price * item.quantity,
     0
   );
@@ -23,7 +28,7 @@ const Cart = () => {
   const shipping = 56;
   const total = subTotal + shipping + taxAmount;
 
-  const handleRemove = (productId: any) => {};
+  const handleRemoveFromCart = (productId: any) => {};
   const handleIncrement = (productId: any) => {};
   const handleDecrement = (productId: any) => {};
 
@@ -36,7 +41,7 @@ const Cart = () => {
         <div>
           <div className="lg:grid grid-cols-3">
             <div className="col-span-2 mr-5">
-              {products.map((product: any) => (
+              {cartData?.map((product: any) => (
                 <div
                   key={product?._id}
                   className="flex justify-between my-4 pb-4 border-b "
@@ -44,17 +49,18 @@ const Cart = () => {
                   <div className=" flex lg:gap-5 gap-3">
                     <Image
                       className="lg:w-28 lg:h-28 w-22 h-28 bg-[#F1F5F9] rounded-lg"
-                      src={product?.productImg}
+                      src={product?.Product?.productMainImage}
                       width={500}
                       height={500}
                       alt="image"
                     />
                     <div>
-                      <h5 className="mb-1">{product?.name}</h5>
-                      <span>{product?.description}</span> <br />
-                      {product?.message ? (
+                      <h5 className="mb-1">{product?.Product?.productName}</h5>
+                      <span>{product?.Product?.Shop?.shopName}</span> <br />
+                      {product?.Product?.discountPercentage ? (
                         <button className="border mt-4 lg:px-4 lg:py-1 px-2 rounded-full ">
-                          {product?.message}
+                          Money Saved {product?.Product?.moneySaved.slice(0, 2)}{" "}
+                          tk
                         </button>
                       ) : (
                         ""
@@ -73,13 +79,14 @@ const Cart = () => {
                   <div className="price_remove">
                     <div>
                       <button className="text-green  font-bold border-2 px-2 rounded-lg border-green">
-                        ${product?.price}.00
+                        Discount:{" "}
+                        {product?.Product?.discountPercentage.slice(0, 2)}%
                       </button>
                     </div>
                     <div>
                       <button
                         className="mt-16 text-blue font-bold"
-                        onClick={() => handleRemove(product?._id)}
+                        onClick={() => handleRemoveFromCart(product?.id)}
                       >
                         Remove
                       </button>

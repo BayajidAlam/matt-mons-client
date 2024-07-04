@@ -14,9 +14,7 @@ const UserContents = ({ children }: { children: React.ReactNode }) => {
     >
       <UserUiHeader />
 
-      <div className="relative">
-        {children}
-        </div>
+      <div className="relative">{children}</div>
       <Footer />
     </Content>
   );
