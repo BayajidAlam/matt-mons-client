@@ -44,6 +44,9 @@ const Cart = () => {
   const shipping = useAppSelector((state) => state.cart.shipping);
   const total = useAppSelector((state) => state.cart.total);
   const taxAmount = useAppSelector((state) => state.cart.taxTotal);
+  // const taxAmount = (0.015 * subTotal).toFixed(2);
+
+  // const total = subTotal + shipping + taxAmount;
 
   const [deleteCart] = useDeleteCartMutation();
   const handleDeleteFromCart = async (product: any) => {
@@ -161,20 +164,20 @@ const Cart = () => {
                     </button>
                   </div>
                   <div className="flex justify-between py-4 border-b ">
-                    <span className="text-slate-500">Subtotal</span>
-                    <h5>${subTotal === 0 ? "00" : subTotal}</h5>
+                    <span className="text-slate-500">Sub total</span>
+                    <h5>${subTotal === 0 ? "00" : subTotal.toFixed(2)}</h5>
                   </div>
                   <div className="flex justify-between py-4 border-b ">
                     <span className="text-slate-500">Shipping estimate</span>
-                    <h5>${subTotal === 0 ? "00" : shipping}</h5>
+                    <h5>${shipping === 0 ? "00" : shipping.toFixed(2)}</h5>
                   </div>
                   <div className="flex justify-between py-4 border-b ">
                     <span className="text-slate-500">Tax estimate</span>
-                    <h5>${subTotal === 0 ? "00" : taxAmount}</h5>
+                    <h5>${taxAmount === 0 ? "00" : taxAmount.toFixed(2)}</h5>
                   </div>
                   <div className="flex justify-between py-4  ">
                     <span className="text-[20px] font-bold">Order total</span>
-                    <h5>${subTotal === 0 ? "00" : total}</h5>
+                    <h5>${total === 0 ? "00" : total.toFixed(2)}</h5>
                   </div>
                   <div className="w-80 my-10">
                     <Link href="/checkout">
