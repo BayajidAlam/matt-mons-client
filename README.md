@@ -4,6 +4,7 @@ Project Todos
 - [x] System design
 - [x] Api end points
 - [ ] Development (Ongoing)
+- [ ] Api Documentation
 - [ ] Browser caching and cache-control
 - [ ] Rate limiting
 - [ ] Write test case
