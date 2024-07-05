@@ -34,6 +34,15 @@ export const couponApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.coupon],
     }),
 
+    // get single by title
+    getSingleCouponByTitle: build.query({
+      query: (id: string) => ({
+        url: `${COUPON_URL}/title`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.coupon],
+    }),
+
     // update
     updateCoupon: build.mutation({
       query: (data: any) => ({
@@ -59,6 +68,7 @@ export const {
   useCreateCouponMutation,
   useGetAllCouponQuery,
   useGetSingleCouponQuery,
+  useGetSingleCouponByTitleQuery,
   useUpdateCouponMutation,
   useDeleteCouponMutation,
 } = couponApi;

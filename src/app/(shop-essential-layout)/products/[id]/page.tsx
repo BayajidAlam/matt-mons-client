@@ -3,7 +3,9 @@ import Loading from "@/app/loading";
 import ProductDetailsSection from "@/components/Product/ProductDetailsSection";
 import { productsArray } from "@/demo/data";
 import { useCreateCartMutation } from "@/redux/api/cart/cartApi";
+import { addToCart } from "@/redux/api/cart/cartSlice";
 import { useGetSingProductQuery } from "@/redux/api/products/productsApi";
+import { useAppDispatch } from "@/redux/hooks";
 import { getUserInfo } from "@/services/auth.service";
 import { UserInfo } from "@/types";
 import { ShoppingCartOutlined } from "@ant-design/icons";
@@ -15,25 +17,28 @@ import { FaStar } from "react-icons/fa";
 import { SiGoogleanalytics } from "react-icons/si";
 
 const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
-
   const { id: uId } = getUserInfo() as UserInfo;
   const id = params.id;
 
   const { data, isLoading } = useGetSingProductQuery(id);
   const productData = data?.data;
-  
+
+  const dispatch = useAppDispatch();
   const [createCart, { isLoading: isCartLoading }] = useCreateCartMutation();
-  const handleAddToCart = async (prodId: string) => {
+
+  const handleAddToCart = async (prod: any) => {
     const data = {
-      productId: prodId,
+      productId: prod.id,
       userId: uId,
     };
     const res = await createCart(data).unwrap();
     console.log(res);
     if (res?.data) {
+      dispatch(addToCart(prod));
       message.success("Product added to cart successfully");
     }
   };
+ 
 
   if (isLoading || isCartLoading) return <Loading />;
 
@@ -128,7 +133,7 @@ const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
 
           <div className="flex justify-start items-center gap-1">
             <button
-              onClick={() => handleAddToCart(productData.id)}
+              onClick={() => handleAddToCart(productData)}
               className="px-4 py-3 border text-[18px"
             >
               <ShoppingCartOutlined className="text-[26px] text-black" />
