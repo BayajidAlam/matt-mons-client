@@ -7,11 +7,20 @@ import { TiSocialFacebook } from "react-icons/ti";
 import { FaTwitter } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io";
 import { Button } from "antd";
-import { removeUserInfo } from "@/services/auth.service";
+import {
+  getUserInfo,
+  isLoggedIn,
+  removeUserInfo,
+} from "@/services/auth.service";
 import { authKey } from "@/constants/storagekey";
 import { useRouter } from "next/navigation";
+import { UserInfo } from "@/types";
+import { USER_ROLE } from "@/constants/role";
 
 const HeaderTop = () => {
+  const userLoggedIn = isLoggedIn();
+  const { role } = getUserInfo() as UserInfo;
+  console.log(role);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState({
     language: "ENGLISH",
@@ -19,7 +28,6 @@ const HeaderTop = () => {
   });
 
   const router = useRouter();
-
   const toggleOpen = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (option: any) => {
@@ -39,14 +47,26 @@ const HeaderTop = () => {
           Home
         </Link>
       </li>
+
+      {(role === USER_ROLE.SUPER_ADMIN ||
+        role === USER_ROLE.ADMIN ||
+        role === USER_ROLE.SELLER ||
+        role === USER_ROLE.SELLS_MANAGER) && (
+        <li>
+          <Link className="text-white text-[13px]" href={`/${role}`}>
+            Dashboard
+          </Link>
+        </li>
+      )}
+
       <li>
         <Link className="text-white text-[13px]" href={"/"}>
-          Register
+          My Order
         </Link>
       </li>
       <li>
         <Link className="text-white text-[13px]" href={"/"}>
-          Blog
+          Shops
         </Link>
       </li>
       <li>

@@ -4,11 +4,14 @@ import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
 import { IoCallOutline } from "react-icons/io5";
 import { VscAccount } from "react-icons/vsc";
-import { CiHeart } from "react-icons/ci";
-import { LiaShoppingBagSolid } from "react-icons/lia";
 import Link from "next/link";
+import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { Badge } from "antd";
+import { useAppSelector } from "@/redux/hooks";
 
 const MainHeader = () => {
+  const quantity = useAppSelector((state) => state.cart.totalQuantity);
+
   return (
     <div className=" w-[92%] md:w-[95%] lg:w-[90%] xl:w-[70%] mx-auto py-8 px-1">
       <div className="flex justify-between items-center gap-12">
@@ -40,8 +43,16 @@ const MainHeader = () => {
         <div className="flex justify-center items-center gap-4">
           <IoIosSearch className="text-3xl text-black block lg:hidden " />
           <VscAccount className="text-2xl" />
-          <CiHeart className="text-3xl" />
-          <LiaShoppingBagSolid className="text-3xl" />
+          <Link className="text-black" href={`/wishlists`}>
+            <HeartOutlined className="text-3xl" />
+          </Link>
+          <Badge count={quantity}>
+            <div className="relative">
+              <Link className="text-black" href={`/cart`}>
+                <ShoppingCartOutlined className="text-3xl" />
+              </Link>
+            </div>
+          </Badge>
         </div>
       </div>
     </div>

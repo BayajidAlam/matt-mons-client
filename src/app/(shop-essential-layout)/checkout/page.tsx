@@ -5,13 +5,20 @@ import FormInput from "@/components/Forms/FormInput";
 import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
 import { genderOptions } from "@/constants/global";
+import { useAppSelector } from "@/redux/hooks";
 import { Col, Row } from "antd";
 
 const Checkout = () => {
+  const subTotal = useAppSelector((state) => state.cart.subTotal);
+  const shipping = useAppSelector((state) => state.cart.shipping);
+  const total = useAppSelector((state) => state.cart.total);
+  const taxAmount = useAppSelector((state) => state.cart.taxTotal);
+
   const onSubmit = async (data: any) => {
     try {
     } catch (err: any) {}
   };
+
   return (
     <>
       <div className="w-[92%] md:w-[95%] lg:w-[90%] xl:w-[70%] mx-auto">
@@ -83,20 +90,20 @@ const Checkout = () => {
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
                   <p className="text-lg">Subtotal</p>
-                  <p className="text-lg font-bold">$1220</p>
+                  <p className="text-lg font-bold">${subTotal}</p>
                 </div>
                 <div className="flex justify-between items-center">
                   <p className="text-lg">Shipping</p>
-                  <p className="text-lg font-bold">$120</p>
+                  <p className="text-lg font-bold">${shipping}</p>
                 </div>
                 <div className="flex justify-between items-center border-b-2 pb-1">
                   <p className="text-lg">Tax</p>
-                  <p className="text-lg font-bold">$12</p>
+                  <p className="text-lg font-bold">${taxAmount}</p>
                 </div>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-lg">Total</p>
-                <p className="text-lg font-bold">$1352</p>
+                <p className="text-lg font-bold">${total}</p>
               </div>
               <button className=" w-full btn bg-buttonBg   text-[16px] border rounded-full px-8 py-2 mt-8 uppercase  text-white">
                 Place Order
