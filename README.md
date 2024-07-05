@@ -1,3 +1,16 @@
+Project Todos
+- [x] Requirement analysis
+- [x] Selecting tech stack
+- [x] System design
+- [x] Api end points
+- [ ] Development (Ongoing)
+- [ ] Browser caching and cache-control
+- [ ] Rate limiting
+- [ ] Write test case
+- [ ] Complete documentation
+
+
+
 ```bash
 git commit -m "Initial commit: starting project setup"
 git commit -m "feat: add user authentication"
