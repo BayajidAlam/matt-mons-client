@@ -6,14 +6,14 @@ const ORDERS_URL = "/coupons";
 export const ordersApi = baseApi.injectEndpoints({
   endpoints: (build: any) => ({
     // create
-    // createAccountHead: build.mutation({
-    //   query: (data: any) => ({
-    //     url: `${ACCOUNT_HEAD_URL}/create`,
-    //     method: 'POST',
-    //     data: data,
-    //   }),
-    //   invalidatesTags: [tagTypes.accountHead],
-    // }),
+    createOrder: build.mutation({
+      query: (data: any) => ({
+        url: `${ORDERS_URL}/create-order`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.orders],
+    }),
 
     // get all
     getAllOrders: build.query({
@@ -22,17 +22,17 @@ export const ordersApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      providesTags: [tagTypes.sells_manager],
+      providesTags: [tagTypes.sells_manager, tagTypes.seller, tagTypes.orders],
     }),
 
     // get single
-    // getSingleSellsManager: build.query({
-    //   query: (id: string) => ({
-    //     url: `${PRODUCTS_URL}/${id}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: [tagTypes.sells_manager],
-    // }),
+    getSingleOrder: build.query({
+      query: (id: string) => ({
+        url: `${ORDERS_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.sells_manager, tagTypes.seller],
+    }),
 
     // update
     // updateSellsManager: build.mutation({
@@ -46,5 +46,8 @@ export const ordersApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetAllOrdersQuery } = ordersApi;
-
+export const {
+  useGetAllOrdersQuery,
+  useCreateOrderMutation,
+  useGetSingleOrderQuery,
+} = ordersApi;

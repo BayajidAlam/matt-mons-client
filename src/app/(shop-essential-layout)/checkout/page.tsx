@@ -2,21 +2,41 @@
 
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
-import FormSelectField from "@/components/Forms/FormSelectField";
 import FormTextArea from "@/components/Forms/FormTextArea";
-import { genderOptions } from "@/constants/global";
+import { useCreateOrderMutation } from "@/redux/api/orders/orderApi";
 import { useAppSelector } from "@/redux/hooks";
-import { Button, Col, Row } from "antd";
+import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
+import { Col, Row, message } from "antd";
+import { useRouter } from "next/router";
 
 const Checkout = () => {
+  const { id, shopId } = getUserInfo() as UserInfo;
+  const router = useRouter();
+
   const subTotal = useAppSelector((state) => state.cart.subTotal);
   const shipping = useAppSelector((state) => state.cart.shipping);
   const total = useAppSelector((state) => state.cart.total);
   const taxAmount = useAppSelector((state) => state.cart.taxTotal);
+  const products = useAppSelector((state) => state.cart.products);
 
+  const [createOrder] = useCreateOrderMutation();
   const onSubmit = async (data: any) => {
     try {
-      console.log(data);
+      const orderData = {
+        ...data,
+        userId: id,
+        shopId,
+        subTotal,
+        shippingCharge: shipping,
+        tax: taxAmount,
+        total: total,
+        products,
+      };
+      const res = await createOrder(orderData).unwrap();
+      if (res?.data) {
+        router.push("/order-successful");
+      }
     } catch (err: any) {}
   };
 
@@ -27,7 +47,7 @@ const Checkout = () => {
           <h3 className=" lg:text-left text-[20px] pb-4">Checkout</h3>
           <Form submitHandler={onSubmit}>
             <div className="md:grid grid-cols-4 gap-8 bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200  space-y-3 pb-40 p-4">
-              <div className="col-span-3 ">
+              <div className="col-span-3">
                 <div
                   style={{
                     border: "1px solid #d9d9d9",
@@ -119,7 +139,7 @@ const Checkout = () => {
                 </div>
               </div>
 
-              <div className="border rounded-xl p-6 !mt-0">
+              <div className="border rounded-xl p-6 !mt-0 pb-40">
                 <h1 className="text-xl">Order summary</h1>
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
