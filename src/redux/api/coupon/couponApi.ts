@@ -36,8 +36,8 @@ export const couponApi = baseApi.injectEndpoints({
 
     // get single by title
     getSingleCouponByTitle: build.query({
-      query: (id: string) => ({
-        url: `${COUPON_URL}/title`,
+      query: (couponName: string) => ({
+        url: `${COUPON_URL}/title/${couponName}`,
         method: "GET",
       }),
       providesTags: [tagTypes.coupon],

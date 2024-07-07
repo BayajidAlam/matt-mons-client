@@ -34,10 +34,21 @@ export const cartApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.cart],
     }),
 
+
     // update
-    updateCart: build.mutation({
+    incrementQuantity: build.mutation({
       query: (data: any) => ({
-        url: `${CART_URL}/${data?.id}`,
+        url: `${CART_URL}/increment/${data?.id}`,
+        method: "PATCH",
+        data: data?.data,
+      }),
+      invalidatesTags: [tagTypes.cart],
+    }),
+
+    // update
+    decrementQuantity: build.mutation({
+      query: (data: any) => ({
+        url: `${CART_URL}/decrement/${data?.id}`,
         method: "PATCH",
         data: data?.data,
       }),
@@ -59,6 +70,7 @@ export const {
   useGetAllCartQuery,
   useCreateCartMutation,
   useGetSingleCartQuery,
-  useUpdateCartMutation,
+  useIncrementQuantityMutation,
+  useDecrementQuantityMutation,
   useDeleteCartMutation,
 } = cartApi;

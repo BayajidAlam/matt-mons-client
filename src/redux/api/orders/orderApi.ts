@@ -1,12 +1,12 @@
 import { tagTypes } from "@/redux/tag-types";
 import { baseApi } from "../baseApi";
 
-const ORDERS_URL = "/coupons";
+const ORDERS_URL = "/orders";
 
 export const ordersApi = baseApi.injectEndpoints({
   endpoints: (build: any) => ({
     // create
-    createOrder: build.mutation({
+    createNewOrders: build.mutation({
       query: (data: any) => ({
         url: `${ORDERS_URL}/create-order`,
         method: "POST",
@@ -48,6 +48,6 @@ export const ordersApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllOrdersQuery,
-  useCreateOrderMutation,
   useGetSingleOrderQuery,
+  useCreateNewOrdersMutation,
 } = ordersApi;

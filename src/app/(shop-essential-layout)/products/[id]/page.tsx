@@ -31,12 +31,15 @@ const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
       productId: prod.id,
       userId: uId,
     };
+   try {
     const res = await createCart(data).unwrap();
-    console.log(res);
     if (res?.data) {
       dispatch(addToCart(prod));
       message.success("Product added to cart successfully");
     }
+   } catch (error) {
+    
+   }
   };
  
 
