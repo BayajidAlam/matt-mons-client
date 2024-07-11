@@ -1,9 +1,10 @@
-Project Todos
+Project Todos 
 - [x] Requirement analysis
 - [x] Selecting tech stack
 - [x] System design
 - [x] Api end points
 - [ ] Development (Ongoing)
+- [ ] Deployment
 - [ ] Api Documentation
 - [ ] Browser caching and cache-control
 - [ ] Rate limiting
