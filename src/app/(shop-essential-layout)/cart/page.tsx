@@ -21,13 +21,10 @@ import { useGetSingleCustomerQuery } from "@/redux/api/customer/customerApi";
 
 const Cart = () => {
   const query: Record<string, any> = {};
-  // const [couponName, setCouponName] = useState<string>("");
-  // const [shouldFetchCoupon, setShouldFetchCoupon] = useState(false);
   const [showModel, setShowModel] = useState(false);
-
   const { id } = getUserInfo() as UserInfo;
 
-  //Get
+  //Get customer info
   const { data, isLoading: getLoad, refetch } = useGetSingleCustomerQuery(id);
   const customerData = data?.data;
 
@@ -37,6 +34,7 @@ const Cart = () => {
 
   const { data: cartAllData, isLoading } = useGetAllCartQuery({ ...query });
   const cartData = cartAllData?.data.cartItems;
+  
   const { total, subTotal, taxAmount, shipping } = cartAllData?.data || {};
 
   //increment quantity
@@ -70,25 +68,6 @@ const Cart = () => {
       message.error(`${error.data}`);
     }
   };
-
-  //apply coupon
-  // const { data, refetch } = useGetSingleCouponByTitleQuery(couponName, {
-  //   skip: !shouldFetchCoupon,
-  // });
-  // const couponData = data?.data;
-
-  // const handleApplyCoupon = async () => {
-  //   if (!couponName) {
-  //     message.warning("Please enter your coupon!");
-  //     return;
-  //   }
-  //   setShouldFetchCoupon(true);
-  //   try {
-  //     await refetch();
-  //   } catch (error) {
-  //     console.error("Error fetching coupon data:", error);
-  //   }
-  // };
 
   if (isLoading) return <Loading />;
   return (
@@ -232,9 +211,11 @@ const Cart = () => {
                     <h5>${total === 0 ? "00" : total?.toFixed(2)}</h5>
                   </div>
                   <div className="my-10">
-                    <button className=" w-full btn bg-buttonBg   text-[16px] border rounded-full px-8 py-2   text-white">
-                      Complete payment
-                    </button>
+                    <Link href={`/checkout`}>
+                      <button className=" w-full btn bg-buttonBg   text-[16px] border rounded-full px-8 py-2   text-white">
+                        Checkout
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

@@ -17,6 +17,7 @@ interface IInput {
   required?: boolean;
   disabled?: boolean;
   readOnly?: boolean;
+  className?: string;
 }
 
 const FormInput = ({
@@ -32,6 +33,7 @@ const FormInput = ({
   required,
   disabled = false,
   readOnly = false,
+  className
 }: IInput) => {
   const {
     control,
@@ -58,6 +60,7 @@ const FormInput = ({
         render={({ field }) =>
           type === "password" ? (
             <Input.Password
+              className={className}
               disabled={disabled}
               type={type}
               size={size}
