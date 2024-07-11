@@ -18,7 +18,6 @@ const MakePayment = ({ clientSecret, isLoading, setIsLoading }) => {
 
   const [cardError, setCardError] = useState("");
   const [success, setSuccess] = useState("");
-  const [tnxId, setTnxId] = useState("");
 
   //get cart data
   query["limit"] = 100;
@@ -26,7 +25,7 @@ const MakePayment = ({ clientSecret, isLoading, setIsLoading }) => {
   query["userId"] = id;
   const { data: cartAllData } = useGetAllCartQuery({ ...query });
   const cartData = cartAllData?.data.cartItems;
-  console.log(cartData);
+
   //Get customer info
   const { data, isLoading: getLoad, refetch } = useGetSingleCustomerQuery(id);
   const customerData = data?.data;
@@ -86,7 +85,6 @@ const MakePayment = ({ clientSecret, isLoading, setIsLoading }) => {
     }
     if (paymentIntent?.status === "succeeded") {
       setSuccess("Your payment successful");
-      setTnxId(paymentIntent?.id);
       setIsLoading(false);
 
       // set payment info to own db
@@ -105,7 +103,7 @@ const MakePayment = ({ clientSecret, isLoading, setIsLoading }) => {
       const res = await createNewOrders({ ...orderData }).unwrap();
       console.log(res);
       if (res?.data?.transId) {
-        router.push(`/order-successful?orderNumber=${res.data.orderId}`);
+        router.push(`/order-successful?orderNumber=${res.data.orderId}&transId=${res.data.transId}`);
       }
     }
   };

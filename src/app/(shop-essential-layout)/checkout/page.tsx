@@ -1,5 +1,4 @@
 "use client";
-import Loading from "@/app/loading";
 import MakePayment from "@/components/addUpdateFrom/AddPayment";
 import { useGetAllCartQuery } from "@/redux/api/cart/cartApi";
 import { getUserInfo } from "@/services/auth.service";
@@ -17,7 +16,7 @@ const CheckoutPage = () => {
   const [clientSecret, setClientSecret] = useState("");
   const query: Record<string, any> = {};
 
-  const { id, shopId, email } = getUserInfo() as UserInfo;
+  const { id } = getUserInfo() as UserInfo;
 
   query["limit"] = 100;
   query["page"] = 1;

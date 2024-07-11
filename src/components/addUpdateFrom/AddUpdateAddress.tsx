@@ -2,7 +2,6 @@
 import Form from "@/components/Forms/Form";
 import FormInput from "@/components/Forms/FormInput";
 import { Button, Col, Row, message } from "antd";
-import { useUpdateColorMutation } from "@/redux/api/color/colorApi";
 import { getUserInfo } from "@/services/auth.service";
 import { UserInfo } from "@/types";
 import {
@@ -17,6 +16,7 @@ const AddUpdateAddress = () => {
   //Get
   const { data, isLoading: getLoad, refetch } = useGetSingleCustomerQuery(id);
   const customerData = data?.data;
+  
   //Update
   const [updateCustomer, { isLoading: updateLoad }] =
     useUpdateCustomerMutation();
