@@ -45,7 +45,7 @@ const MyOrderComponent = () => {
 
               <div className="mt-6 sm:mt-8 lg:flex lg:gap-8">
                 <OrderHistory order={order}/>
-                <OrderSummary />
+                <OrderSummary order={order}/>
               </div>
             </div>
           </section>
