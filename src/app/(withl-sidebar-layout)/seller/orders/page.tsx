@@ -1,30 +1,27 @@
 "use client";
 import ActionBar from "@/components/ui/ActionBar";
-
 import { useDebounced } from "@/redux/hooks";
-import {
-  DeleteOutlined,
-  EditOutlined,
-  ReloadOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { useState } from "react";
-
 import dayjs from "dayjs";
-
-import ModalComponent from "@/components/ui/Modal";
-import { USER_ROLE } from "@/constants/role";
-import Image from "next/image";
-import { IoMdAdd } from "react-icons/io";
 import UMTable from "@/components/ui/Table";
-import AddUpdateManager from "@/components/addUpdateFrom/addUpdateManager";
+import ModalTriggerButton from "@/components/ui/ModalTriggerButton";
+import Loader from "@/components/Utils/Loader";
+import EComModalWrapper from "@/components/ui/EComModalWrapper";
+import { UserInfo } from "@/types";
+import { getUserInfo } from "@/services/auth.service";
 import AddUpdateOrders from "@/components/addUpdateFrom/AddUpdateOrder";
-import { useGetAllOrdersQuery } from "@/redux/api/orders/orderApi";
+import { useGetAllSellsOrdersQuery } from "@/redux/api/orders/orderApi";
+import Image from "next/image";
 
 const MyOrdersPage = () => {
-  const SUPER_ADMIN = USER_ROLE.ADMIN;
+  const { shopId, role } = getUserInfo() as UserInfo;
   const query: Record<string, any> = {};
-  const [showModel, setShowModel] = useState(false);
+
+  const [id, setId] = useState("");
+  
+  const [showModalWithId, setShowModalWithId] = useState(false);
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
@@ -36,6 +33,7 @@ const MyOrdersPage = () => {
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
+  query["shopId"] = shopId;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -48,116 +46,129 @@ const MyOrdersPage = () => {
 
   const columns = [
     {
-      title: "",
-      dataIndex: "profileImg",
-      render: function (data: any) {
-        const image = `${
-          data ||
-          "https://res.cloudinary.com/dnzlgpcc3/image/upload/v1704419785/oiav6crzfltkswdrrrli.png"
-        } `;
+      title: "Product",
+      dataIndex: "OrderItems",
+      width: "25%",
+      render: (orderItems: any) => {
         return (
-          <Image
-            src={image}
-            width={100}
-            height={100}
-            alt=""
-            style={{ width: "70px", height: "50px" }}
-          />
-          // <Avatar shape="square" size={64} icon={<CarOutlined />} />
+          <table
+            className="min-w-full"
+            style={{ borderCollapse: "separate", borderSpacing: "0 10px" }}
+          >
+            <thead>
+              <tr>
+                <th className="text-left">Image</th>
+                <th className="text-left">Name</th>
+                <th className="text-left">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderItems.map((item: any) => (
+                <tr key={item.id}>
+                  <td style={{ verticalAlign: "top" }}>
+                    <Image
+                      src={item.Product.productMainImage}
+                      alt={item.Product.productName}
+                      width={50}
+                      height={50}
+                    />
+                  </td>
+                  <td
+                    style={{ verticalAlign: "top" }}
+                    className="font-bold mx-2"
+                  >
+                    {item.Product.productName.length > 20
+                      ? item.Product.productName.slice(0, 40) + "..."
+                      : item.Product.productName}
+                  </td>
+                  <td style={{ verticalAlign: "top" }} className="font-bold">
+                    {item.Product.minPrice}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         );
       },
     },
-    {
-      title: "Product Name",
-      dataIndex: "bloodGroup",
-      render: (data: any) => (data ? data : "N/A"),
-    },
+
     {
       title: "Customer Name",
       dataIndex: "fullName",
+      render: function (data: any) {
+        return <p>{data}</p>;
+      },
     },
     {
-      title: "Email",
-      dataIndex: "driverId",
-    },
-    {
-      title: "Contact No",
+      title: "Contact Number",
       dataIndex: "contactNumber",
-      render: (data: any) => (data ? data : "N/A"),
-    },
-    {
-      title: "Em. Contact No",
-      dataIndex: "emergencyContactNumber",
-      render: (data: any) => (data ? data : "N/A"),
+      render: function (data: any) {
+        return <p>{data}</p>;
+      },
     },
     {
       title: "Address",
       dataIndex: "address",
-    },
-    {
-      title: "Shipping Charge",
-      dataIndex: "shippingCharge",
       render: function (data: any) {
-        return data && dayjs(data).format("MMM D, YYYY hh:mm A");
+        return <p>{data}</p>;
       },
-      sorter: true,
     },
     {
-      title: "Total",
+      title: "Price",
       dataIndex: "total",
       render: function (data: any) {
+        return <p>{data}</p>;
+      },
+    },
+    {
+      title: "Order Status",
+      dataIndex: "orderStatus",
+      render: function (data: any) {
+        return <p>{data}</p>;
+      },
+    },
+    {
+      title: "Ordered At",
+      dataIndex: "orderPlacedAt",
+      render: function (data: any) {
         return data && dayjs(data).format("MMM D, YYYY hh:mm A");
       },
-      sorter: true,
     },
-
     {
-      title: "Action",
+      title: "Change Order Status",
       dataIndex: "id",
-      // width: "15%",
       render: function (data: any) {
         return (
           <div className="flex">
-            {/* <Link href={`/${SUPER_ADMIN}/general_user/details/${data}`}>
-              <Button onClick={() => console.log(data)} type="primary">
-                <EyeOutlined />
-              </Button>
-            </Link> */}
             <div
+              onClick={() => {
+                setId(data);
+              }}
               style={{
                 margin: "0px 5px",
               }}
             >
-              <ModalComponent
-                showModel={showModel}
-                setShowModel={setShowModel}
+              <ModalTriggerButton
+                setShowModel={setShowModalWithId}
                 icon={<EditOutlined />}
-              >
-                <AddUpdateManager id={data} />
-              </ModalComponent>
+              />
             </div>
-            <Button
-              //   onClick={() => deleteGeneralUserHandler(data)}
-              type="primary"
-              danger
-            >
-              <DeleteOutlined />
-            </Button>
           </div>
         );
       },
     },
   ];
 
-  const { data, isLoading } = useGetAllOrdersQuery({ ...query });
-  // const data: any = [];
-  const drivers = data?.data;
-  const meta = data?.meta;
+  const { data, isLoading } = useGetAllSellsOrdersQuery({ ...query });
 
+  const ordersData = data?.data;
+  const meta = data?.meta;
+console.log(ordersData)
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);
   };
+
   const onTableChange = (pagination: any, filter: any, sorter: any) => {
     const { order, field } = sorter;
     setSortBy(field as string);
@@ -170,9 +181,10 @@ const MyOrdersPage = () => {
     setSearchTerm("");
   };
 
-  // if (isLoading) {
-  //   return <Loader className="h-[50vh] flex items-end justify-center" />;
-  // }
+  if (isLoading) {
+    return <Loader className="h-[50vh] flex items-end justify-center" />;
+  }
+
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
       <ActionBar inline title="Orders List">
@@ -196,21 +208,13 @@ const MyOrdersPage = () => {
               <ReloadOutlined />
             </Button>
           )}
-          <ModalComponent
-            showModel={showModel}
-            setShowModel={setShowModel}
-            buttonText="Add Orders"
-            icon={<IoMdAdd />}
-          >
-            <AddUpdateOrders />
-          </ModalComponent>
         </div>
       </ActionBar>
 
       <UMTable
-        // loading={isLoading}
+        loading={isLoading}
         columns={columns}
-        dataSource={drivers}
+        dataSource={ordersData}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -218,6 +222,13 @@ const MyOrdersPage = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+
+      <EComModalWrapper
+        showModel={showModalWithId}
+        setShowModel={setShowModalWithId}
+      >
+        <AddUpdateOrders id={id} />
+      </EComModalWrapper>
     </div>
   );
 };

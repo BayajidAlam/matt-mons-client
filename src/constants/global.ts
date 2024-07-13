@@ -51,8 +51,6 @@ export const daysOptions = days.map((day: string) => {
   };
 });
 
-
-
 export enum ExamType {
   FINAL = "FINAL",
   MIDTERM = "MIDTERM",
@@ -69,7 +67,6 @@ export enum PaymentStatus {
   PARTIAL_PAID = "PARTIAL_PAID",
   FULL_PAID = "FULL_PAID",
 }
-
 
 export const genderOption = [
   {
@@ -145,16 +142,16 @@ export const workshopType = [
 
 export const maintenanceType = [
   {
-    label: 'Scheduled',
-    value: 'Scheduled',
+    label: "Scheduled",
+    value: "Scheduled",
   },
   {
-    label: 'Unscheduled',
-    value: 'Unscheduled',
+    label: "Unscheduled",
+    value: "Unscheduled",
   },
   {
-    label: 'Accidental',
-    value: 'Accidental',
+    label: "Accidental",
+    value: "Accidental",
   },
 ];
 
@@ -200,7 +197,6 @@ export const accidentPaymentStatus = [
   },
 ];
 
-
 // month of the year
 export const monthOfYear = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
@@ -208,9 +204,17 @@ export enum OrderStatus {
   placed = "placed",
   payment_accepted = "payment_accepted",
   delivered_to_curier = "delivered_to_curier",
-  curier_wareshouse = "curier_wareshouse", 
+  curier_wareshouse = "curier_wareshouse",
   being_delivered = "being_delivered",
-  delivered = "delivered", 
+  delivered = "delivered",
   cancel = "cancel",
-  returned = "returned"
+  returned = "returned",
 }
+
+export const orderStatusOptions = [
+  { label: "Delivered to Courier", value: "delivered_to_curier" },
+  { label: "Courier Warehouse", value: "curier_wareshouse" },
+  { label: "Being Delivered", value: "being_delivered" },
+  { label: "Delivered", value: "delivered" },
+  { label: "Returned", value: "returned" },
+];

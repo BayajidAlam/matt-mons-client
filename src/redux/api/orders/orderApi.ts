@@ -25,6 +25,16 @@ export const ordersApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.orders],
     }),
 
+    // get all
+    getAllSellsOrders: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${ORDERS_URL}/sells`,
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: [tagTypes.orders],
+    }),
+
     // get single
     getSingleOrder: build.query({
       query: (id: string) => ({
@@ -48,6 +58,7 @@ export const ordersApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllOrdersQuery,
+  useGetAllSellsOrdersQuery,
   useGetSingleOrderQuery,
   useCreateNewOrdersMutation,
   useUpdateOrderMutation,

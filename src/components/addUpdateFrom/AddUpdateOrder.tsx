@@ -1,47 +1,70 @@
 "use client";
 import Form from "@/components/Forms/Form";
-import FormInput from "@/components/Forms/FormInput";
-import FormTextArea from "@/components/Forms/FormTextArea";
 import { Button, Col, Row, message } from "antd";
-import { useState } from "react";
 import FormSelectField from "../Forms/FormSelectField";
-import { genderOptions } from "@/constants/global";
-import Loading from "@/app/loading";
-import UploadImage from "../ui/UploadImage";
+import { OrderStatus, orderStatusOptions } from "@/constants/global";
+import {
+  useGetSingleOrderQuery,
+  useUpdateOrderMutation,
+} from "@/redux/api/orders/orderApi";
 
-const AddUpdateOrders = ({ id }: { id?: string }) => {
+const AddUpdateOrders = ({ id }: { id: string }) => {
+  // const { data } = useGetSingleOrderQuery(id);
+  // const orderStatus = data?.data?.orderStatus ;
+  
+  // const orderStatusDefaultValue = { label: orderStatus, value: orderStatus };
 
-  const [image, setimage] = useState("");
-  //Get
-  // const { data, isLoading: getLoad } = useGetSingleDriverQuery(id ? id : "");
-  const data:any = []
   //Update
-  // const [updateDriver, { isLoading: updateLoad }] = useUpdateDriverMutation();
-
-  //Create
-  // const [createDriver, { isLoading: createLoad }] = useCreateDriverMutation();
+  const [updateOrder, { isLoading: updateLoad }] = useUpdateOrderMutation();
 
   const onSubmit = async (values: any) => {
-    message.loading(id ? "Updating...." : "Adding....");
-    id ? values.profileImg : (values.driver.profileImg = image);
+    message.loading("Updating....");
+
+    let orderStatusData = {};
+    if (values.orderStatus === OrderStatus.delivered_to_curier) {
+      orderStatusData = {
+        delivered_to_curier: new Date(),
+        ...values,
+      };
+    } else if (values.orderStatus === OrderStatus.curier_wareshouse) {
+      orderStatusData = {
+        curier_wareshouse: new Date(),
+        ...values,
+      };
+    } else if (values.orderStatus === OrderStatus.being_delivered) {
+      orderStatusData = {
+        being_delivered: new Date(),
+        ...values,
+      };
+    } else if (values.orderStatus === OrderStatus.delivered) {
+      orderStatusData = {
+        delivered: new Date(),
+        ...values,
+      };
+    } else {
+      orderStatusData = {
+        canceledAt: new Date(),
+        ...values,
+      };
+    }
     try {
-      // const res = id
-      //   ? await updateDriver({
-      //       id,
-      //       data: {
-      //         fullName: values.driver.fullName,
-      //         mobile: values.driver.mobile,
-      //         licenseNo: values.driver.licenseNo,
-      //         bloodGroup: values.driver.bloodGroup,
-      //         address: values.driver.address,
-      //       },
-      //     }).unwrap()
-      //   : await createDriver(values).unwrap();
-      // if (res.id) {
-      //   message.success(`Driver ${id ? "updated" : "added"} successfully`);
+      console.log(orderStatusData);
+      // const res = await updateOrder({
+      //   id,
+      //   data: {
+      //     data: {
+      //       ...values,
+      //       statusChangeTimeProperty: new Date(),
+      //     },
+      //   },
+      // }).unwrap();
+
+      // if (res?.data) {
+      //   message.success("Order status updated successfully");
       // } else {
       //   message.error(res.message);
       // }
+      // console.log(res);
     } catch (err: any) {
       console.error(err.message);
     }
@@ -56,10 +79,10 @@ const AddUpdateOrders = ({ id }: { id?: string }) => {
   return (
     <div>
       <h1 className="text-center my-1 font-bold text-2xl">
-        {id ? "Update Order" : "Add Order"}
+        Update order status
       </h1>
       <div>
-        <Form submitHandler={onSubmit} defaultValues={id ? { ...data } : {}}>
+        <Form submitHandler={onSubmit}>
           <div
             style={{
               border: "1px solid #d9d9d9",
@@ -78,162 +101,27 @@ const AddUpdateOrders = ({ id }: { id?: string }) => {
             >
               <Col
                 className="gutter-row"
-                xs={10}
-                sm={6}
-                md={6}
-                lg={4}
-                // style={{
-                //   marginBottom: "10px",
-                // }}
-              >
-                <UploadImage setImageStatus={setimage} name="profileImg" />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={14}
-                sm={18}
-                md={18}
-                lg={20}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <div className="space-y-[10px]">
-                  <Col
-                    style={{
-                      padding: "0px",
-                    }}
-                  >
-                    {!id && (
-                      <FormInput
-                        type="text"
-                        name="userName"
-                        size="large"
-                        label="User Name"
-                        required={true}
-                        placeholder="Please enter driver user name"
-                      />
-                    )}
-                  </Col>
-                  <Col
-                    style={{
-                      padding: "0px",
-                    }}
-                  >
-                    {!id && (
-                      <FormInput
-                        type="password"
-                        name="password"
-                        size="large"
-                        label="Password"
-                        required={true}
-                        placeholder="Please enter driver password"
-                      />
-                    )}
-                  </Col>
-                </div>
-              </Col>
-
-              <Col
-                className="gutter-row"
                 xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name={id ? "fullName" : "driver.fullName"}
-                  size="large"
-                  label="Full Name"
-                  required={true}
-                  placeholder="Please enter driver full name"
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="tel"
-                  name={id ? "mobile" : "driver.mobile"}
-                  size="large"
-                  label="Mobile"
-                  required={true}
-                  placeholder="Please enter driver mobile number"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
-                style={{
-                  marginBottom: "10px",
-                }}
-              >
-                <FormInput
-                  type="text"
-                  name={id ? "licenseNo" : "driver.licenseNo"}
-                  size="large"
-                  label="License No"
-                  // required={true}
-                  placeholder="Please enter driver license number"
-                />
-              </Col>
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={12}
+                md={24}
+                lg={24}
                 style={{
                   marginBottom: "10px",
                 }}
               >
                 <FormSelectField
+                  // defaultValue={orderStatusDefaultValue}
+                  options={orderStatusOptions}
+                  name="orderStatus"
                   size="large"
-                  name={id ? "bloodGroup" : "driver.bloodGroup"}
-                  options={genderOptions}
-                  label="Blood Group"
-                  placeholder="Select driver blood group"
-                  // required={true}
-                />
-              </Col>
-
-              <Col
-                className="gutter-row"
-                xs={24}
-                md={12}
-                lg={24}
-                style={{
-                  marginBottom: "15px",
-                }}
-              >
-                <FormTextArea
-                  name={id ? "address" : "driver.address"}
-                  label="Address"
-                  rows={3}
-                  placeholder="Enter driver address"
-                  // required
+                  label="Order Status"
+                  required={true}
+                  placeholder="Please enter order status"
                 />
               </Col>
             </Row>
             <div className="flex justify-end items-center">
-              <Button
-                htmlType="submit"
-                type="primary"
-                // disabled={createLoad || updateLoad}
-              >
-                {id ? "Update" : "Add"}
+              <Button htmlType="submit" type="primary" disabled={updateLoad}>
+                {updateLoad ? "Updating..." : "Update"}
               </Button>
             </div>
           </div>
