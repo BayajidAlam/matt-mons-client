@@ -9,10 +9,10 @@ import {
 } from "@/redux/api/orders/orderApi";
 
 const AddUpdateOrders = ({ id }: { id: string }) => {
-  // const { data } = useGetSingleOrderQuery(id);
-  // const orderStatus = data?.data?.orderStatus ;
-  
-  // const orderStatusDefaultValue = { label: orderStatus, value: orderStatus };
+  const { data } = useGetSingleOrderQuery(id);
+  const orderStatus = data?.data?.orderStatus ;
+
+  const orderStatusDefaultValue = { label: orderStatus, value: orderStatus };
 
   //Update
   const [updateOrder, { isLoading: updateLoad }] = useUpdateOrderMutation();
@@ -49,22 +49,19 @@ const AddUpdateOrders = ({ id }: { id: string }) => {
     }
     try {
       console.log(orderStatusData);
-      // const res = await updateOrder({
-      //   id,
-      //   data: {
-      //     data: {
-      //       ...values,
-      //       statusChangeTimeProperty: new Date(),
-      //     },
-      //   },
-      // }).unwrap();
+      const res = await updateOrder({
+        id,
+        data: {
+          ...orderStatusData,
+        },
+      }).unwrap();
 
-      // if (res?.data) {
-      //   message.success("Order status updated successfully");
-      // } else {
-      //   message.error(res.message);
-      // }
-      // console.log(res);
+      if (res?.data) {
+        message.success("Order status updated successfully");
+      } else {
+        message.error(res.message);
+      }
+      console.log(res);
     } catch (err: any) {
       console.error(err.message);
     }
@@ -109,7 +106,7 @@ const AddUpdateOrders = ({ id }: { id: string }) => {
                 }}
               >
                 <FormSelectField
-                  // defaultValue={orderStatusDefaultValue}
+                  defaultValue={orderStatusDefaultValue}
                   options={orderStatusOptions}
                   name="orderStatus"
                   size="large"

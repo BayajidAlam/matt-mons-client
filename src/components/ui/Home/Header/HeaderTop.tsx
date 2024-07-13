@@ -60,12 +60,12 @@ const HeaderTop = () => {
       )}
 
       <li>
-        <Link className="text-white text-[13px]" href={"/"}>
+        <Link className="text-white text-[13px]" href={"/my-orders"}>
           My Order
         </Link>
       </li>
       <li>
-        <Link className="text-white text-[13px]" href={"/"}>
+        <Link className="text-white text-[13px]" href={"/shops"}>
           Shops
         </Link>
       </li>

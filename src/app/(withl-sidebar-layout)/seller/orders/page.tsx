@@ -223,12 +223,12 @@ console.log(ordersData)
         showPagination={true}
       />
 
-      <EComModalWrapper
+      {/* <EComModalWrapper
         showModel={showModalWithId}
         setShowModel={setShowModalWithId}
       >
         <AddUpdateOrders id={id} />
-      </EComModalWrapper>
+      </EComModalWrapper> */}
     </div>
   );
 };

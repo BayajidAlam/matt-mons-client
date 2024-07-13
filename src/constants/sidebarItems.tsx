@@ -179,7 +179,11 @@ export const sidebarItems = (role: string, shopCount: number) => {
           key: `/${role}/orders`,
         },
         {
-          label: <Link href={`/${role}/returns`}>Returns</Link>,
+          label: <Link href={`/${role}/delivered-orders`}>Delivered orders</Link>,
+          key: `/${role}/delivered-orders`,
+        },
+        {
+          label: <Link href={`/${role}/returns`}>Canceled orders</Link>,
           key: `/${role}/returns`,
         },
       ],

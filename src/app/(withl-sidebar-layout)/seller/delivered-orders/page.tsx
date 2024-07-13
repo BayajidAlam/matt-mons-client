@@ -16,7 +16,7 @@ import { useGetAllSellsOrdersQuery } from "@/redux/api/orders/orderApi";
 import Image from "next/image";
 import { OrderStatus } from "@/constants/global";
 
-const ReturnedOrders = () => {
+const DeliveredOrders = () => {
   const { shopId, role } = getUserInfo() as UserInfo;
   const query: Record<string, any> = {};
   const [id, setId] = useState("");
@@ -33,7 +33,7 @@ const ReturnedOrders = () => {
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
   query["shopId"] = shopId;
-  query["orderStatus"] = OrderStatus.cancel;
+  query["orderStatus"] = OrderStatus.delivered;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -163,7 +163,7 @@ const ReturnedOrders = () => {
 
   const ordersData = data?.data;
   const meta = data?.meta;
-  console.log(ordersData);
+ 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);
@@ -187,7 +187,7 @@ const ReturnedOrders = () => {
 
   return (
     <div className="bg-white border border-blue-200 rounded-lg shadow-md shadow-blue-200 p-5 space-y-3">
-      <ActionBar inline title="Canceled orders List">
+      <ActionBar inline title="Delivered orders List">
         <div className="flex items-center justify-between flex-grow gap-2">
           <Input
             // size="large"
@@ -223,14 +223,14 @@ const ReturnedOrders = () => {
         showPagination={true}
       />
 
-      <EComModalWrapper
+      {/* <EComModalWrapper
         showModel={showModalWithId}
         setShowModel={setShowModalWithId}
       >
         <AddUpdateOrders id={id} />
-      </EComModalWrapper>
+      </EComModalWrapper> */}
     </div>
   );
 };
 
-export default ReturnedOrders;
+export default DeliveredOrders;
