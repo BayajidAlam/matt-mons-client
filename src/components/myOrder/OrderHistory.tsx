@@ -3,8 +3,33 @@ import dayjs from "dayjs";
 import { CheckOutlined } from "@ant-design/icons";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { IoHomeOutline } from "react-icons/io5";
+import { Button, message } from "antd";
+import { OrderStatus } from "@/constants/global";
+import { useUpdateOrderMutation } from "@/redux/api/orders/orderApi";
 
 const OrderHistory = ({ order }) => {
+
+  const [updateOrder] = useUpdateOrderMutation();
+  const handleCancelOrder = async (id: number) => {
+    message.loading("Cancelling order...");
+    try {
+      const res = await updateOrder({
+        id,
+        data: {
+          orderStatus: OrderStatus.cancel,
+          canceledAt: new Date(),
+        },
+      }).unwrap();
+      if (res?.data) {
+        message.success(`Order canceled successfully`);
+      } else {
+        message.error(res.message);
+      }
+    } catch (err: any) {
+      console.error(err.message);
+    }
+  };
+
   return (
     <div className="mt-6 grow sm:mt-8 lg:mt-0">
       <div className="space-y-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
@@ -25,7 +50,7 @@ const OrderHistory = ({ order }) => {
                       ? dayjs(order.being_delivered)
                           .add(1, "day")
                           .format("MMM D, YYYY")
-                      : dayjs(order.created_at)
+                      : dayjs(order.orderPlacedAt)
                           .add(3, "day")
                           .format("MMM D, YYYY")
                   }`}
@@ -47,7 +72,7 @@ const OrderHistory = ({ order }) => {
                     ? dayjs(order.curier_wareshouse)
                         .add(1, "day")
                         .format("MMM D, YYYY")
-                    : dayjs(order.createAt)
+                    : dayjs(order.orderPlacedAt)
                         .add(2, "day")
                         .format("MMM D, YYYY"))}
             </h4>
@@ -105,7 +130,7 @@ const OrderHistory = ({ order }) => {
             </span>
             <div>
               <h4 className="mb-0.5 font-semibold text-base">
-                {dayjs(order?.createAt).format("MMM D, YYYY hh:mm A")}
+                {dayjs(order?.orderPlacedAt).format("MMM D, YYYY hh:mm A")}
               </h4>
               <a href="#" className="text-sm font-medium hover:underline">
                 Order placed - Receipt #647563
@@ -115,19 +140,23 @@ const OrderHistory = ({ order }) => {
         </ol>
 
         <div className="gap-4 sm:flex sm:items-center">
-          <button
-            type="button"
-            className="w-full rounded-lg  border border-gray-200 bg-white px-5  py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-          >
-            Cancel the order
-          </button>
-
-          <a
-            href="#"
-            className="mt-4 flex w-full items-center justify-center rounded-lg bg-primary-700  px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300  dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 sm:mt-0"
-          >
-            Order details
-          </a>
+          {order?.delivered ? (
+            <Button
+              className="w-full rounded-lg  border border-gray-200  text-sm font-medium    text-white"
+              type="primary"
+            >
+              Give Feedback
+            </Button>
+          ) : (
+            <Button
+              disabled={order?.canceledAt}
+              onClick={() => handleCancelOrder(order?.id)}
+              className="w-full rounded-lg  border border-gray-200  text-sm font-medium    bg-red-400 text-white"
+              type="primary"
+            >
+              {order?.canceledAt ? "Order canceled" : "Cancel the order"}
+            </Button>
+          )}
         </div>
       </div>
     </div>

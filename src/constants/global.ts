@@ -85,6 +85,7 @@ export const genderOption = [
     value: "others",
   },
 ];
+
 export const bloodGroupOptions = [
   {
     label: "A+",
@@ -130,6 +131,7 @@ export const isActive = [
     value: "deactivate-",
   },
 ];
+
 export const workshopType = [
   {
     label: "In House",
@@ -140,6 +142,7 @@ export const workshopType = [
     value: "Outside-",
   },
 ];
+
 export const maintenanceType = [
   {
     label: 'Scheduled',
@@ -154,12 +157,14 @@ export const maintenanceType = [
     value: 'Accidental',
   },
 ];
+
 export const paperTypeFitness = [
   {
     label: "Fitness",
     value: "Fitness",
   },
 ];
+
 export const paperTypeRegistration = [
   {
     label: "Registration",
@@ -172,12 +177,14 @@ export const paperTypeTaxToken = [
     value: "Tax",
   },
 ];
+
 export const paperTypeRoutePermit = [
   {
     label: "Route Permit",
     value: "Route",
   },
 ];
+
 export const accidentPaymentStatus = [
   {
     label: "Paid",
@@ -196,3 +203,14 @@ export const accidentPaymentStatus = [
 
 // month of the year
 export const monthOfYear = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+export enum OrderStatus {
+  placed = "placed",
+  payment_accepted = "payment_accepted",
+  delivered_to_curier = "delivered_to_curier",
+  curier_wareshouse = "curier_wareshouse", 
+  being_delivered = "being_delivered",
+  delivered = "delivered", 
+  cancel = "cancel",
+  returned = "returned"
+}

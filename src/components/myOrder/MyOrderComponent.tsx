@@ -32,7 +32,7 @@ const MyOrderComponent = () => {
   }
   const { data } = useGetAllOrdersQuery({ ...query });
   const orderData = data?.data;
-  console.log(data);
+
   return (
     <>
       {orderData?.map((order, i: number) => (

@@ -22,7 +22,7 @@ export const ordersApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      providesTags: [tagTypes.sells_manager, tagTypes.seller, tagTypes.orders],
+      providesTags: [tagTypes.orders],
     }),
 
     // get single
@@ -31,18 +31,18 @@ export const ordersApi = baseApi.injectEndpoints({
         url: `${ORDERS_URL}/${id}`,
         method: "GET",
       }),
-      providesTags: [tagTypes.sells_manager, tagTypes.seller],
+      providesTags: [tagTypes.orders],
     }),
 
     // update
-    // updateSellsManager: build.mutation({
-    //   query: (data: any) => ({
-    //     url: `${PRODUCTS_URL}/${data?.id}`,
-    //     method: "PATCH",
-    //     data: data?.data,
-    //   }),
-    //   invalidatesTags: [tagTypes.sells_manager],
-    // }),
+    updateOrder: build.mutation({
+      query: (data: any) => ({
+        url: `${ORDERS_URL}/${data?.id}`,
+        method: "PATCH",
+        data: data?.data,
+      }),
+      invalidatesTags: [tagTypes.orders],
+    }),
   }),
 });
 
@@ -50,4 +50,5 @@ export const {
   useGetAllOrdersQuery,
   useGetSingleOrderQuery,
   useCreateNewOrdersMutation,
+  useUpdateOrderMutation,
 } = ordersApi;
