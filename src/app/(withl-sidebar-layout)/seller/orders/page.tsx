@@ -2,7 +2,7 @@
 import ActionBar from "@/components/ui/ActionBar";
 import { useDebounced } from "@/redux/hooks";
 import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, Tag } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import UMTable from "@/components/ui/Table";
@@ -20,7 +20,7 @@ const MyOrdersPage = () => {
   const query: Record<string, any> = {};
 
   const [id, setId] = useState("");
-  
+
   const [showModalWithId, setShowModalWithId] = useState(false);
 
   const [page, setPage] = useState<number>(1);
@@ -124,7 +124,11 @@ const MyOrdersPage = () => {
       title: "Order Status",
       dataIndex: "orderStatus",
       render: function (data: any) {
-        return <p>{data}</p>;
+        return (
+          <Tag color={"geekblue"} key={data}>
+            {data.toUpperCase()}
+          </Tag>
+        );
       },
     },
     {
@@ -163,7 +167,7 @@ const MyOrdersPage = () => {
 
   const ordersData = data?.data;
   const meta = data?.meta;
-console.log(ordersData)
+  console.log(ordersData);
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);

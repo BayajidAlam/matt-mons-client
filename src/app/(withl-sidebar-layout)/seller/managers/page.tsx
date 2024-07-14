@@ -94,6 +94,12 @@ const AllManagesPage = () => {
       dataIndex: "fullName",
     },
     {
+      title: "Email",
+      dataIndex: "user",
+      key: "email",
+      render: (user) => user.email,
+    },
+    {
       title: "NID Number",
       dataIndex: "nidNumber",
     },
@@ -167,7 +173,7 @@ const AllManagesPage = () => {
   // const data = [];
   const managersData = data?.data;
   const meta = data?.meta;
-  console.log(managersData);
+
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
     setSize(pageSize);

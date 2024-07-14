@@ -2,7 +2,7 @@
 import ActionBar from "@/components/ui/ActionBar";
 import { useDebounced } from "@/redux/hooks";
 import { EditOutlined, ReloadOutlined } from "@ant-design/icons";
-import { Button, Input } from "antd";
+import { Button, Input, Tag } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import UMTable from "@/components/ui/Table";
@@ -124,7 +124,11 @@ const ReturnedOrders = () => {
       title: "Order Status",
       dataIndex: "orderStatus",
       render: function (data: any) {
-        return <p>{data}</p>;
+        return (
+          <Tag color={"volcano"} key={data}>
+            {data.toUpperCase()}
+          </Tag>
+        );
       },
     },
     {
