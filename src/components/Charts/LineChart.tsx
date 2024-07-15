@@ -10,10 +10,10 @@ import lineChart from './configs/lineChart';
 const LineChart = () => {
   const { Title, Paragraph } = Typography;
 
-  const { data, isLoading } = useFuelSummaryGroupByMonthYearQuery('', {
-    refetchOnMountOrArgChange: true,
-  });
-
+  // const { data, isLoading } = useFuelSummaryGroupByMonthYearQuery('', {
+  //   refetchOnMountOrArgChange: true,
+  // });
+  const data = []
   const summaries = data?.summaries || [];
   const filterByYear = summaries?.filter(
     (el: any) => el.year === new Date().getFullYear()
@@ -36,7 +36,7 @@ const LineChart = () => {
     <div className="overflow-hidden">
       <div className="linechart mb-[14px]">
         <div>
-          <Title level={5}>Fuel Summery</Title>
+          <Title level={5}>Sells Summery</Title>
           <Paragraph className="lastweek !m-0">
             than last year <span className="bnb2">+10%</span>
           </Paragraph>

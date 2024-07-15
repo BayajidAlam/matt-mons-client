@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import { monthOfYear } from '@/constants/global';
-import { useTripSummaryGroupByMonthYearQuery } from '@/redux/api/report/reportApi';
-import { Typography } from 'antd';
-import ReactApexChart from 'react-apexcharts';
-import columnChart from './configs/columnChart';
+import { monthOfYear } from "@/constants/global";
+// import { useTripSummaryGroupByMonthYearQuery } from '@/redux/api/report/reportApi';
+import { Typography } from "antd";
+import ReactApexChart from "react-apexcharts";
+import columnChart from "./configs/columnChart";
 
 const ColumnChart = () => {
   const { Title, Paragraph } = Typography;
 
-  const { data, isLoading } = useTripSummaryGroupByMonthYearQuery('', {
-    refetchOnMountOrArgChange: true,
-  });
+  // const { data, isLoading } = useTripSummaryGroupByMonthYearQuery('', {
+  //   refetchOnMountOrArgChange: true,
+  // });
 
+  const data = [];
   const summaries = data?.summaries || [];
   const filterByYear = summaries?.filter(
     (el: any) => el.year === new Date().getFullYear()
@@ -25,16 +26,16 @@ const ColumnChart = () => {
 
   const series = [
     {
-      name: 'Trip Income',
+      name: "Trip Income",
       data: mappedData,
-      color: '#fff',
+      color: "#fff",
     },
   ];
 
   return (
     <div className="overflow-hidden">
       <div>
-        <Title level={5}>Trip Summery</Title>
+        <Title level={5}>Sells Summary</Title>
         <Paragraph className="lastweek">
           than last year <span className="bnb2">+30%</span>
         </Paragraph>

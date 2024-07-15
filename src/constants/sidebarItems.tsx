@@ -1,8 +1,6 @@
 import type { MenuProps } from "antd";
 import {
   ProfileOutlined,
-  TableOutlined,
-  AppstoreOutlined,
   MessageOutlined,
   DashboardOutlined,
   HomeOutlined,

@@ -1,4 +1,4 @@
-import { useGetAllMaintenanceQuery } from '@/redux/api/maintenance/maintenanceApi';
+
 import { useGetAllTripQuery } from '@/redux/api/trip/tripApi';
 import { Empty, Radio, RadioChangeEvent, Spin, Typography } from 'antd';
 import dayjs from 'dayjs';
@@ -15,27 +15,29 @@ const RecentSection = () => {
   };
 
   // recent trips
-  const { data: tripData, isLoading: isTripLoading } = useGetAllTripQuery(
-    {
-      limit: 10,
-    },
-    {
-      refetchOnMountOrArgChange: true,
-    }
-  );
-
+  // const { data: tripData, isLoading: isTripLoading } = useGetAllTripQuery(
+  //   {
+  //     limit: 10,
+  //   },
+  //   {
+  //     refetchOnMountOrArgChange: true,
+  //   }
+  // );
+  const tripData = [];
   const allTrips = tripData?.trips || [];
 
   // recent maintenance
-  const { data: maintenanceData, isLoading: isMaintenanceLoading } =
-    useGetAllMaintenanceQuery(
-      {
-        limit: 10,
-      },
-      {
-        refetchOnMountOrArgChange: true,
-      }
-    );
+  // const { data: maintenanceData, isLoading: isMaintenanceLoading } =
+  //   useGetAllMaintenanceQuery(
+  //     {
+  //       limit: 10,
+  //     },
+  //     {
+  //       refetchOnMountOrArgChange: true,
+  //     }
+  //   );
+
+  const maintenanceData = []
 
   const allMaintenances = maintenanceData?.maintenances || [];
 
@@ -49,8 +51,8 @@ const RecentSection = () => {
         </div>
         <div>
           <Radio.Group onChange={recentTabChange} defaultValue={recentTabData}>
-            <Radio.Button value="trip">TRIP</Radio.Button>
-            <Radio.Button value="maintenance">MAINTENANCE</Radio.Button>
+            <Radio.Button value="trip">Sells</Radio.Button>
+            <Radio.Button value="maintenance">Manager</Radio.Button>
           </Radio.Group>
         </div>
       </div>
@@ -64,19 +66,19 @@ const RecentSection = () => {
                   scope="col"
                   className="py-2 pl-3 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                 >
-                  Vehicle
+                  Sells
                 </th>
                 <th
                   scope="col"
                   className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
                 >
-                  Destination
+                  Count
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
               {allTrips.length ? (
-                allTrips.map(
+                allTrips?.map(
                   (
                     { vehicle, startDate, id, from, to }: any,
                     index: number
@@ -108,7 +110,7 @@ const RecentSection = () => {
               ) : (
                 <tr>
                   <td className="py-20 w-full text-center text-red-400">
-                    {isTripLoading ? <Spin /> : <Empty />}
+                    {/* {isTripLoading ? <Spin /> : <Empty />} */}
                   </td>
                 </tr>
               )}
@@ -126,13 +128,13 @@ const RecentSection = () => {
                   scope="col"
                   className="py-2 pl-3 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                 >
-                  Vehicle
+                  Manager
                 </th>
                 <th
                   scope="col"
                   className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
                 >
-                  Maintenance Head
+                  Product
                 </th>
               </tr>
             </thead>
@@ -168,7 +170,7 @@ const RecentSection = () => {
               ) : (
                 <tr>
                   <td className="py-20 w-full text-center text-red-400">
-                    {isMaintenanceLoading ? <Spin /> : <Empty />}
+                    {/* {isMaintenanceLoading ? <Spin /> : <Empty />} */}
                   </td>
                 </tr>
               )}

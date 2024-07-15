@@ -6,7 +6,7 @@ const IncomeExpenseSection = () => {
   return (
     <div className="bg-white border border-blue-200 shadow-md shadow-blue-200 rounded-lg py-5 pl-5 pr-1.5 lg:col-span-5 overflow-auto">
       <div className="pr-3.5">
-        <Title level={5}>Income/Expenses</Title>
+        <Title level={5}>Delivered/Cancel orders</Title>
         {/* <Paragraph className="lastweek !m-0">
                 than last year <span className="blue">+10%</span>
               </Paragraph> */}
@@ -84,47 +84,47 @@ export default IncomeExpenseSection;
 const incomeExpenseData = [
   {
     type: 'expense',
-    name: 'Fuel bill',
-    amount: '-৳700',
+    name: 'Mini heater',
+    amount: '৳700',
   },
   {
     type: 'income',
-    name: 'Trip bonus',
+    name: 'Mini heater',
     amount: '+1000',
   },
   {
     type: 'income',
-    name: 'Trip completed',
+    name: 'Mini heater',
     amount: '+12000',
   },
   {
     type: 'cancel',
-    name: 'Trip cancel',
+    name: 'Mini heater',
     amount: '+৳800',
   },
   {
     type: 'expense',
-    name: 'Glass repair',
+    name: 'Mini heater',
     amount: '-৳1350',
   },
   {
     type: 'expense',
-    name: 'Bumper repair',
+    name: 'Mini heater',
     amount: '-৳680',
   },
   {
     type: 'income',
-    name: 'Trip completed',
+    name: 'Mini heater',
     amount: '+20000',
   },
   {
     type: 'cancel',
-    name: 'Trip cancel',
+    name: 'Mini heater',
     amount: '+৳1300',
   },
   {
     type: 'expense',
-    name: 'Tire change',
+    name: 'Mini heater',
     amount: '-৳2000',
   },
 ];

@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 
-const ColumnChart = dynamic(() => import('@/components/Charts/LineChart'), {
+const ColumnChart = dynamic(() => import('@/components/Charts/ColumnChart'), {
   ssr: false,
 });
 const LineChart = dynamic(() => import('@/components/Charts/LineChart'), {

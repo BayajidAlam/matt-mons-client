@@ -59,11 +59,13 @@ const HeaderTop = () => {
         </li>
       )}
 
-      <li>
-        <Link className="text-white text-[13px]" href={"/my-orders"}>
-          My Order
-        </Link>
-      </li>
+      {role === USER_ROLE.CUSTOMER && (
+        <li>
+          <Link className="text-white text-[13px]" href={"/my-orders"}>
+            My Order
+          </Link>
+        </li>
+      )}
       <li>
         <Link className="text-white text-[13px]" href={"/shops"}>
           Shops
