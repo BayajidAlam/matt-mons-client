@@ -27,7 +27,7 @@ export const sidebarItems = (role: string, shopCount: number) => {
     },
     {
       label: (
-        <Link className="text-sm " href={`/seller/dashboard`}>
+        <Link className="text-sm " href={`/dashboard`}>
           Dashboard
         </Link>
       ),
@@ -65,94 +65,11 @@ export const sidebarItems = (role: string, shopCount: number) => {
 
   const adminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    {
-      label: "Manage academic",
-      key: "manage-academic",
-      icon: <TableOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}/academic/faculty`}>Faculties</Link>,
-          key: `/${role}/academic/faculty`,
-        },
-        {
-          label: <Link href={`/${role}/academic/department`}>Departments</Link>,
-          key: `/${role}/academic/department`,
-        },
-        {
-          label: <Link href={`/${role}/academic/semester`}>Semesters</Link>,
-          key: `/${role}/academic/semester`,
-        },
-      ],
-    },
-    {
-      label: "Management",
-      key: "management",
-      icon: <AppstoreOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}/department`}>Department</Link>,
-          key: `/${role}/department`,
-        },
-        {
-          label: <Link href={`/${role}/building`}>Building</Link>,
-          key: `/${role}/building`,
-        },
-        {
-          label: <Link href={`/${role}/room`}>Rooms</Link>,
-          key: `/${role}/room`,
-        },
-        {
-          label: <Link href={`/${role}/course`}>Course</Link>,
-          key: `/${role}/course`,
-        },
-        {
-          label: (
-            <Link href={`/${role}/semester-registration`}>
-              Semester registration
-            </Link>
-          ),
-          key: `/${role}/semester-registration`,
-        },
-        {
-          label: <Link href={`/${role}/offered-course`}>Offered courses</Link>,
-          key: `/${role}/offered-course`,
-        },
-        {
-          label: (
-            <Link href={`/${role}/offered-course-section`}>
-              Course sections
-            </Link>
-          ),
-          key: `/${role}/offered-course-section`,
-        },
-      ],
-    },
     ...commonUserProfile,
   ];
 
   const superAdminSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
-    {
-      label: <Link href={`/${role}/admin`}>Manage Admin</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/admin`,
-    },
-    {
-      label: <Link href={`/${role}/user`}>Manage User</Link>,
-      icon: <TableOutlined />,
-      key: `/${role}/user`,
-    },
-    {
-      label: "Management",
-      key: "management",
-      icon: <AppstoreOutlined />,
-      children: [
-        {
-          label: <Link href={`/${role}/department`}>Department</Link>,
-          key: `/${role}/department`,
-        },
-      ],
-    },
     ...commonUserProfile,
   ];
 
@@ -179,7 +96,9 @@ export const sidebarItems = (role: string, shopCount: number) => {
           key: `/${role}/orders`,
         },
         {
-          label: <Link href={`/${role}/delivered-orders`}>Delivered orders</Link>,
+          label: (
+            <Link href={`/${role}/delivered-orders`}>Delivered orders</Link>
+          ),
           key: `/${role}/delivered-orders`,
         },
         {
@@ -265,7 +184,28 @@ export const sidebarItems = (role: string, shopCount: number) => {
   const sellsManagerSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
-      label: "Manage shop",
+      label: "Manage order",
+      key: "manage-orders",
+      icon: <ShoppingOutlined />,
+      children: [
+        {
+          label: <Link href={`/${role}/orders`}>Orders</Link>,
+          key: `/${role}/orders`,
+        },
+        {
+          label: (
+            <Link href={`/${role}/delivered-orders`}>Delivered orders</Link>
+          ),
+          key: `/${role}/delivered-orders`,
+        },
+        {
+          label: <Link href={`/${role}/returns`}>Canceled orders</Link>,
+          key: `/${role}/returns`,
+        },
+      ],
+    },
+    {
+      label: "Manage product",
       key: "manage-products",
       icon: <ShopOutlined />,
       children: [
@@ -274,38 +214,26 @@ export const sidebarItems = (role: string, shopCount: number) => {
           key: `/${role}/products`,
         },
         {
-          label: <Link href={`/${role}/orders`}>Orders</Link>,
-          key: `/${role}/orders`,
+          label: <Link href={`/${role}/category`}>Category</Link>,
+          key: `/${role}/category`,
+        },
+        {
+          label: <Link href={`/${role}/tags`}>Tags</Link>,
+          key: `/${role}/tags`,
         },
         {
           label: <Link href={`/${role}/skus`}>SKUS</Link>,
           key: `/${role}/skus`,
         },
         {
-          label: <Link href={`/${role}/returns`}>Returns</Link>,
-          key: `/${role}/returns`,
+          label: <Link href={`/${role}/color`}>Color</Link>,
+          key: `/${role}/color`,
         },
-      ],
-    },
-    {
-      label: "Shop Users",
-      key: "shop-users",
-      icon: <UserSwitchOutlined />,
-      children: [
         {
-          label: <Link href={`/${role}/customers`}>Customers</Link>,
-          key: `/${role}/customers`,
+          label: <Link href={`/${role}/size`}>Size</Link>,
+          key: `/${role}/size`,
         },
       ],
-    },
-    {
-      label: (
-        <Link className="text-sm " href={`/${role}/shop-settings`}>
-          Shop Settings
-        </Link>
-      ),
-      key: "/shop-settings",
-      icon: <SettingOutlined />,
     },
     ...commonUserProfile,
   ];

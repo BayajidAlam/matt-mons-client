@@ -1,12 +1,7 @@
-import AdminDashboard from '@/components/Dashboard/AdminDashboard';
-import { Metadata } from 'next';
+import React from "react";
 
-export const metadata: Metadata = {
-  title: 'VehiTrack | Dashboard',
+const SellerDashboard = () => {
+  return <div>Seller Dashboard</div>;
 };
 
-const DashboardPage = () => {
-  return <AdminDashboard />;
-};
-
-export default DashboardPage;
+export default SellerDashboard;
