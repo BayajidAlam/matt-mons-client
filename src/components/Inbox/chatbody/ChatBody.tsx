@@ -1,11 +1,10 @@
 // import Blank from "./Blank";
 
 import { useGetAllMessageQuery } from "@/redux/api/message/messageApi";
-
-import Loader from "@/components/Utlis/Loader";
 import ChatHead from "./ChatHead";
 import Messages from "./Messages";
 import Options from "./Options";
+import Loader from "@/components/Utils/Loader";
 
 export default function ChatBody({ id }: { id?: any }) {
   const {

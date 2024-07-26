@@ -17,6 +17,9 @@ const TopBanner = React.lazy(
 const AddsModal = React.lazy(
   () => import("@/components/ui/Modal/AddsModal")
 );
+const ContactUs = React.lazy(
+  () => import("@/components/ui/Home/ContactUs")
+);
 
 const UserPage = () => {
   
@@ -25,7 +28,7 @@ const UserPage = () => {
       <HeaderBottom />
       <TopBanner />
       <AddSection />
-      <AddsModal />
+      <ContactUs />
     </div>
   );
 };

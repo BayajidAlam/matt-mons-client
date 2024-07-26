@@ -1,9 +1,7 @@
 "use client";
 import Loading from "@/app/loading";
 import ProductDetailsSection from "@/components/Product/ProductDetailsSection";
-import { productsArray } from "@/demo/data";
 import { useCreateCartMutation } from "@/redux/api/cart/cartApi";
-import { addToCart } from "@/redux/api/cart/cartSlice";
 import { useGetSingProductQuery } from "@/redux/api/products/productsApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { getUserInfo } from "@/services/auth.service";
@@ -11,10 +9,9 @@ import { UserInfo } from "@/types";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaStar } from "react-icons/fa";
-import { SiGoogleanalytics } from "react-icons/si";
 
 const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
   const { id: uId } = getUserInfo() as UserInfo;
@@ -23,7 +20,6 @@ const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
   const { data, isLoading } = useGetSingProductQuery(id);
   const productData = data?.data;
 
-  const dispatch = useAppDispatch();
   const [createCart, { isLoading: isCartLoading }] = useCreateCartMutation();
 
   const handleAddToCart = async (prod: any) => {
@@ -34,7 +30,6 @@ const ProductDetailsPage = ({ params }: { params: { id: string } }) => {
    try {
     const res = await createCart(data).unwrap();
     if (res?.data) {
-      dispatch(addToCart(prod));
       message.success("Product added to cart successfully");
     }
    } catch (error) {

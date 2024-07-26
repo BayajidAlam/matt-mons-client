@@ -2,7 +2,7 @@ import Conversation from "@/components/Inbox/Conversation";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "VehiTrack | Inbox",
+  title: "ECOM | Inbox",
 };
 
 const InboxPage = () => {

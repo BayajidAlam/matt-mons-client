@@ -1,5 +1,6 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
+import Image from "next/image";
 
 export default function ChatItem({
   avatar,
@@ -16,7 +17,7 @@ export default function ChatItem({
     <div className="flex gap-2 items-center justify-center md:justify-normal p-3 text-sm border-b border-gray-300 cursor-pointer hover:bg-gray-100 focus:outline-none w-">
       <div>
         {avatar ? (
-          <img
+          <Image
             className="object-cover w-10 h-10 rounded-full"
             src={avatar}
             alt={name}

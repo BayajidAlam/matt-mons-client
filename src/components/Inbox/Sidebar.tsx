@@ -5,7 +5,6 @@ import { IoMdAdd } from "react-icons/io";
 import ModalComponent from "../ui/Modal";
 import ChatItems from "./ChatIItems";
 import NewConversation from "./NewConversation";
-// import Blank from "./Blank";
 
 export default function Sidebar() {
   const [showModel, setShowModel] = useState(false);

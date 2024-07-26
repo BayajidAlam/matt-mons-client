@@ -1,7 +1,5 @@
-// import { IMeta } from "@/types";
 import io from "socket.io-client";
 import { baseApi } from "../baseApi";
-
 const CONVERSATION_URL = "/conversations";
 
 export const conversationApi = baseApi.injectEndpoints({
@@ -30,7 +28,7 @@ export const conversationApi = baseApi.injectEndpoints({
         try {
           await cacheDataLoaded;
           socket.on("conversation-message", (data) => {
-            // console.log(data);
+            console.log(data);
             updateCachedData((draft) => {
               const conversation = draft?.find(
                 (c: any) => c.id === data?.conversation?.id

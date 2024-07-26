@@ -1,4 +1,5 @@
-Project Todos 
+Project Todos
+
 - [x] Requirement analysis
 - [x] Selecting tech stack
 - [x] System design
@@ -11,8 +12,6 @@ Project Todos
 - [ ] Write test case
 - [ ] Complete documentation
 
-
-
 ```bash
 git commit -m "Initial commit: starting project setup"
 git commit -m "feat: add user authentication"
@@ -23,7 +22,6 @@ git commit -m "docs: update installation instructions"
 git commit -m "style: improve code formatting"
 git commit -m "test: add unit tests for user service"
 ```
-
 
 ## Table of Contents
 
@@ -36,9 +34,9 @@ git commit -m "test: add unit tests for user service"
 
 ## Project Overview
 
-Welcome to the frontend repository of matt-mons, the innovative multi vendor ecommerce Management System designed to streamline your ecommerce management experience. Firstly I will go with MVP which will meet the minimum requirements to run our initial business, which means I am prioritising the user fetching feature and the manager roll feature that will be developed first. Here I am  planning version(v1) requirements.
+Welcome to the frontend repository of matt-mons, the innovative multi vendor ecommerce Management System designed to streamline your ecommerce management experience. Firstly I will go with MVP which will meet the minimum requirements to run our initial business, which means I am prioritising the user fetching feature and the manager roll feature that will be developed first. Here I am planning version(v1) requirements.
 
- This frontend repository works in conjunction with the matt-mons backend, providing a user-friendly interface for managing vehicles efficiently.
+This frontend repository works in conjunction with the matt-mons backend, providing a user-friendly interface for managing vehicles efficiently.
 
 - First priority(V1)
 - Later Version(V2)
@@ -52,7 +50,6 @@ Welcome to the frontend repository of matt-mons, the innovative multi vendor eco
 - **Socket.io:** Real-time bidirectional event-based communication.
 - **Framer Motion:** Animation library for React components.
 - **EmailJS:** Service for sending emails directly from client-side JavaScript.
-
 
 ## System Design
 
@@ -73,7 +70,6 @@ I will design the system for five diffrent role Customer, Sells Manager, Seller,
 - Contact with supports or chat with sales manager(V2)
 - Take the help of map to navigate towards shop(V2)
 
-
 **Sells Manager**
 
 - Create Product
@@ -81,7 +77,6 @@ I will design the system for five diffrent role Customer, Sells Manager, Seller,
 - Accept order
 - Update tracking
 - Chat with customer(V2)
-
 
 **Seller**
 
@@ -94,7 +89,6 @@ I will design the system for five diffrent role Customer, Sells Manager, Seller,
 - Update tracking
 - Chat with customer(V2)
 
-
 **Admin**
 
 - Verify and edit,ban seller
@@ -104,11 +98,10 @@ I will design the system for five diffrent role Customer, Sells Manager, Seller,
 - Assist seller and sales manager to get a better user experience
 - Collect feedback from seller and Sells manager
 
-
 **Admin**
+
 - Add, remove a admin
 - Business supervision
-
 
 ### Non-Functional requirements
 
@@ -129,7 +122,7 @@ Let's start with the estimation and constraints.
 ### Traffic
 
 Let us assume we have 100 million daily active users (DAU) with 1 million drivers and on average our platform enables 10 million rides daily.
-Let us assume we have 10000 active users(DAU) 
+Let us assume we have 10000 active users(DAU)
 If on average each user performs 10 actions (such as request a check available product, addtoCart, checkout, etc.) we will have to handle 100000 requests daily.
 
 $$
@@ -170,13 +163,13 @@ $$
 
 Here is our high-level estimate:
 
-| Type                      | Estimate        |
-| ------------------------- | -----------     |
-| Daily active users (DAU)  | 10000           |
-| Requests per second (RPS) | 1.15/s          |
-| Storage (per day)         | ~0.04 GB        |
-| Storage (10 years)        | ~146 GB         |
-| Bandwidth                 | ~0.462 KB/s     |
+| Type                      | Estimate    |
+| ------------------------- | ----------- |
+| Daily active users (DAU)  | 10000       |
+| Requests per second (RPS) | 1.15/s      |
+| Storage (per day)         | ~0.04 GB    |
+| Storage (10 years)        | ~146 GB     |
+| Bandwidth                 | ~0.462 KB/s |
 
 ## Data model design
 
@@ -216,14 +209,13 @@ While our data model seems quite relational, we don't necessarily need to store 
 
 We will split the data between different services each having ownership over a particular table. Then we can use a relational database such as [PostgreSQL](https://www.postgresql.org).
 
-
 ## High-level design
 
 Now let us do a high-level design of our system.
 
 ### Architecture
 
-We will be using Monolith architecure while we are building our first version. According to demand we will scale it horizontally and If it reach to limitations we will consider to build to microservice(May be on v3). 
+We will be using Monolith architecure while we are building our first version. According to demand we will scale it horizontally and If it reach to limitations we will consider to build to microservice(May be on v3).
 
 ### How is the service expected to work?
 
@@ -237,7 +229,6 @@ Here's how our service is expected to work:
 6. Once the destination is reached, the driver will mark the ride as complete and collect payment.
 7. After the payment is complete, the customer can leave a rating and feedback for the trip if they like.
 
-
 ### Payments
 
 Handling payments at scale is challenging, to simplify our system we can use a third-party payment processor like [Stripe](https://stripe.com) or [SSLCommerz](https://www.paypal.com). Once the payment is complete, the payment processor will redirect the user back to our application and we can set up a [webhook](https://en.wikipedia.org/wiki/Webhook) to capture all the payment-related data.
@@ -249,7 +240,6 @@ We will send notifications through our server(v2)
 ## Detailed design
 
 It's time to discuss our design decisions in detail.
-
 
 ## Identify and resolve bottlenecks
 
@@ -265,7 +255,7 @@ To make our system more resilient we can do the following:
 
 ## Getting Started
 
-To get started with the VehiTrack frontend, follow these steps:
+To get started with the ECOM frontend, follow these steps:
 
 1. Clone the repository: `git clone [frontend_repository_url]`
 2. Install dependencies: `yarn install`
@@ -281,7 +271,7 @@ The frontend codebase follows given modular and organized folder structure:
   - `/assets`: Image, svg and other resources.
   - `/components`: Reusable React components.
   - `/redux`: Redux store setup and actions.
-     - `/api`: API requests and integration with the backend.
+    - `/api`: API requests and integration with the backend.
   - `constants`: Constant vaiable of the project.
   - `helpers`: Helper functions.
   - `hooks`: Necessary hooks.
@@ -293,7 +283,7 @@ The frontend codebase follows given modular and organized folder structure:
 
 ## Usage
 
-To interact with the VehiTrack frontend, follow these steps:
+To interact with the ECOM frontend, follow these steps:
 
 1. **Installation:**
 
@@ -302,28 +292,25 @@ To interact with the VehiTrack frontend, follow these steps:
 
 2. **Configuration:**
 
-   
-
 3. **Development Server:**
 
    - Start the development server: `yarn dev`
-   - Open your browser and navigate to `http://localhost:3000` to access the VehiTrack application in development mode.
+   - Open your browser and navigate to `http://localhost:3000` to access the ECOM application in development mode.
 
 4. **User Authentication:**
 
    - Use the predefined user accounts for testing:
      - **Super Admin:**
-       - User ID: 
-       - Password: 
+       - User ID:
+       - Password:
      - **Admin:**
-       - User ID: 
-       - Password: 
-   
+       - User ID:
+       - Password:
 
 5. **Explore Features:**
 
    - Navigate through the dashboard to access different features:
-     
+
 6. **Animation with Framer Motion:**
 
    - Experience smooth and interactive animations integrated with Framer Motion.
