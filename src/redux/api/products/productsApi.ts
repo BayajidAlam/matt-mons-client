@@ -45,6 +45,16 @@ export const productsApi = baseApi.injectEndpoints({
       providesTags: [tagTypes.product],
     }),
 
+    // get most sold product by category
+    getAllMostSoldByCategory: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: `${PRODUCTS_URL}/most-sold-by-category`,
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: [tagTypes.product],
+    }),
+
     // get single
     getSingProduct: build.query({
       query: (id: string) => ({
@@ -80,6 +90,7 @@ export const {
   useGetAllProductsQuery,
   useGetAllTodayBestSellsProductsQuery,
   useGetAllProductInfinityQuery,
+  useGetAllMostSoldByCategoryQuery,
   useGetSingProductQuery,
   useUpdateProductMutation,
   useDeleteProductMutation,

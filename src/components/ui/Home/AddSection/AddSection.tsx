@@ -146,6 +146,7 @@ const AddSection = () => {
             </Swiper>
           </div>
         </div>
+        
         <div className="rest_part">
           <CommonTitle title="Check Out">Daily Best Sells</CommonTitle>
           <div

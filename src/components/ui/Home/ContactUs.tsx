@@ -23,8 +23,8 @@ export default function ContactUs() {
 
     emailjs
       .send(
-        "service_1n66zp3",
-        "template_fcbqjpe",
+        "service_2pqgl4x",
+        "template_bo4w939",
         templateParams,
         "SB0unnfYXIhE2N7rr"
       )

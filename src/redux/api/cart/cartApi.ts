@@ -12,7 +12,7 @@ export const cartApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      invalidatesTags: [tagTypes.cart],
+      invalidatesTags: [tagTypes.cart,tagTypes.wishlist],
     }),
 
     // get all

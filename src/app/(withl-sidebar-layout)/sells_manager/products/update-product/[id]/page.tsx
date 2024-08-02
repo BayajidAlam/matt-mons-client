@@ -58,7 +58,7 @@ const UpdateProduct = ({ params }: any) => {
           ...values,
         },
       }).unwrap();
-
+      console.log(res)
       if (res?.data) {
         message.success(`Product updated successfully`);
         router.push(`/${role}/products/${id}`);
