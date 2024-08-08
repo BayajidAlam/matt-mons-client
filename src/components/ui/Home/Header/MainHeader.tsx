@@ -5,16 +5,23 @@ import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
 import { IoCallOutline } from "react-icons/io5";
 import Link from "next/link";
-import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
-import { Badge } from "antd";
-import { getUserInfo } from "@/services/auth.service";
+import {
+  HeartOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
+import { Badge, Button, Dropdown, MenuProps } from "antd";
+import { getUserInfo, removeUserInfo } from "@/services/auth.service";
 import { UserInfo } from "@/types";
 import { useGetAllCartQuery } from "@/redux/api/cart/cartApi";
 import DrawerComponent from "../../Drawer/Drawer";
+import { authKey } from "@/constants/storagekey";
+import { useRouter } from "next/navigation";
 
 const MainHeader = () => {
   const query: Record<string, any> = {};
   const { id } = getUserInfo() as UserInfo;
+  const router = useRouter();
 
   query["limit"] = 100;
   query["page"] = 1;
@@ -22,6 +29,36 @@ const MainHeader = () => {
 
   const { data: cartAllData, isLoading } = useGetAllCartQuery({ ...query });
   const quantity = cartAllData?.data?.cartItems?.length;
+
+  const logOut = () => {
+    removeUserInfo(authKey);
+    router.push("/login");
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      key: "0",
+      label: (
+        <Link className="text-sm" href={`/user-profile`}>
+          Profile
+        </Link>
+      ),
+    },
+    {
+      key: "1",
+      label: (
+        <Link className="text-sm" href={`/change-password`}>
+          Change password
+        </Link>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <button onClick={logOut}>Logout</button>
+      ),
+    },
+  ];
 
   return (
     <div className=" w-[92%] md:w-[95%] lg:w-[90%] xl:w-[70%] mx-auto py-8 px-1">
@@ -62,17 +99,31 @@ const MainHeader = () => {
 
         <div className="flex justify-center items-center gap-4">
           <IoIosSearch className="text-3xl text-black block md:hidden " />
-          {/* <VscAccount className="text-2xl" /> */}
+
           <Link className="text-black" href={`/wishlists`}>
-            <HeartOutlined className="text-3xl" />
+            <HeartOutlined className="text-2xl" />
           </Link>
           <Badge count={quantity}>
             <div className="relative">
               <Link className="text-black" href={`/cart`}>
-                <ShoppingCartOutlined className="text-3xl" />
+                <ShoppingCartOutlined className="text-2xl" />
               </Link>
             </div>
           </Badge>
+
+          <div className="hidden lg:block">
+            <Dropdown menu={{ items }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <UserOutlined className="text-2xl" />
+              </div>
+            </Dropdown>
+          </div>
         </div>
       </div>
     </div>

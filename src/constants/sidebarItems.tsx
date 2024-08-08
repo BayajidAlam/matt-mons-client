@@ -236,16 +236,16 @@ export const sidebarItems = (role: string, shopCount: number) => {
     ...commonUserProfile,
   ];
 
-  const customerSidebarItems: MenuProps["items"] = [
-    ...defaultSidebarItems,
-    ...commonUserProfile,
-  ];
+  // const customerSidebarItems: MenuProps["items"] = [
+  //   ...defaultSidebarItems,
+  //   ...commonUserProfile,
+  // ];
 
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.SELLER) return sellerSidebarItems;
   else if (role === USER_ROLE.SELLS_MANAGER) return sellsManagerSidebarItems;
-  else {
-    return customerSidebarItems;
-  }
+  // else {
+  //   return customerSidebarItems;
+  // }
 };

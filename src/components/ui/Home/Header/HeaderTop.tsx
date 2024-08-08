@@ -6,26 +6,20 @@ import Link from "next/link";
 import { TiSocialFacebook } from "react-icons/ti";
 import { FaTwitter } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io";
-import { Button } from "antd";
-import {
-  getUserInfo,
-  removeUserInfo,
-} from "@/services/auth.service";
-import { authKey } from "@/constants/storagekey";
-import { useRouter } from "next/navigation";
+import { getUserInfo } from "@/services/auth.service";
 import { UserInfo } from "@/types";
 import { USER_ROLE } from "@/constants/role";
 
 const HeaderTop = () => {
   const { role } = getUserInfo() as UserInfo;
-  console.log(role);
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState({
     language: "ENGLISH",
     flag: englandFlag,
   });
 
-  const router = useRouter();
+  
   const toggleOpen = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (option: any) => {
@@ -33,11 +27,7 @@ const HeaderTop = () => {
     setIsOpen(false);
   };
 
-  const logOut = () => {
-    removeUserInfo(authKey);
-    router.push("/login");
-  };
-
+ 
   const navItems = (
     <>
       <li>
@@ -57,6 +47,11 @@ const HeaderTop = () => {
         </li>
       )}
 
+      <li>
+        <Link className="text-white text-[13px]" href={"/products"}>
+          Products
+        </Link>
+      </li>
       {role === USER_ROLE.CUSTOMER && (
         <li>
           <Link className="text-white text-[13px]" href={"/my-orders"}>
@@ -64,24 +59,6 @@ const HeaderTop = () => {
           </Link>
         </li>
       )}
-      <li>
-        <Link className="text-white text-[13px]" href={"/shops"}>
-          Shops
-        </Link>
-      </li>
-      <li>
-        <Link className="text-white text-[13px]" href={"/"}>
-          About Us
-        </Link>
-      </li>
-      <li>
-        <Button
-          onClick={logOut}
-          className="text-white text-[13px] bg-transparent hover:bg-transparent"
-        >
-          Log out
-        </Button>
-      </li>
     </>
   );
 

@@ -1,38 +1,57 @@
 import React, { useState } from "react";
 import {
   AppstoreOutlined,
+  HomeOutlined,
   LogoutOutlined,
   MailOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
+import Link from "next/link";
+import { AiOutlineShopping } from "react-icons/ai";
+import { IoBagCheckOutline } from "react-icons/io5";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
   {
     key: "1",
-    icon: <MailOutlined />,
-    label: "Home",
+    icon: <HomeOutlined />,
+    label: (
+      <Link className="text-sm" href={`/`}>
+        Home
+      </Link>
+    ),
   },
   {
     key: "2",
-    icon: <AppstoreOutlined />,
-    label: "Shops",
+    icon: <AiOutlineShopping />,
+    label: (
+      <Link className="text-sm" href={`/products`}>
+        Products
+      </Link>
+    ),
   },
   {
     key: "3",
-    icon: <AppstoreOutlined />,
-    label: "My Orders",
+    icon: <IoBagCheckOutline />,
+    label: (
+      <Link className="text-sm" href={`/`}>
+        My Orders
+      </Link>
+    ),
   },
   {
     key: "4",
     icon: <SettingOutlined />,
     label: "Settings",
     children: [
-      { key: "31", label: "Profile" },
-      { key: "32", label: "Change Password" },
+      { key: "profile", label: <Link href={`/user-profile`}>Profile</Link> },
+      {
+        key: "change-password",
+        label: <Link href={`/change-password`}>Change Password</Link>,
+      },
     ],
   },
 ];
@@ -62,6 +81,7 @@ const levelKeys = getLevelKeys(items as LevelKeysProps[]);
 
 const UserSideBarMenu = () => {
   const [stateOpenKeys, setStateOpenKeys] = useState(["2", "23"]);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>(["1"]);
 
   const onOpenChange: MenuProps["onOpenChange"] = (openKeys) => {
     const currentOpenKey = openKeys.find(
@@ -86,25 +106,28 @@ const UserSideBarMenu = () => {
     }
   };
 
+  const onSelect: MenuProps["onSelect"] = ({ key }) => {
+    setSelectedKeys([key]);
+  };
+
   return (
-    <div style={{ display: "flex", flexDirection: "column", }}>
-    <Menu
-      mode="inline"
-      defaultSelectedKeys={["231"]}
-      openKeys={stateOpenKeys}
-      onOpenChange={onOpenChange}
-      style={{ width: 256, flex: 1 }}
-      items={items}
-    />
-    <Menu
-      mode="inline"
-      style={{ width: 256 }}
-    >
-      <Menu.Item key="logout" icon={<LogoutOutlined />}>
-        Logout
-      </Menu.Item>
-    </Menu>
-  </div>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <Menu
+        mode="inline"
+        defaultSelectedKeys={["1"]}
+        selectedKeys={selectedKeys}
+        openKeys={stateOpenKeys}
+        onOpenChange={onOpenChange}
+        onSelect={onSelect}
+        style={{ width: 256, flex: 1 }}
+        items={items}
+      />
+      <Menu mode="inline" style={{ width: 256 }}>
+        <Menu.Item key="logout" icon={<LogoutOutlined />}>
+          Logout
+        </Menu.Item>
+      </Menu>
+    </div>
   );
 };
 
