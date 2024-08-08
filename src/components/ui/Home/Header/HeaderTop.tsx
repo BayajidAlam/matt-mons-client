@@ -9,7 +9,6 @@ import { IoLogoInstagram } from "react-icons/io";
 import { Button } from "antd";
 import {
   getUserInfo,
-  isLoggedIn,
   removeUserInfo,
 } from "@/services/auth.service";
 import { authKey } from "@/constants/storagekey";
@@ -18,7 +17,6 @@ import { UserInfo } from "@/types";
 import { USER_ROLE } from "@/constants/role";
 
 const HeaderTop = () => {
-  const userLoggedIn = isLoggedIn();
   const { role } = getUserInfo() as UserInfo;
   console.log(role);
   const [isOpen, setIsOpen] = useState(false);
@@ -164,7 +162,7 @@ const HeaderTop = () => {
         </div>
         <div>
           <div className="flex justify-between items-center gap-4">
-            <ul className="hidden md:flex justify-center items-center gap-8 ">
+            <ul className="hidden lg:flex justify-center items-center gap-8 ">
               {navItems}
             </ul>
             <span className=" h-3 border-white"></span>

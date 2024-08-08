@@ -1,25 +1,45 @@
+"use client";
 import React from "react";
 import EComLogo from "@/assets/e-com-logo.png";
 import Image from "next/image";
 import { IoIosSearch } from "react-icons/io";
 import { IoCallOutline } from "react-icons/io5";
-import { VscAccount } from "react-icons/vsc";
 import Link from "next/link";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
-import { useAppSelector } from "@/redux/hooks";
+import { getUserInfo } from "@/services/auth.service";
+import { UserInfo } from "@/types";
+import { useGetAllCartQuery } from "@/redux/api/cart/cartApi";
+import DrawerComponent from "../../Drawer/Drawer";
 
 const MainHeader = () => {
-  const quantity = useAppSelector((state) => state.cart.totalQuantity);
+  const query: Record<string, any> = {};
+  const { id } = getUserInfo() as UserInfo;
+
+  query["limit"] = 100;
+  query["page"] = 1;
+  query["userId"] = id;
+
+  const { data: cartAllData, isLoading } = useGetAllCartQuery({ ...query });
+  const quantity = cartAllData?.data?.cartItems?.length;
 
   return (
     <div className=" w-[92%] md:w-[95%] lg:w-[90%] xl:w-[70%] mx-auto py-8 px-1">
       <div className="flex justify-between items-center gap-12">
-        <Link href="/home">
-          <Image src={EComLogo} alt="logo" width={100} height={40} />
-        </Link>
+        <div className="flex justify-start items-start gap-2">
+          <DrawerComponent />
+          <Link className="hidden lg:block" href="/home">
+            <Image
+              className="w-20"
+              src={EComLogo}
+              alt="logo"
+              width={100}
+              height={40}
+            />
+          </Link>
+        </div>
 
-        <form className="hidden lg:flex mx-auto w-[40%] px-6 rounded-full bg-[#f5f5f5]   focus-within:border-gray-300 h-[40px]">
+        <form className="hidden md:flex mx-auto w-[40%] px-6 rounded-full bg-[#f5f5f5]   focus-within:border-gray-300 h-[40px]">
           <input
             type="text"
             placeholder="Search..."
@@ -41,8 +61,8 @@ const MainHeader = () => {
         </div>
 
         <div className="flex justify-center items-center gap-4">
-          <IoIosSearch className="text-3xl text-black block lg:hidden " />
-          <VscAccount className="text-2xl" />
+          <IoIosSearch className="text-3xl text-black block md:hidden " />
+          {/* <VscAccount className="text-2xl" /> */}
           <Link className="text-black" href={`/wishlists`}>
             <HeartOutlined className="text-3xl" />
           </Link>

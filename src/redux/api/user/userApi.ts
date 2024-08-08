@@ -6,26 +6,6 @@ const USER_URL = "/users";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (build: any) => ({
-    //   //  create super admin
-    //   createSuperAdmin: build.mutation({
-    //     query: (data: any) => ({
-    //       url: `${USER_URL}/create-super-admin`,
-    //       method: 'POST',
-    //       data: data,
-    //     }),
-    //     invalidatesTags: [tagTypes.customer],
-    //   }),
-
-    //   // create admin
-    //   createAdmin: build.mutation({
-    //     query: (data: any) => ({
-    //       url: `${USER_URL}/create-admin`,
-    //       method: 'POST',
-    //       data: data,
-    //     }),
-    //     invalidatesTags: [tagTypes.user],
-    //   }),
-
     // create
     createSellsManager: build.mutation({
       query: (data: any) => ({
@@ -46,26 +26,6 @@ export const userApi = baseApi.injectEndpoints({
       invalidatesTags: [tagTypes.user, tagTypes.customer],
     }),
 
-    //   // create driver
-    //   createDriver: build.mutation({
-    //     query: (data: any) => ({
-    //       url: `${USER_URL}/create-driver`,
-    //       method: 'POST',
-    //       data: data,
-    //     }),
-    //     invalidatesTags: [tagTypes.user, tagTypes.driver],
-    //   }),
-
-    //   // create helper
-    //   createHelper: build.mutation({
-    //     query: (data: any) => ({
-    //       url: `${USER_URL}/create-helper`,
-    //       method: 'POST',
-    //       data: data,
-    //     }),
-    //     invalidatesTags: [tagTypes.user],
-    //   }),
-
     // get all
     getAllUser: build.query({
       query: (arg: Record<string, any>) => ({
@@ -81,6 +41,15 @@ export const userApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.user],
     }),
+
+    // get single
+    getSingleUser: build.query({
+      query: (id: string) => ({
+        url: `${USER_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.seller],
+    }),
   }),
 });
 
@@ -88,4 +57,5 @@ export const {
   useCreateCustomerMutation,
   useGetAllUserQuery,
   useCreateSellsManagerMutation,
+  useGetSingleUserQuery
 } = userApi;
